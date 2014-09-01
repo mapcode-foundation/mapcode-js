@@ -1,0 +1,108 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+<script src="ctrynams.js" type="text/javascript"></script>
+<script src="mapcode.js"  type="text/javascript"></script>
+<script src="ndata.js" type="text/javascript"></script>
+</HEAD>
+
+<BODY>
+
+	<CENTER>
+
+		<FONT SIZE=7>Sample mapcode HTML</FONT>
+
+		<script type="text/javascript">
+			function submitmc() {
+				var result='?';
+				var isocode=document.getElementById("isocode").value;
+				var tc=iso2ccode(isocode);
+				if (tc<0) {
+					result='Failed to decode territory code "'+isocode+'"';
+				}
+				else {
+					var mc = document.getElementById("mapcode").value.toUpperCase();
+
+					// decode mapcode
+					var coords = master_decode(mc,tc);
+
+					// show result
+					if (coords)
+						result='Mapcode "'+mc+'" in "'+fullname(tc)+'": '+coords.y+','+coords.x;
+					else
+						result='Failed to decode mapcode "'+mc+'" in "'+fullname(tc)+'"';
+				}
+				document.getElementById("resultdiv").innerHTML=result;
+				return false;
+			}
+		</script>
+
+
+		<form action="#" onsubmit="return submitmc();">
+			Territory: 
+			<input type="text" id="isocode" value="NLD" onkeyup="submitmc();">
+			Mapcode: 
+			<input type="text" id="mapcode" value="XX.XX" onkeyup="submitmc();">
+			<input type="submit" value="Decode">
+		</form>
+
+		<DIV id="resultdiv"><font color=grey>Enter a territory and enter a mapcode</font></DIV>
+
+<!--	*** DECODING ***		-->
+
+<HR>
+
+		<script type="text/javascript">
+			function submitll() {
+				var result='';
+				var isocode=document.getElementById("isocodell").value;
+				var tc=iso2ccode(isocode);
+				if (tc<0) {
+					result='Failed to decode territory code "'+isocode+'"';
+				}
+				else {
+					var y = document.getElementById("llat").value.toUpperCase();
+					var x = document.getElementById("llon").value.toUpperCase();
+
+					for(var run=1;run<=2;run++) if ((run==1)==(tc==ct))
+					{						
+						if (run==2) result+='<P>Encoding in other areas:<BR>';
+						for(var ct=0;ct<MAX_CCODE;ct++) 
+						{
+							// encode mapcode
+							var results = master_encode(y,x,ct);
+							// show result
+							if (run==1 || results.length) 
+							{
+								result += '<p><B>'+results.length+' results in "'+fullname(ct)+'" for ('+y+','+x+'):</b><p>';
+								for (var i=0;i<results.length;i++) {
+									if ( results[i][1]!=ccode_earth)
+										result += '<small>'+ccode2iso(results[i][1],2)+'</small> ';
+									result += '<b>'+results[i][0]+'</b><br>';
+								}
+							}
+						}
+					}
+				}
+				document.getElementById("resultll").innerHTML=result;
+				return false;
+			}
+		</script>
+
+		<form action="#" onsubmit="return submitll();">
+			Latitude: 
+			<input type="text" id="llat" value="52.376514" onkeyup="submitll();">
+			Longitude: 
+			<input type="text" id="llon" value="4.908542" onkeyup="submitll();">
+			Preferred territory: 
+			<input type="text" id="isocodell" value="NLD" onkeyup="submitll();">
+			<input type="submit" value="Encode">
+		</form>
+
+		<DIV id="resultll"><font color=grey>Enter a latitude, a longitude, and a preferred territory</font></DIV>
+
+	</CENTER>
+
+</BODY>
+</HTML>
