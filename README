@@ -17,5 +17,6 @@ limitations under the License.
 
 Original C library created by Pieter Geelen. Work on Java version
 of the Mapcode library by Rijn Buve and Matthew Lowden.
+-------------------------------------------------------------------------------
 
-For more information, see: http://www.mapcode.com.
+Online documentation can be found at: http://rijnb.github.io/mapcode-js/
