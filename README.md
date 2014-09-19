@@ -1,11 +1,13 @@
--------------------------------------------------------------------------------
-MAPCODE LIBRARY FOR JAVASCRIPT
--------------------------------------------------------------------------------
+Mapcode Library for JavaScript
+====
+
 Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
 
 Online documentation can be found at: http://rijnb.github.io/mapcode-js/
 
--------------------------------------------------------------------------------
+License
+====
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -20,5 +22,4 @@ limitations under the License.
 
 Original C library created by Pieter Geelen. Work on Java version
 of the Mapcode library by Rijn Buve and Matthew Lowden.
--------------------------------------------------------------------------------
 
