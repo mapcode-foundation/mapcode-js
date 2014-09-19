@@ -1,0 +1,93 @@
+# -----------------------------------------------------------------------------
+# Compiled sources
+# -----------------------------------------------------------------------------
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# -----------------------------------------------------------------------------
+# Packages and archives
+# -----------------------------------------------------------------------------
+# It's better to unpack these files and commit the raw source
+# git has its own built in compression methods.
+# *.7z
+# *.dmg
+# *.gz
+# *.iso
+# *.jar
+# *.rar
+# *.tar
+# *.zip
+
+# -----------------------------------------------------------------------------
+# Logs and databases
+# -----------------------------------------------------------------------------
+*.log
+# *.sql - we need to commit raw SQL for test database creation
+*.sqlite
+*.tlog
+*.epoch
+*.swp
+*.hprof
+*.hprof.index
+*~
+
+# -----------------------------------------------------------------------------
+# OS generated files
+# -----------------------------------------------------------------------------
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# -----------------------------------------------------------------------------
+# Maven generated files
+# -----------------------------------------------------------------------------
+target/
+*/target/
+out/
+
+# -----------------------------------------------------------------------------
+# IntelliJ IDEA
+# -----------------------------------------------------------------------------
+# Not safe to share any of this across different IDEA major versions. Use the POMs.
+*.iml
+*.iws
+*.releaseBackup
+
+.idea
+.idea/.name
+.idea/artifacts/
+.idea/workspace.xml
+.idea/dataSources.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/tasks.xml
+.idea/uiDesigner.xml
+.idea/libraries/*
+.idea/dictionaries/*
+.idea/modules.xml
+.idea/scopes/*
+
+# .idea/inspectionProfiles/*
+
+atlassian-ide-plugin.xml
+
+# -----------------------------------------------------------------------------
+# Eclipse files
+# -----------------------------------------------------------------------------
+.classpath
+.project
+.settings
+.cache
+
+# -----------------------------------------------------------------------------
+# Netbeans files
+# -----------------------------------------------------------------------------
+nb-configuration.xml
+*.orig
