@@ -3,7 +3,7 @@ Mapcode Library for JavaScript
 
 Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
 
-Online documentation can be found at: http://rijnb.github.io/mapcode-js/
+**Online documentation can be found at: http://rijnb.github.io/mapcode-js/**
 
 License
 ====
