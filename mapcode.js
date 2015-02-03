@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-var mapcode_cversion="1.33";
-var MAX_CCODE  =541;
+
+var mapcode_cversion="1.41";
+var MAX_CCODE  =542;
 
 
 
@@ -50,91 +51,91 @@ var entity_iso = [
 		'ARG','2DD','2DN','2CH','2AN','2LD','2DL','2ML','2NL','2MN',
 		'2TR','2MZ','2SK','2PB','2HR','2AR','2AS','2BR','2UT','2GA',
 		'2KL','2TN','2HP','2JK','2CT','2JH','2KA','2RJ','2OR','2GJ',
-		'2WB','2MP','2AP','2MH','2UP','2PY','NSW','ACT','JBT','4NT',
-		'4SA','TAS','VIC','4WA','QLD','6DF','6SE','6AL','6RJ','6ES',
-		'6RN','6PB','6SC','6PE','6AP','6CE','6AC','6PR','6RR','6RO',
-		'6SP','6PI','6TO','6RS','6MA','6GO','6MS','6BA','6MG','6MT',
-		'6PA','6AM','1DC','1RI','1DE','1CT','1NJ','1NH','1VT','1MA',
-		'1HI','1MD','1WV','1SC','1ME','1IN','1KY','1TN','1VA','1OH',
-		'1PA','1MS','1LA','1AL','1AR','1NC','1NY','1IA','1IL','1GA',
-		'1WI','1FL','1MO','1OK','1ND','1WA','1SD','1NE','1KS','1ID',
-		'1UT','1MN','1MI','1WY','1OR','1CO','1NV','1AZ','1NM','1MT',
-		'1CA','1TX','1AK','3BC','3AB','3ON','3QC','3SK','3MB','3NL',
-		'3NB','3NS','3PE','3YT','3NT','3NU','IND','AUS','BRA','USA',
-		'MEX','MOW','SPE','KGD','7IN','7AD','7SE','7KB','7KC','7CE',
-		'7CU','IVA','LIP','ORL','TUL','7BE','VLA','KRS','KLU','7TT',
-		'BRY','YAR','RYA','AST','MOS','SMO','7DA','VOR','NGR','PSK',
-		'KOS','STA','KDA','7KL','TVE','LEN','ROS','VGG','VLG','MUR',
-		'7KR','NEN','7KO','ARK','7MO','NIZ','PNZ','7KI','7ME','ORE',
-		'ULY','7PM','7BA','7UD','7TA','SAM','SAR','YAN','7KM','SVE',
-		'TYU','KGN','7CH','7BU','ZAB','IRK','NVS','TOM','OMS','7KK',
-		'KEM','7AL','ALT','7TY','KYA','MAG','CHU','KAM','SAK','7PO',
-		'YEV','KHA','AMU','7SA','CAN','RUS','8SH','8TJ','8BJ','8HI',
-		'8NX','8CQ','8ZJ','8JS','8FJ','8AH','8LN','8SD','8SX','8JX',
-		'8HA','8GZ','8GD','8HB','8JL','8HE','8SN','8NM','8HL','8HN',
-		'8GX','8SC','8YN','8XZ','8GS','8QH','8XJ','CHN','UMI','CPT',
-		'AT0','AT1','AT2','AT3','AT4','AT5','AT6','AT7','AT8','ATA',
-		'AAA','?'	];
+		'2WB','2MP','2TG','2AP','2MH','2UP','2PY','NSW','ACT','JBT',
+		'4NT','4SA','TAS','VIC','4WA','QLD','6DF','6SE','6AL','6RJ',
+		'6ES','6RN','6PB','6SC','6PE','6AP','6CE','6AC','6PR','6RR',
+		'6RO','6SP','6PI','6TO','6RS','6MA','6GO','6MS','6BA','6MG',
+		'6MT','6PA','6AM','1DC','1RI','1DE','1CT','1NJ','1NH','1VT',
+		'1MA','1HI','1MD','1WV','1SC','1ME','1IN','1KY','1TN','1VA',
+		'1OH','1PA','1MS','1LA','1AL','1AR','1NC','1NY','1IA','1IL',
+		'1GA','1WI','1FL','1MO','1OK','1ND','1WA','1SD','1NE','1KS',
+		'1ID','1UT','1MN','1MI','1WY','1OR','1CO','1NV','1AZ','1NM',
+		'1MT','1CA','1TX','1AK','3BC','3AB','3ON','3QC','3SK','3MB',
+		'3NL','3NB','3NS','3PE','3YT','3NT','3NU','IND','AUS','BRA',
+		'USA','MEX','MOW','SPE','KGD','7IN','7AD','7SE','7KB','7KC',
+		'7CE','7CU','IVA','LIP','ORL','TUL','7BE','VLA','KRS','KLU',
+		'7TT','BRY','YAR','RYA','AST','MOS','SMO','7DA','VOR','NGR',
+		'PSK','KOS','STA','KDA','7KL','TVE','LEN','ROS','VGG','VLG',
+		'MUR','7KR','NEN','7KO','ARK','7MO','NIZ','PNZ','7KI','7ME',
+		'ORE','ULY','7PM','7BA','7UD','7TA','SAM','SAR','YAN','7KM',
+		'SVE','TYU','KGN','7CH','7BU','ZAB','IRK','NVS','TOM','OMS',
+		'7KK','KEM','7AL','ALT','7TY','KYA','MAG','CHU','KAM','SAK',
+		'7PO','YEV','KHA','AMU','7SA','CAN','RUS','8SH','8TJ','8BJ',
+		'8HI','8NX','8CQ','8ZJ','8JS','8FJ','8AH','8LN','8SD','8SX',
+		'8JX','8HA','8GZ','8GD','8HB','8JL','8HE','8SN','8NM','8HL',
+		'8HN','8GX','8SC','8YN','8XZ','8GS','8QH','8XJ','CHN','UMI',
+		'CPT','AT0','AT1','AT2','AT3','AT4','AT5','AT6','AT7','AT8',
+		'ATA','AAA','?'	];
 
 
 
 var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1PR=PRI,1AS=ASM,1MP=MNP,4JB=JBT,4QL=QLD,4TS=TAS,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,4NI=NFK,COL=5CL,5ME=5MX,MEX=5MX,5TM=TAM,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,EAZ=TZA,SKM=2SK,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,2OD=2OR,";
 
 var dependency = [
-	 27,409,  50,409,  26,409,  53,409,  48,409,  47,409,  76,409, 528,409,  38,409, 
-	532,539, 537,539, 533,539, 535,539, 536,539, 538,539, 534,539, 531,539, 
-	537,270, 
-	533,407,  21,407,   4,407,  42,407, 530,407,  11,407, 
-	536,209, 
-	 61,527,   8,527, 109,527, 
+	 27,410,  50,410,  26,410,  53,410,  48,410,  47,410,  76,410, 529,410,  38,410, 
+	533,540, 538,540, 534,540, 536,540, 537,540, 539,540, 535,540, 532,540, 
+	538,270, 
+	534,408,  21,408,   4,408,  42,408, 531,408,  11,408, 
+	537,209, 
+	 61,528,   8,528, 109,528, 
 	 63,113, 265,113, 
 	198,181, 
-	529,197, 129,197,  71,197,  75,197,  64,197,  62,197,  90,197,  67,197,  29,197,   5,197,  10,197,  22,197, 
-	 18,166,  14,166, 535,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
-	 18,166,  14,166, 535,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	530,197, 129,197,  71,197,  75,197,  64,197,  62,197,  90,197,  67,197,  29,197,   5,197,  10,197,  22,197, 
+	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
 	 25,112,  33,112,  45,112,   9,112, 
-	 28,171,  30,171, 531,171,   3,171, 
-	 18,166,  14,166, 535,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
-	 13,178, 538,178, 534,178,  40,178, 
-	 18,166,  14,166, 535,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 28,171,  30,171, 532,171,   3,171, 
+	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 13,178, 539,178, 535,178,  40,178, 
+	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
 	 77,210, 
-	 18,166,  14,166, 535,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
-	 27,409,  50,409,  26,409,  53,409,  48,409,  47,409,  76,409, 528,409,  38,409, 
-	 27,409,  50,409,  26,409,  53,409,  48,409,  47,409,  76,409, 528,409,  38,409, 
+	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 27,410,  50,410,  26,410,  53,410,  48,410,  47,410,  76,410, 529,410,  38,410, 
+	 27,410,  50,410,  26,410,  53,410,  48,410,  47,410,  76,410, 529,410,  38,410, 
 	-1	];
 
-var usa_from   =342
-var usa_upto   =392
-var ccode_usa  =409
+var usa_from   =343
+var usa_upto   =393
+var ccode_usa  =410
 var ind_from   =271
-var ind_upto   =305
-var ccode_ind  =406
-var can_from   =393
-var can_upto   =405
-var ccode_can  =494
-var aus_from   =306
-var aus_upto   =314
-var ccode_aus  =407
+var ind_upto   =306
+var ccode_ind  =407
+var can_from   =394
+var can_upto   =406
+var ccode_can  =495
+var aus_from   =307
+var aus_upto   =315
+var ccode_aus  =408
 var mex_from   =233
 var mex_upto   =264
-var ccode_mex  =410
-var bra_from   =315
-var bra_upto   =341
-var ccode_bra  =408
-var chn_from   =496
-var chn_upto   =526
-var ccode_chn  =527
-var rus_from   =411
-var rus_upto   =493
-var ccode_rus  =495
-var ccode_ata  =539
-var ccode_earth=540
+var ccode_mex  =411
+var bra_from   =316
+var bra_upto   =342
+var ccode_bra  =409
+var chn_from   =497
+var chn_upto   =527
+var ccode_chn  =528
+var rus_from   =412
+var rus_upto   =494
+var ccode_rus  =496
+var ccode_ata  =540
+var ccode_earth=541
 
 var parents3="USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,"
 var parents2="US,IN,CA,AU,MX,BR,RU,CN,"
 
 
-var ccode_start=112; // NLD
+var ccode_start=112; // NLD
 
 
 // *************************** mapcode_org *********************
