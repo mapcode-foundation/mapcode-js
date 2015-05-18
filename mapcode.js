@@ -15,8 +15,8 @@
  */
 
 
-var mapcode_cversion="1.41";
-var MAX_CCODE  =542;
+var mapcode_cversion="1.50";
+var MAX_CCODE  =533;
 
 
 
@@ -74,32 +74,28 @@ var entity_iso = [
 		'8HI','8NX','8CQ','8ZJ','8JS','8FJ','8AH','8LN','8SD','8SX',
 		'8JX','8HA','8GZ','8GD','8HB','8JL','8HE','8SN','8NM','8HL',
 		'8HN','8GX','8SC','8YN','8XZ','8GS','8QH','8XJ','CHN','UMI',
-		'CPT','AT0','AT1','AT2','AT3','AT4','AT5','AT6','AT7','AT8',
-		'ATA','AAA','?'	];
+		'CPT','ATA','AAA','?'	];
 
 
 
-var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1PR=PRI,1AS=ASM,1MP=MNP,4JB=JBT,4QL=QLD,4TS=TAS,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,4NI=NFK,COL=5CL,5ME=5MX,MEX=5MX,5TM=TAM,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,EAZ=TZA,SKM=2SK,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,2OD=2OR,";
+var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1PR=PRI,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,COL=5CL,5ME=5MX,MEX=5MX,5TM=TAM,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,2OD=2OR,";
 
 var dependency = [
 	 27,410,  50,410,  26,410,  53,410,  48,410,  47,410,  76,410, 529,410,  38,410, 
-	533,540, 538,540, 534,540, 536,540, 537,540, 539,540, 535,540, 532,540, 
-	538,270, 
-	534,408,  21,408,   4,408,  42,408, 531,408,  11,408, 
-	537,209, 
+	 21,408,   4,408,  42,408,  11,408, 
 	 61,528,   8,528, 109,528, 
 	 63,113, 265,113, 
 	198,181, 
 	530,197, 129,197,  71,197,  75,197,  64,197,  62,197,  90,197,  67,197,  29,197,   5,197,  10,197,  22,197, 
-	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
-	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 18,166,  14,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 18,166,  14,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
 	 25,112,  33,112,  45,112,   9,112, 
-	 28,171,  30,171, 532,171,   3,171, 
-	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
-	 13,178, 539,178, 535,178,  40,178, 
-	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 28,171,  30,171,   3,171, 
+	 18,166,  14,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 13,178,  40,178, 
+	 18,166,  14,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
 	 77,210, 
-	 18,166,  14,166, 536,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
+	 18,166,  14,166,  15,166,  23,166,  32,166,  82,166,   2,166,  17,166,  51,166,  20,166,  19,166,  12,166,  35,166,  70,166,  59,166, 
 	 27,410,  50,410,  26,410,  53,410,  48,410,  47,410,  76,410, 529,410,  38,410, 
 	 27,410,  50,410,  26,410,  53,410,  48,410,  47,410,  76,410, 529,410,  38,410, 
 	-1	];
@@ -128,8 +124,8 @@ var ccode_chn  =528
 var rus_from   =412
 var rus_upto   =494
 var ccode_rus  =496
-var ccode_ata  =540
-var ccode_earth=541
+var ccode_ata  =531
+var ccode_earth=532
 
 var parents3="USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,"
 var parents2="US,IN,CA,AU,MX,BR,RU,CN,"
@@ -140,7 +136,7 @@ var ccode_start=112; // NLD
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '1.33/C'+mapcode_cversion;
+var mapcode_javaversion = '1.50/C'+mapcode_cversion;
 
 /// returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) { return str.replace(/^\s+|\s+$/g, ''); }
@@ -406,7 +402,8 @@ var decode_chars = [
 var encode_chars = [ 
 	'0','1','2','3','4','5','6','7','8','9',
 	'B','C','D','F','G','H','J','K','L','M',
-	'N','P','Q','R','S','T','V','W','X','Y','Z']
+	'N','P','Q','R','S','T','V','W','X','Y','Z',
+	'A','E','U'] /* 1.50 */
 
 function x_divider(miny,maxy)
 {
@@ -812,11 +809,7 @@ function showinlan(str,lan,asHTML)
 	// unpack for languages that do not support E and U
 	if (asc2lan[lan][4]==63) { // is there no equivalent for the letter E in this language?
 	  if ( str.indexOf('E')>=0 || str.indexOf('U')>=0) { 
-		var str2=aeu_unpack(str); 
-		if (str!=str2) { 
-			var dc=str2.indexOf('.'); 
-			str='A'+str2; 
-		} 
+		str=aeu_pack(aeu_unpack(str),true); /* v1.50 repack! */
 	  }
 	}
 
@@ -1288,7 +1281,7 @@ function decode_starpipe(input,firstindex,ccode) // returns millionths
 
 
 
-function aeu_pack(r)
+function aeu_pack(r,short) /* v1.50 */
 {
 	var dotpos=-9;
 	var rlen=r.length;
@@ -1307,10 +1300,14 @@ function aeu_pack(r)
 			return r; // not alldigit (or multiple dots)
 
 	if (rlen-2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?		
-		var v = (r.charCodeAt(rlen-2)-48)*10+(r.charCodeAt(rlen-1)-48);							
-		var last  = Math.floor(v%34); 
-		var vowels = ['A','E','U'];						
-		r = r.substring(0,rlen-2) + vowels[Math.floor(v/34)] + (last<31 ? encode_chars[last] : vowels[last-31]);
+		if (short) { /* v1.50 new way: use only A */
+			var v = (r.charCodeAt(0)-48)*100+(r.charCodeAt(rlen-2)-48)*10+(r.charCodeAt(rlen-1)-48); 
+			r = 'A' + r.substring(1,rlen-2) + encode_chars[Math.floor(v/32)]  + encode_chars[v%32]; // 1.50
+		}
+		else { /* old way: use A, E and U */
+			var v = (r.charCodeAt(rlen-2)-48)*10+(r.charCodeAt(rlen-1)-48);			
+			r = r.substring(0,rlen-2) + encode_chars[Math.floor(v/34)+31] + encode_chars[v%34]; // v1.50
+		}
 	}
 	return r+rest;
 }
@@ -1420,8 +1417,16 @@ function aeu_unpack(str) // unpack encoded into all-digit (assume str already up
 	var lastpos = str.length-1;	
 	var dotpos = str.indexOf('.');
 	if (dotpos<2 || lastpos<dotpos+2 ) return ''; // Error: no dot, or less than 2 letters before dot, or less than 2 letters after dot
-	
-	if (str.charAt(0)=='A')
+
+	if (str.charAt(0)=='A') /* V1.50 */
+	{			
+		var v1 = decode_chars[str.charCodeAt(lastpos  )]; if (v1<0) v1 = 31;
+		var v2 = decode_chars[str.charCodeAt(lastpos-1)]; if (v2<0) v2 = 31;
+		var s = String(1000+v1+32*v2);
+		str = s.charAt(1) + str.substring(1,lastpos-1) + s.charAt(2) + s.charAt(3);
+		voweled=1;
+	}
+	else if (str.charAt(0)=='U') /* V1.50 */
 	{
 		voweled=1;
 		str=str.substring(1);

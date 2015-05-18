@@ -2,7 +2,7 @@ var isofullname = [
 
 		'Vatican City (Holy See)','Monaco','Gibraltar','Tokelau',
 		'Cocos Islands (Keeling Islands)','Saint-Barthelemy','Nauru','Tuvalu',
-		'Macau','Sint Maarten','Saint-Martin','Norfolk and Philip Island (Philip Island)',
+		'Macau (Aomen)','Sint Maarten','Saint-Martin','Norfolk and Philip Island (Philip Island)',
 		'Pitcairn Islands','Bouvet Island','Bermuda','British Indian Ocean Territory',
 		'San Marino','Guernsey','Anguilla','Montserrat',
 		'Jersey','Christmas Island','Wallis and Futuna (Futuna)','British Virgin Islands (Virgin Islands, British)',
@@ -10,12 +10,12 @@ var isofullname = [
 		'Cook islands','Saint Pierre and Miquelon (Miquelon)','Niue','Saint Kitts and Nevis (Nevis)',
 		'Cayman islands','Bonaire, St Eustasuis and Saba (Saba) (St Eustasius)','Maldives','Saint Helena, Ascension and Tristan da Cunha (Ascension) (Tristan da Cunha)',
 		'Malta','Grenada','US Virgin Islands (Virgin Islands, US)','Mayotte',
-		'Svalbard and Jan Mayen (Jan Mayen)','Saint Vincent and the Grenadines (Grenadines)','Heard Island and McDonald Islands (McDonald Islands)','Barbados',
+		'Svalbard and Jan Mayen (Jan Mayen) (Spitsbergen)','Saint Vincent and the Grenadines (Grenadines)','Heard Island and McDonald Islands (McDonald Islands)','Barbados',
 		'Antigua and Barbuda (Barbuda)','Curacao','Seychelles','Palau',
 		'Northern Mariana Islands','Andorra','Guam','Isle of Man',
 		'Saint Lucia','Micronesia (Federated States of Micronesia)','Singapore','Tonga',
 		'Dominica','Bahrain','Kiribati','Turks and Caicos Islands (Caicos Islands)',
-		'Sao Tome and Principe (Principe)','Hong Kong','Martinique','Faroe Islands',
+		'Sao Tome and Principe (Principe)','Hong Kong (Xianggang)','Martinique','Faroe Islands',
 		'Guadeloupe','Comoros','Mauritius','Reunion',
 		'Luxembourg','Samoa','South Georgia and the South Sandwich Islands (South Sandwich Islands)','French Polynesia',
 		'Cape Verde','Trinidad and Tobago (Tobago)','Brunei','French Southern and Antarctic Lands',
@@ -100,7 +100,7 @@ var isofullname = [
 		'Arizona','New Mexico','Montana','California',
 		'Texas','Alaska','British Columbia','Alberta',
 		'Ontario','Quebec','Saskatchewan','Manitoba',
-		'Newfoundland','New Brunswick','Nova Scotia','Prince Edward Island',
+		'Newfoundland and Labrador (Labrador)','New Brunswick','Nova Scotia','Prince Edward Island',
 		'Yukon','Northwest Territories','Nunavut','India',
 		'Australia','Brazil','USA (United States of America) (America)','Mexico',
 		'Moscow','Saint Petersburg','Kaliningrad Oblast','Ingushetia Republic',
@@ -132,8 +132,6 @@ var isofullname = [
 		'Hebei','Shaanxi','Nei Mongol (Inner Mongolia)','Heilongjiang',
 		'Hunan','Guangxi Zhuang','Sichuan','Yunnan',
 		'Xizang (Tibet)','Gansu','Qinghai','Xinjiang Uyghur',
-		'China','United States Minor Outlying Islands','Clipperton Island','Macquarie Island',
-		'Ross Dependency','Adelie Land','Australian Antarctic Territory','Queen Maud Land',
-		'British Antarctic Territory','Chile Antartica','Argentine Antarctica','Peter 1 Island',
-		'Antarctica','International (Worldwide) (Earth)','?'	];
+		'China','United States Minor Outlying Islands','Clipperton Island','Antarctica',
+		'International (Worldwide) (Earth)','?'	];
 

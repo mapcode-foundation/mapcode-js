@@ -33,6 +33,12 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 ## Version History
 
+* May 2015
+
+	* 1.50 - Added 22-chararcter post-processing of all-digit mapcodes for the Greek alphabet.
+	         Retired legacy aliases EAZ and SKM, AU-QL, AU-TS, AU-NI and AU-JB.
+	         Retired legacy Antarctica claims AT0 through AT8.
+
 * January 2015
 
 	* 1.41 - Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
