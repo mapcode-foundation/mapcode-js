@@ -35,7 +35,8 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 * May 2015
 
-	* 1.50 - Added 22-chararcter post-processing of all-digit mapcodes for the Greek alphabet.
+	* 1.50 - Major release. This version is not compatible with mapcode 1.4x!
+             Added 22-chararcter post-processing of all-digit mapcodes for the Greek alphabet.
 	         Retired legacy aliases EAZ and SKM, AU-QL, AU-TS, AU-NI and AU-JB.
 	         Retired legacy Antarctica claims AT0 through AT8.
 
