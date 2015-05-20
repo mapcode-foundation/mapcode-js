@@ -72,7 +72,9 @@
         function submitll() {
             var result = '';
             var isocode = document.getElementById("isocodell").value;
-            var tc = iso2ccode(isocode);
+            var tc = 0;
+            if (isocode)
+                tc = iso2ccode(isocode);
             if (tc < 0) {
                 result = 'Failed to decode territory code "' + isocode + '"';
             }
@@ -87,7 +89,7 @@
                         var results = master_encode(y, x, ct);
                         // show result
                         if (run == 1 || results.length) {
-                            result += '<p><B>' + results.length + ' results in "' + fullname(ct) + '" for (' + y + ',' + x + '):</b><p>';
+                            result += '<p><B>' + results.length + ' results in "' + fullname(ct) + '" for (' + y + ", " + x + '):</b><p>';
                             for (var i = 0; i < results.length; i++) {
                                 if (results[i][1] != ccode_earth)
                                     result += '<small>' + ccode2iso(results[i][1], 2) + '</small> ';
