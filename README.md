@@ -26,49 +26,49 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 ## Javascript Files for Mapcode Support
 
     mapcode.js  - Key routines for mapcode support
-    ndata.js	- Data table for mapcode support
+    ndata.js    - Data table for mapcode support
 
-    sample.html	- Sample code to interpret / generate mapcodes
-    ctrynams.js	- Optional js array with the names of territories (in English)
+    sample.html - Sample code to interpret / generate mapcodes
+    ctrynams.js - Optional js array with the names of territories (in English)
 
 ## Version History
 
 * May 2015
 
-	* 1.50 - Major release. This version is not backwards compatible with mapcode 1.4x: is has dropped support for
+    * 1.50 - Major release. This version is not backwards compatible with mapcode 1.4x: is has dropped support for
              Antartica AT0-8 codes and has a changed (improved) way of dealing with the Greek alphabet.
 
              Added 22-chararcter post-processing of all-digit mapcodes for the Greek alphabet.
 
-	         Retired legacy aliases EAZ and SKM, AU-QL, AU-TS, AU-NI and AU-JB.
+             Retired legacy aliases EAZ and SKM, AU-QL, AU-TS, AU-NI and AU-JB.
 
-	         Retired legacy Antarctica claims AT0 through AT8.
+             Retired legacy Antarctica claims AT0 through AT8.
 
 * January 2015
 
-	* 1.41 - Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
+    * 1.41 - Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
 
 * August 2014
 
-	* 1.33 - Normalise results when longitude below -180 degrees.
+    * 1.33 - Normalise results when longitude below -180 degrees.
 
-	* 1.32 - Prevent FIJI failing to decode at exactly 180 degrees; prevent invalid filtering near the territory bounding rectangle.
+    * 1.32 - Prevent FIJI failing to decode at exactly 180 degrees; prevent invalid filtering near the territory bounding rectangle.
 
 * April 2014
 
-	* 1.31 - Make iso2ccode() even more forgiving by allowing a state alias to be recognized in context.
+    * 1.31 - Make iso2ccode() even more forgiving by allowing a state alias to be recognized in context.
 
-	* 1.3 - Disable 7-char state codes for large states in India, and instead generate country mapcodes for states.
+    * 1.3 - Disable 7-char state codes for large states in India, and instead generate country mapcodes for states.
 
-	* 1.28 - Fix for starpipe "zoning" error, causing the last 2 mapcode characters to be ignored in certain areas.
+    * 1.28 - Fix for starpipe "zoning" error, causing the last 2 mapcode characters to be ignored in certain areas.
 
-	* 1.27 - Support undefined ranges in data array (useful for partial JavaScript builds).
+    * 1.27 - Support undefined ranges in data array (useful for partial JavaScript builds).
 
 * May 2013
 
-	* 1.26 - Added alias OD for India, and 2.3 code for Daman and Diu.
+    * 1.26 - Added alias OD for India, and 2.3 code for Daman and Diu.
 
-	* 1.25 - Ccode2iso(c,2) support added.
+    * 1.25 - Ccode2iso(c,2) support added.
 
-	* 1.24 - Public domain release.
+    * 1.24 - Public domain release.
 
