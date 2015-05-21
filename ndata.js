@@ -8191,3 +8191,10 @@ var data_special1 = [
 390,3,1,390,1,256,196,167,148,134,126,119,114,110,107,105,103,102,102,102,
 102,102,103,105,107,110,114,119,126,134,148,167,196,256,1,0,-1];
 
+exports.data_start = data_start;
+exports.data_flags = data_flags;
+exports.data_minx = data_minx;
+exports.data_miny = data_miny;
+exports.data_maxx = data_maxx;
+exports.data_maxy = data_maxy;
+exports.data_special1 = data_special1;

@@ -137,3 +137,4 @@ var isofullname = [
 		'British Antarctic Territory','Chile Antartica','Argentine Antarctica','Peter 1 Island',
 		'Antarctica','International (Worldwide) (Earth)','?'	];
 
+module.exports = isofullname;
