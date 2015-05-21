@@ -91,3 +91,4 @@ atlassian-ide-plugin.xml
 # -----------------------------------------------------------------------------
 nb-configuration.xml
 *.orig
+node_modules
