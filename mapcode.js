@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-var mapcode_cversion = "1.50";
+var mapcode_cversion = "1.50.1";
 var MAX_CCODE = 533;
 
 var entity_iso = [
