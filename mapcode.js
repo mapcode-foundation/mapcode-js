@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 var mapcode_cversion = "1.50";
 var MAX_CCODE = 533;
 
@@ -97,35 +96,35 @@ var dependency = [
     27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
     -1];
 
-var usa_from = 343
-var usa_upto = 393
-var ccode_usa = 410
-var ind_from = 271
-var ind_upto = 306
-var ccode_ind = 407
-var can_from = 394
-var can_upto = 406
-var ccode_can = 495
-var aus_from = 307
-var aus_upto = 315
-var ccode_aus = 408
-var mex_from = 233
-var mex_upto = 264
-var ccode_mex = 411
-var bra_from = 316
-var bra_upto = 342
-var ccode_bra = 409
-var chn_from = 497
-var chn_upto = 527
-var ccode_chn = 528
-var rus_from = 412
-var rus_upto = 494
-var ccode_rus = 496
-var ccode_ata = 531
-var ccode_earth = 532
+var usa_from = 343;
+var usa_upto = 393;
+var ccode_usa = 410;
+var ind_from = 271;
+var ind_upto = 306;
+var ccode_ind = 407;
+var can_from = 394;
+var can_upto = 406;
+var ccode_can = 495;
+var aus_from = 307;
+var aus_upto = 315;
+var ccode_aus = 408;
+var mex_from = 233;
+var mex_upto = 264;
+var ccode_mex = 411;
+var bra_from = 316;
+var bra_upto = 342;
+var ccode_bra = 409;
+var chn_from = 497;
+var chn_upto = 527;
+var ccode_chn = 528;
+var rus_from = 412;
+var rus_upto = 494;
+var ccode_rus = 496;
+var ccode_ata = 531;
+var ccode_earth = 532;
 
-var parents3 = "USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,"
-var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,"
+var parents3 = "USA,IND,CAN,AUS,MEX,BRA,RUS,CHN,";
+var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 
 var ccode_start = 112; // NLD
@@ -382,9 +381,9 @@ var xdivider19 = [
     3380, 3696, 4077, 4547, 5139, 5910, 6952, 8443, 10747, 14784,    // 89.1290 degrees
     23681, 59485];
 
-var nc = [1, 31, 961, 29791, 923521, 28629151, 887503681]
-var xside = [0, 5, 31, 168, 961, 168 * 31, 29791, 165869, 923521, 5141947, 28629151]
-var yside = [0, 6, 31, 176, 961, 176 * 31, 29791, 165869, 923521, 5141947, 28629151]
+var nc = [1, 31, 961, 29791, 923521, 28629151, 887503681];
+var xside = [0, 5, 31, 168, 961, 168 * 31, 29791, 165869, 923521, 5141947, 28629151];
+var yside = [0, 6, 31, 176, 961, 176 * 31, 29791, 165869, 923521, 5141947, 28629151];
 
 var decode_chars = [
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -402,13 +401,13 @@ var decode_chars = [
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
 var encode_chars = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
     'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z',
-    'A', 'E', 'U']
+    'A', 'E', 'U'];
 /* 1.50 */
 
 function x_divider(miny, maxy) {
@@ -760,7 +759,7 @@ var asc2lan = [
     [1366, 1330, 1331, 1332, 1333, 1336, 1337, 1338, 1339, 1341, 1343, 1344, 1345, 1347, 1365, 1351, 1352, 1354, 1357, 1358, 1349, 1359, 1360, 1361, 1362, 1363, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Armenian
     [2437, 2444, 2453, 2454, 2447, 2455, 2457, 2458, 63, 2461, 2464, 2465, 2466, 2467, 63, 2468, 2469, 2470, 2472, 2474, 2451, 2476, 2477, 2479, 2482, 2489, 2534, 2535, 2536, 2537, 2538, 2539, 2540, 2541, 2542, 2543], // Bengali
     [2565, 2581, 2583, 2584, 2575, 2586, 2588, 2591, 63, 2592, 2595, 2596, 2598, 2599, 63, 2600, 2602, 2605, 2606, 2608, 2603, 2610, 2613, 2616, 2617, 2593, 2662, 2663, 2664, 2665, 2666, 2667, 2668, 2669, 2670, 2671], // Gurmukhi
-    [3928, 3904, 3905, 3906, 3940, 3908, 3909, 3910, 63, 3911, 3914, 3916, 3918, 3919, 63, 3921, 3923, 3924, 3926, 3934, 3941, 3935, 3937, 3938, 3939, 3942, 3872, 3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881], // Tibetan
+    [3928, 3904, 3905, 3906, 3940, 3908, 3909, 3910, 63, 3911, 3914, 3916, 3918, 3919, 63, 3921, 3923, 3924, 3926, 3934, 3941, 3935, 3937, 3938, 3939, 3942, 3872, 3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881] // Tibetan
 ];
 
 // *UI*
@@ -836,7 +835,7 @@ function showinlan(str, lan, asHTML) {
 
 function to_ascii(str) {
     var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    var result = ''
+    var result = '';
     var len = str.length;
     var i;
     var trans = 0;
@@ -1114,7 +1113,7 @@ function decode_nameless(result, firstrec) // returns millionths
 
 /// returns result, or empty if error
 var first_encode_record = -1; // GLOBAL
-var results = new Array; // GLOBAL
+var results = []; // GLOBAL
 
 function encode_starpipe(y, x, thiscodexlen, thisindex, ccode) {
     var starpipe_result;
@@ -1278,7 +1277,7 @@ function aeu_pack(r, short) /* v1.50 */ {
     return r + rest;
 }
 
-var forcecoder_encode = -1; // GLOBAL
+var stop_at_encode = -1; // GLOBAL
 function master_encode(orgy, orgx, ccode, isrecursive, stop_with_one_result, allowworld, state_override) {
     if (!isrecursive) {
         results.length = 0;
@@ -1308,12 +1307,6 @@ function master_encode(orgy, orgx, ccode, isrecursive, stop_with_one_result, all
                 return '';
             from = upto + 1; // empty the range
         }
-    }
-
-    if (forcecoder_encode > 0) {
-        from = upto = forcecoder_encode;
-        forcecoder_encode = -1;
-        stop_with_one_result = true;
     }
 
     var i;
@@ -1358,6 +1351,12 @@ function master_encode(orgy, orgx, ccode, isrecursive, stop_with_one_result, all
                         if (state_override >= 0)
                             storecode = state_override;
 
+                    if (stop_at_encode >= 0 && stop_at_encode == i) {
+                        results.length = 0;
+                        results[0] = [r, storecode];
+                        return results;
+                    }
+
                     results[results.length] = [r, storecode];
 
                     if (stop_with_one_result)
@@ -1372,7 +1371,10 @@ function master_encode(orgy, orgx, ccode, isrecursive, stop_with_one_result, all
     if (allowworld)
         if (!isrecursive)
             if (ccode != ccode_earth)
-                master_encode(orgy, orgx, ccode_earth, true, stop_with_one_result, false, -1);
+                return master_encode(orgy, orgx, ccode_earth, true, stop_with_one_result, false, -1);
+
+    if (stop_at_encode >= 0)
+        results.length = 0;
 
     return results;
 }
