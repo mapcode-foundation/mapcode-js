@@ -46,6 +46,10 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 * May 2015
 
+    * 1.50.1
+    
+    Bugfix for mapcodes in IN-DD (in India).
+
     * 1.50 
     
     Major release. This version is not backwards compatible with mapcode 1.4x: is has dropped support for
