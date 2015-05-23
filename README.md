@@ -1,6 +1,6 @@
 # Mapcode Library for JavaScript
 
-Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
+Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
 
 ----
 
