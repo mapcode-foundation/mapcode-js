@@ -1,0 +1,10 @@
+var ndata = require('./ndata');
+data_start = ndata.data_start;
+data_flags = ndata.data_flags;
+data_minx = ndata.data_minx;
+data_miny = ndata.data_miny;
+data_maxx= ndata.data_maxx;
+data_maxy = ndata.data_maxy;
+data_special1 = ndata.data_special1;
+isofullname = require('./ctrynams');
+mapcode = require('./mapcode.js');

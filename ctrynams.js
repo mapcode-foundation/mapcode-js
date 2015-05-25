@@ -151,3 +151,4 @@ var isofullname = [
     'China', 'United States Minor Outlying Islands', 'Clipperton Island', 'Antarctica',
     'International (Worldwide) (Earth)', '?'];
 
+module.exports = isofullname;
