@@ -1,6 +1,6 @@
 # Mapcode Library for JavaScript
 
-Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
+Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
 
 ----
 
@@ -44,7 +44,17 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 ## Version History
 
+* June 2015
+
+    * 1.54
+
+    Removed unneeded mminfo flags (no effect on functionality).
+
 * May 2015
+
+    * 1.50.3
+    
+    Redesign of the API to conform to Javascript standards and match the Java implementation of the mapcode system.
 
     * 1.50.1
     
