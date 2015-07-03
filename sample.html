@@ -30,21 +30,19 @@
 
     <script type="text/javascript">
         function submitmc() {
-            var alphacode = document.getElementById("alphacode").value;
-            var tc = getTerritoryNumber(alphacode);
-            var mc = document.getElementById("mapcode").value.toUpperCase();
+            var alphacode = document.getElementById("alphacode").value;         
+            var mapcode = document.getElementById("mapcode").value.toUpperCase();
 
             // decode mapcode
-            var coords = decode(mc, tc);
+            var coords = decode(mapcode, alphacode);
 
             // show html
-            var html = 'Mapcode "' + mc + '"';
+            var html = 'Mapcode "' + mapcode + '"';
             
-			if (alphacode.length)
-				if (tc>=0)
-					html+=' (in the context of "' + getTerritoryFullname(tc) + '")';
-				else
-					html+=' (in unknown context "'+alphacode+'")';
+			if (alphacode.length>0)
+				html+=' (in the context of "' + getTerritoryFullname(alphacode) + '")';
+			else
+				html+=' (in unknown context "'+alphacode+'")';
 
             if (coords.x==undefined)
                 html += ' can not de decoded';
@@ -75,22 +73,20 @@
         function submitll() {
             var html = '';
             var alphacode = document.getElementById("alphacodell").value;
-            var tc = getTerritoryNumber(alphacode);
             var y = document.getElementById("llat").value;
             var x = document.getElementById("llon").value;
 
 			var results;
 
-            if (alphacode.length>0) {
-				if (tc<0) {
+			if (alphacode.length>0) {
+				if (!getTerritoryFullname(alphacode))
 					html = '"' + alphacode + '" is not a valid territory alphacode';
-				}
 				else {
-					results = encodeShortest(y, x, tc);
+					results = encodeShortest(y, x, alphacode);
 					if (results.length>0)
-						html += '<P>Coordinate has mapcode <B>' + results[0].fullmapcode + '</B> in territory "'+getTerritoryFullname(tc)+'"<BR>';
+						html += '<P>Coordinate has mapcode <B>' + results[0].fullmapcode + '</B> in territory "'+getTerritoryFullname(alphacode)+'"<BR>';
 					else
-						html += '<P>Coordinate has no mapcode in territory "'+getTerritoryFullname(tc)+'"<BR>';					
+						html += '<P>Coordinate has no mapcode in territory "'+getTerritoryFullname(alphacode)+'"<BR>';					
 				}
 			}
 

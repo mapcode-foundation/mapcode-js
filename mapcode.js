@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,82 +16,82 @@
 
 
 var entity_iso = [
-    'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
-    'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
-    'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM',
-    'NIU', 'KNA', 'CYM', 'BES', 'MDV', 'SHN', 'MLT', 'GRD', 'VIR', 'MYT',
-    'SJM', 'VCT', 'HMD', 'BRB', 'ATG', 'CUW', 'SYC', 'PLW', 'MNP', 'AND',
-    'GUM', 'IMN', 'LCA', 'FSM', 'SGP', 'TON', 'DMA', 'BHR', 'KIR', 'TCA',
-    'STP', 'HKG', 'MTQ', 'FRO', 'GLP', 'COM', 'MUS', 'REU', 'LUX', 'WSM',
-    'SGS', 'PYF', 'CPV', 'TTO', 'BRN', 'ATF', 'PRI', 'CYP', 'LBN', 'JAM',
-    'GMB', 'QAT', 'FLK', 'VUT', 'MNE', 'BHS', 'TLS', 'SWZ', 'KWT', 'FJI',
-    'NCL', 'SVN', 'ISR', 'PSE', 'SLV', 'BLZ', 'DJI', 'MKD', 'RWA', 'HTI',
-    'BDI', 'GNQ', 'ALB', 'SLB', 'ARM', 'LSO', 'BEL', 'MDA', 'GNB', 'TWN',
-    'BTN', 'CHE', 'NLD', 'DNK', 'EST', 'DOM', 'SVK', 'CRI', 'BIH', 'HRV',
-    'TGO', 'LVA', 'LTU', 'LKA', 'GEO', 'IRL', 'SLE', 'PAN', 'CZE', 'GUF',
-    'ARE', 'AUT', 'AZE', 'SRB', 'JOR', 'PRT', 'HUN', 'KOR', 'ISL', 'GTM',
-    'CUB', 'BGR', 'LBR', 'HND', 'BEN', 'ERI', 'MWI', 'PRK', 'NIC', 'GRC',
-    'TJK', 'BGD', 'NPL', 'TUN', 'SUR', 'URY', 'KHM', 'SYR', 'SEN', 'KGZ',
-    'BLR', 'GUY', 'LAO', 'ROU', 'GHA', 'UGA', 'GBR', 'GIN', 'ECU', 'ESH',
-    'GAB', 'NZL', 'BFA', 'PHL', 'ITA', 'OMN', 'POL', 'CIV', 'NOR', 'MYS',
-    'VNM', 'FIN', 'COG', 'DEU', 'JPN', 'ZWE', 'PRY', 'IRQ', 'MAR', 'UZB',
-    'SWE', 'PNG', 'CMR', 'TKM', 'ESP', 'THA', 'YEM', 'FRA', 'ALA', 'KEN',
-    'BWA', 'MDG', 'UKR', 'SSD', 'CAF', 'SOM', 'AFG', 'MMR', 'ZMB', 'CHL',
-    'TUR', 'PAK', 'MOZ', 'NAM', 'VEN', 'NGA', 'TZA', 'EGY', 'MRT', 'BOL',
-    'ETH', 'COL', 'ZAF', 'MLI', 'AGO', 'NER', 'TCD', 'PER', 'MNG', 'IRN',
-    'LBY', 'SDN', 'IDN', 'DIF', 'TLA', 'MOR', 'AGU', '5CL', 'QUE', 'HID',
-    '5MX', 'TAB', 'NAY', 'GUA', 'PUE', 'YUC', 'ROO', 'SIN', 'CAM', 'MIC',
-    'SLP', 'GRO', 'NLE', 'BCN', 'VER', 'CHP', 'BCS', 'ZAC', 'JAL', 'TAM',
-    'OAX', 'DUR', 'COA', 'SON', 'CHH', 'GRL', 'SAU', 'COD', 'DZA', 'KAZ',
-    'ARG', '2DD', '2DN', '2CH', '2AN', '2LD', '2DL', '2ML', '2NL', '2MN',
-    '2TR', '2MZ', '2SK', '2PB', '2HR', '2AR', '2AS', '2BR', '2UT', '2GA',
-    '2KL', '2TN', '2HP', '2JK', '2CT', '2JH', '2KA', '2RJ', '2OR', '2GJ',
-    '2WB', '2MP', '2TG', '2AP', '2MH', '2UP', '2PY', 'NSW', 'ACT', 'JBT',
-    '4NT', '4SA', 'TAS', 'VIC', '4WA', 'QLD', '6DF', '6SE', '6AL', '6RJ',
-    '6ES', '6RN', '6PB', '6SC', '6PE', '6AP', '6CE', '6AC', '6PR', '6RR',
-    '6RO', '6SP', '6PI', '6TO', '6RS', '6MA', '6GO', '6MS', '6BA', '6MG',
-    '6MT', '6PA', '6AM', '1DC', '1RI', '1DE', '1CT', '1NJ', '1NH', '1VT',
-    '1MA', '1HI', '1MD', '1WV', '1SC', '1ME', '1IN', '1KY', '1TN', '1VA',
-    '1OH', '1PA', '1MS', '1LA', '1AL', '1AR', '1NC', '1NY', '1IA', '1IL',
-    '1GA', '1WI', '1FL', '1MO', '1OK', '1ND', '1WA', '1SD', '1NE', '1KS',
-    '1ID', '1UT', '1MN', '1MI', '1WY', '1OR', '1CO', '1NV', '1AZ', '1NM',
-    '1MT', '1CA', '1TX', '1AK', '3BC', '3AB', '3ON', '3QC', '3SK', '3MB',
-    '3NL', '3NB', '3NS', '3PE', '3YT', '3NT', '3NU', 'IND', 'AUS', 'BRA',
-    'USA', 'MEX', 'MOW', 'SPE', 'KGD', '7IN', '7AD', '7SE', '7KB', '7KC',
-    '7CE', '7CU', 'IVA', 'LIP', 'ORL', 'TUL', '7BE', 'VLA', 'KRS', 'KLU',
-    '7TT', 'BRY', 'YAR', 'RYA', 'AST', 'MOS', 'SMO', '7DA', 'VOR', 'NGR',
-    'PSK', 'KOS', 'STA', 'KDA', '7KL', 'TVE', 'LEN', 'ROS', 'VGG', 'VLG',
-    'MUR', '7KR', 'NEN', '7KO', 'ARK', '7MO', 'NIZ', 'PNZ', '7KI', '7ME',
-    'ORE', 'ULY', '7PM', '7BA', '7UD', '7TA', 'SAM', 'SAR', 'YAN', '7KM',
-    'SVE', 'TYU', 'KGN', '7CH', '7BU', 'ZAB', 'IRK', 'NVS', 'TOM', 'OMS',
-    '7KK', 'KEM', '7AL', 'ALT', '7TY', 'KYA', 'MAG', 'CHU', 'KAM', 'SAK',
-    '7PO', 'YEV', 'KHA', 'AMU', '7SA', 'CAN', 'RUS', '8SH', '8TJ', '8BJ',
-    '8HI', '8NX', '8CQ', '8ZJ', '8JS', '8FJ', '8AH', '8LN', '8SD', '8SX',
-    '8JX', '8HA', '8GZ', '8GD', '8HB', '8JL', '8HE', '8SN', '8NM', '8HL',
-    '8HN', '8GX', '8SC', '8YN', '8XZ', '8GS', '8QH', '8XJ', 'CHN', 'UMI',
+    'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM', 
+    'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR', 
+    'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM', 
+    'NIU', 'KNA', 'CYM', 'BES', 'MDV', 'SHN', 'MLT', 'GRD', 'VIR', 'MYT', 
+    'SJM', 'VCT', 'HMD', 'BRB', 'ATG', 'CUW', 'SYC', 'PLW', 'MNP', 'AND', 
+    'GUM', 'IMN', 'LCA', 'FSM', 'SGP', 'TON', 'DMA', 'BHR', 'KIR', 'TCA', 
+    'STP', 'HKG', 'MTQ', 'FRO', 'GLP', 'COM', 'MUS', 'REU', 'LUX', 'WSM', 
+    'SGS', 'PYF', 'CPV', 'TTO', 'BRN', 'ATF', 'PRI', 'CYP', 'LBN', 'JAM', 
+    'GMB', 'QAT', 'FLK', 'VUT', 'MNE', 'BHS', 'TLS', 'SWZ', 'KWT', 'FJI', 
+    'NCL', 'SVN', 'ISR', 'PSE', 'SLV', 'BLZ', 'DJI', 'MKD', 'RWA', 'HTI', 
+    'BDI', 'GNQ', 'ALB', 'SLB', 'ARM', 'LSO', 'BEL', 'MDA', 'GNB', 'TWN', 
+    'BTN', 'CHE', 'NLD', 'DNK', 'EST', 'DOM', 'SVK', 'CRI', 'BIH', 'HRV', 
+    'TGO', 'LVA', 'LTU', 'LKA', 'GEO', 'IRL', 'SLE', 'PAN', 'CZE', 'GUF', 
+    'ARE', 'AUT', 'AZE', 'SRB', 'JOR', 'PRT', 'HUN', 'KOR', 'ISL', 'GTM', 
+    'CUB', 'BGR', 'LBR', 'HND', 'BEN', 'ERI', 'MWI', 'PRK', 'NIC', 'GRC', 
+    'TJK', 'BGD', 'NPL', 'TUN', 'SUR', 'URY', 'KHM', 'SYR', 'SEN', 'KGZ', 
+    'BLR', 'GUY', 'LAO', 'ROU', 'GHA', 'UGA', 'GBR', 'GIN', 'ECU', 'ESH', 
+    'GAB', 'NZL', 'BFA', 'PHL', 'ITA', 'OMN', 'POL', 'CIV', 'NOR', 'MYS', 
+    'VNM', 'FIN', 'COG', 'DEU', 'JPN', 'ZWE', 'PRY', 'IRQ', 'MAR', 'UZB', 
+    'SWE', 'PNG', 'CMR', 'TKM', 'ESP', 'THA', 'YEM', 'FRA', 'ALA', 'KEN', 
+    'BWA', 'MDG', 'UKR', 'SSD', 'CAF', 'SOM', 'AFG', 'MMR', 'ZMB', 'CHL', 
+    'TUR', 'PAK', 'MOZ', 'NAM', 'VEN', 'NGA', 'TZA', 'EGY', 'MRT', 'BOL', 
+    'ETH', 'COL', 'ZAF', 'MLI', 'AGO', 'NER', 'TCD', 'PER', 'MNG', 'IRN', 
+    'LBY', 'SDN', 'IDN', 'DIF', 'TLA', 'MOR', 'AGU', '5CL', 'QUE', 'HID', 
+    '5MX', 'TAB', 'NAY', 'GUA', 'PUE', 'YUC', 'ROO', 'SIN', 'CAM', 'MIC', 
+    'SLP', 'GRO', 'NLE', 'BCN', 'VER', 'CHP', 'BCS', 'ZAC', 'JAL', 'TAM', 
+    'OAX', 'DUR', 'COA', 'SON', 'CHH', 'GRL', 'SAU', 'COD', 'DZA', 'KAZ', 
+    'ARG', '2DD', '2DN', '2CH', '2AN', '2LD', '2DL', '2ML', '2NL', '2MN', 
+    '2TR', '2MZ', '2SK', '2PB', '2HR', '2AR', '2AS', '2BR', '2UT', '2GA', 
+    '2KL', '2TN', '2HP', '2JK', '2CT', '2JH', '2KA', '2RJ', '2OR', '2GJ', 
+    '2WB', '2MP', '2TG', '2AP', '2MH', '2UP', '2PY', 'NSW', 'ACT', 'JBT', 
+    '4NT', '4SA', 'TAS', 'VIC', '4WA', 'QLD', '6DF', '6SE', '6AL', '6RJ', 
+    '6ES', '6RN', '6PB', '6SC', '6PE', '6AP', '6CE', '6AC', '6PR', '6RR', 
+    '6RO', '6SP', '6PI', '6TO', '6RS', '6MA', '6GO', '6MS', '6BA', '6MG', 
+    '6MT', '6PA', '6AM', '1DC', '1RI', '1DE', '1CT', '1NJ', '1NH', '1VT', 
+    '1MA', '1HI', '1MD', '1WV', '1SC', '1ME', '1IN', '1KY', '1TN', '1VA', 
+    '1OH', '1PA', '1MS', '1LA', '1AL', '1AR', '1NC', '1NY', '1IA', '1IL', 
+    '1GA', '1WI', '1FL', '1MO', '1OK', '1ND', '1WA', '1SD', '1NE', '1KS', 
+    '1ID', '1UT', '1MN', '1MI', '1WY', '1OR', '1CO', '1NV', '1AZ', '1NM', 
+    '1MT', '1CA', '1TX', '1AK', '3BC', '3AB', '3ON', '3QC', '3SK', '3MB', 
+    '3NL', '3NB', '3NS', '3PE', '3YT', '3NT', '3NU', 'IND', 'AUS', 'BRA', 
+    'USA', 'MEX', 'MOW', 'SPE', 'KGD', '7IN', '7AD', '7SE', '7KB', '7KC', 
+    '7CE', '7CU', 'IVA', 'LIP', 'ORL', 'TUL', '7BE', 'VLA', 'KRS', 'KLU', 
+    '7TT', 'BRY', 'YAR', 'RYA', 'AST', 'MOS', 'SMO', '7DA', 'VOR', 'NGR', 
+    'PSK', 'KOS', 'STA', 'KDA', '7KL', 'TVE', 'LEN', 'ROS', 'VGG', 'VLG', 
+    'MUR', '7KR', 'NEN', '7KO', 'ARK', '7MO', 'NIZ', 'PNZ', '7KI', '7ME', 
+    'ORE', 'ULY', '7PM', '7BA', '7UD', '7TA', 'SAM', 'SAR', 'YAN', '7KM', 
+    'SVE', 'TYU', 'KGN', '7CH', '7BU', 'ZAB', 'IRK', 'NVS', 'TOM', 'OMS', 
+    '7KK', 'KEM', '7AL', 'ALT', '7TY', 'KYA', 'MAG', 'CHU', 'KAM', 'SAK', 
+    '7PO', 'YEV', 'KHA', 'AMU', '7SA', 'CAN', 'RUS', '8SH', '8TJ', '8BJ', 
+    '8HI', '8NX', '8CQ', '8ZJ', '8JS', '8FJ', '8AH', '8LN', '8SD', '8SX', 
+    '8JX', '8HA', '8GZ', '8GD', '8HB', '8JL', '8HE', '8SN', '8NM', '8HL', 
+    '8HN', '8GX', '8SC', '8YN', '8XZ', '8GS', '8QH', '8XJ', 'CHN', 'UMI', 
     'CPT', 'ATA', 'AAA', '?'];
 
 
 var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1PR=PRI,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,COL=5CL,5ME=5MX,MEX=5MX,5TM=TAM,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,2OD=2OR,";
 
 var dependency = [
-	27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
-    21, 408, 4, 408, 42, 408, 11, 408,
-    61, 528, 8, 528, 109, 528,
-    63, 113, 265, 113,
-    198, 181,
-    530, 197, 129, 197, 71, 197, 75, 197, 64, 197, 62, 197, 90, 197, 67, 197, 29, 197, 5, 197, 10, 197, 22, 197,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    25, 112, 33, 112, 45, 112, 9, 112,
-    28, 171, 30, 171, 3, 171,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    13, 178, 40, 178,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    77, 210,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
-    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
+	27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410, 
+    21, 408, 4, 408, 42, 408, 11, 408, 
+    61, 528, 8, 528, 109, 528, 
+    63, 113, 265, 113, 
+    198, 181, 
+    530, 197, 129, 197, 71, 197, 75, 197, 64, 197, 62, 197, 90, 197, 67, 197, 29, 197, 5, 197, 10, 197, 22, 197, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    25, 112, 33, 112, 45, 112, 9, 112, 
+    28, 171, 30, 171, 3, 171, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    13, 178, 40, 178, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    77, 210, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410, 
+    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410, 
     -1];
 
 var usa_from = 343;
@@ -131,7 +131,6 @@ var mapcode_cversion = "2.0.0";
 // *************************** mapcode_org *********************
 
 var mapcode_javaversion = '2.0.0/C' + mapcode_cversion;
-
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -177,6 +176,10 @@ function alias2iso(territoryAlphaCode) {
 
 /// PRIVATE given ISO code, return territoryNumber (or negative if error)
 function iso2ccode(territoryAlphaCode) {
+    if (territoryAlphaCode=="" || typeof territoryAlphaCode=="undefined")
+      return undefined;
+    if (!isNaN(territoryAlphaCode)) 
+      return territoryAlphaCode;
     territoryAlphaCode = trim(String(territoryAlphaCode)).toUpperCase();
 
     var sep = territoryAlphaCode.lastIndexOf('-');
@@ -244,7 +247,8 @@ function getTerritoryNumber( territoryAlphaCode, contextTerritoryNumber ) {
 }
 
 /// PUBLIC return full name of territory
-function getTerritoryFullname(territoryNumber) {
+function getTerritoryFullname(territory) {
+    var territoryNumber = getTerritoryNumber(territory);
     if (territoryNumber==undefined || territoryNumber<0 || territoryNumber>ccode_earth)
         return undefined;
     var idx = isofullname[territoryNumber].indexOf(' (');
@@ -254,7 +258,8 @@ function getTerritoryFullname(territoryNumber) {
 }
 
 /// PUBLIC return parent country of territoryNumber (negative if territoryNumber is not a state)
-function getParentOf(territoryNumber) {
+function getParentOf(territory) {
+    var territoryNumber = getTerritoryNumber(territory);
     if (territoryNumber >= usa_from && territoryNumber <= usa_upto) return ccode_usa;
     if (territoryNumber >= ind_from && territoryNumber <= ind_upto) return ccode_ind;
     if (territoryNumber >= can_from && territoryNumber <= can_upto) return ccode_can;
@@ -267,12 +272,13 @@ function getParentOf(territoryNumber) {
 }
 
 /// PUBLIC returns true iff territoryNumber is a state
-function isSubdivision(territoryNumber) {
-    return getParentOf(territoryNumber) >= 0;
+function isSubdivision(territory) {
+    return getParentOf(territory) >= 0;
 }
 
 /// PUBLIC returns true iff territoryNumber is a country that has states
-function hasSubdivision(territoryNumber) {
+function hasSubdivision(territory) {
+    var territoryNumber = getTerritoryNumber(territory);
     return (territoryNumber == ccode_usa || territoryNumber == ccode_ind || territoryNumber == ccode_can || territoryNumber == ccode_aus || territoryNumber == ccode_mex || territoryNumber == ccode_bra || territoryNumber == ccode_chn || territoryNumber == ccode_rus);
 }
 
@@ -303,7 +309,7 @@ function fitsInsideWithRoom( coord, minx, maxx, miny, maxy )
 /// PUBLIC return the AlphaCode (usually an ISO 3166 code) of a territory
 /// format: 0=local (often ambiguous), 1=international (full and unambiguous, DEFAULT), 2=shortest (shortest non-ambiguous abbreviation)
 function getTerritoryAlphaCode(territoryNumber, format) {
-    if (format == undefined)
+    if (format == undefined) 
         format=1;
     if (territoryNumber >= 0 && territoryNumber <= ccode_earth) {
         var n = entity_iso[territoryNumber];
@@ -368,7 +374,7 @@ function find_bestiso(y, x, preferredTerritoryNumber) {
         minmaxSetup(dataLastRecord(preferredTerritoryNumber)); // get encompassing rectangle
         if (fitsInside(oy, ox, minx, maxx, miny, maxy))
             return preferredTerritoryNumber;
-    }
+    }    
     // find first fit
     var i;
     for (i = 0; i < ccode_earth; i++) {
@@ -522,19 +528,19 @@ var use_high_precision = 0; // nr of letters of high-precision postfix (if any) 
 var extrapostfix = ''; // GLOBAL
 var fraclat=0,fraclon=0;
 function encodeExtension(result, extrax4, extray, dividerx4, dividery,extraDigits,ydirection) {
-  if (!extraDigits)
+  if (!extraDigits) 
     return result;
   if (extraDigits > maxMapcodePrecision())
     extraDigits = maxMapcodePrecision();
   var encx = (extrax4+4*fraclon) / (dividerx4);
   var ency = (extray +  fraclat*ydirection) / (dividery );
-  extrapostfix='';
+  extrapostfix='';    
   while (extraDigits-->0) {
     encx*=30;
-    var gx=Math.floor(encx);
-    if (gx<0) gx=0; else if (gx>29) gx=29;
-    ency*=30;
-    var gy=Math.floor(ency);
+    var gx=Math.floor(encx); 
+    if (gx<0) gx=0; else if (gx>29) gx=29;      
+    ency*=30; 
+    var gy=Math.floor(ency); 
     if (gy<0) gy=0; else if (gy>29) gy=29;
     var column1=Math.floor(gx/6);
     var column2=(gx%6);
@@ -569,16 +575,16 @@ function decodeExtension(y, x, dividerx4, dividery, ydirection, orginput)
       if (c2<0) c2=0; else if (c2>29) c2=29;
       row2 =Math.floor(c2/6); column2 = (c2%6);
     } else { //
-      row2 = 2;
+      row2 = 2; 
       halfcolumn = 0.5;
       column2 = 3;
     } //
     processor *= 30;
     extrax += ((column1*6 + column2 ))/processor;
-    extray += ((row1*5 + row2 - halfcolumn))/processor;
+    extray += ((row1*5 + row2 - halfcolumn))/processor;    
   } //
   extrax += (0.5/processor);
-  extray += (0.5/processor);
+  extray += (0.5/processor);  
   extrax *= dividerx;
   extray *= dividery;
   extrax = x + extrax;
@@ -702,7 +708,7 @@ function encodeGrid(m, y, x, codex, minx, miny, maxx, maxy, headerletter, territ
     else {
         divx = Math.floor(nc[prefixlength] / divy);
         if (getDebugInfo) mcInfo={type:4,regular:false,form:(prefixlength==2 ? 'ss' : prefixlength==3 ? 'sss' : 'ssss')};
-
+        
     }
 
     if (getDebugInfo) {
@@ -744,10 +750,10 @@ function encodeGrid(m, y, x, codex, minx, miny, maxx, maxy, headerletter, territ
 
 
     if (prefixlength == 4 && divx == 961 && divy == 961) {
-        result = result.charAt(0) + result.charAt(2) + result.charAt(1) + result.charAt(3);
+        result = result.charAt(0) + result.charAt(2) + result.charAt(1) + result.charAt(3);        
     }
 
-    if (getDebugInfo && prefixlength == 4 && divx == 961 && divy == 961)
+    if (getDebugInfo && prefixlength == 4 && divx == 961 && divy == 961) 
        mcInfo.rectZone=asDegreeRect( minx + 31 * xgridsize * Math.floor(relx/31), miny + 31 * ygridsize * Math.floor(rely/31), xgridsize * 31, ygridsize * 31 );
 
     rely = miny + (rely * ygridsize);
@@ -924,7 +930,7 @@ function to_ascii(str) {
 }
 
 
-/// PRIVATE lowest-level data access
+/// PRIVATE lowest-level data access 
 
 var flags, codex, codexlo, codexhi, codexlen; // GLOBAL
 var isnameless, isrestricted, recType, isSpecialShape22; // GLOBAL
@@ -1050,7 +1056,7 @@ function encodeNameless(x, y, index, firstcode) {
 
         if (extray==0 && fraclat>0) {
             dy--;
-            extray += dividery;
+            extray += dividery;              
         }
 
         var v = storage_offset;
@@ -1062,7 +1068,7 @@ function encodeNameless(x, y, index, firstcode) {
         }
 
         if (getDebugInfo) {
-            mcInfo={type:(isSpecialShape22 ? 2 : 1),regular:false};
+            mcInfo={type:(isSpecialShape22 ? 2 : 1),regular:false}; 
             mcInfo.rectCell=asDegreeRect( minx + dx*(dividerx4/4), maxy - (dy+1)*dividery, dividerx4/4, dividery );
             mcInfo.prefixDivx = xSIDE;
             mcInfo.prefixDivy = SIDE;
@@ -1203,7 +1209,7 @@ function decodeNameless(result, firstrec) // returns millionths
 }
 
 
-function encodeAutoHeader(y, x, thiscodexlen, thisindex, territoryNumber)
+function encodeAutoHeader(y, x, thiscodexlen, thisindex, territoryNumber) 
 {
     var STORAGE_START = 0;
 
@@ -1246,7 +1252,7 @@ function encodeAutoHeader(y, x, thiscodexlen, thisindex, territoryNumber)
                 var value = vx * Math.floor(H / 176);
 
                 if ( extray==0 && fraclat>0 ) {
-                  if (vy==0) {
+                  if (vy==0) { 
                     STORAGE_START += product;
                     continue;
                   }
@@ -1265,8 +1271,8 @@ function encodeAutoHeader(y, x, thiscodexlen, thisindex, territoryNumber)
                     mcInfo.dotPosition = codexlen-2;
                     mcInfo.prefixDivx = Math.floor(W / 168);
                     mcInfo.prefixDivy = Math.floor(H / 176);
-                    mcInfo.rectSubarea=asDegreeRect(minx + (vx*168    )*dividerx, maxy - ((vy+1)*176      )* dividery,168 * dividerx,176 * dividery);
-                    mcInfo.rectCell   =asDegreeRect(minx + (vx*168+spx)*dividerx, maxy - ((vy  )*176+spy+1)* dividery,      dividerx,      dividery);
+                    mcInfo.rectSubarea=asDegreeRect(minx + (vx*168    )*dividerx, maxy - ((vy+1)*176      )* dividery,168 * dividerx,176 * dividery);                
+                    mcInfo.rectCell   =asDegreeRect(minx + (vx*168+spx)*dividerx, maxy - ((vy  )*176+spy+1)* dividery,      dividerx,      dividery);                
                 }
 
                 var mapc = encodeBase31(Math.floor(STORAGE_START / (961 * 31)) + value, codexlen - 2) + '.' + encodeTriple(spx, spy, dividerx, dividery);
@@ -1368,7 +1374,7 @@ function aeu_pack(r, short) /* v1.50 */ {
 var debugStopRecord = -1; // GLOBAL
 /// returns result, or empty if error
 var results; // GLOBAL
-function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override)
+function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override) 
 {
     // round to millionths and normalise
     if (isNaN(orgx)) orgx = 0;
@@ -1387,7 +1393,7 @@ function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override
     var lon32=Math.floor(x);
     fraclat=y-lat32; // get fraction
     fraclon=x-lon32; // get fraction
-
+  
     // for 8-digit precision, cells are divided into 810,000 by 810,000 minicells. So take care of math errors
     fraclat *= 810000; if (fraclat<1) fraclat=0; else { if (fraclat>809999) { fraclat=0; lat32++; } else fraclat /= 810000; }
     fraclon *= 810000; if (fraclon<1) fraclon=0; else { if (fraclon>809999) { fraclon=0; lon32++; } else fraclon /= 810000; }
@@ -1400,7 +1406,6 @@ function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override
     mcInfo = {type:0};
 	
     if (!isrecursive) results=[];
-    var original_length = results.length;
 
     var fromTerritory=0;
     var uptoTerritory=ccode_earth;
@@ -1415,6 +1420,7 @@ function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override
   var territoryNumber;
   for(territoryNumber=fromTerritory;territoryNumber<=uptoTerritory;territoryNumber++)
   {
+    var original_length = results.length;
     var from = dataFirstRecord(territoryNumber);
     if (!data_flags[from]) continue;   // 1.27 survive partially filled data_ array
     var upto = dataLastRecord(territoryNumber);
@@ -1444,7 +1450,7 @@ function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override
                 else if (isrestricted && i == upto && getParentOf(territoryNumber) >= 0) {
                     mapcoderEngine(orgy, orgx, getParentOf(territoryNumber), getshortest, true/*recursive*/, territoryNumber);
                     continue;
-                }
+                }                
                 else {
                     if (isrestricted && results.length == original_length) {
                         r = ''; // restricted, and no shorter mapcodes exist: do not generate mapcodes
@@ -1453,7 +1459,7 @@ function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override
                         r = encodeGrid(i, y, x, codex, minx, miny, maxx, maxy, headerLetter(i), territoryNumber);
                     }
                 }
-
+                
                 if (r.length > 4) {
                     r = aeu_pack(r);
 
@@ -1461,8 +1467,8 @@ function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override
                     if (state_override != undefined && state_override >= 0)
                         storecode = state_override;
 
-                    if (debugStopRecord==i) {
-                        debugStopFailed = 0;
+                    if (debugStopRecord==i) { 
+                        debugStopFailed = 0; 
                         results.length = 0; // clear all other results
                     }
 
@@ -1583,7 +1589,7 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
 
     var prefixlength = mapcode.indexOf('.');
     var postfixlength = mclen - 1 - prefixlength;
-
+    
     var result;
     var i;
     for (i = from; i <= upto; i++) {
@@ -1640,7 +1646,7 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
 
 // ******************** legacy interface *****************
 
-function hasStates(territoryNumber) {return hasSubdivision(territoryNumber);}
+function hasStates(territoryNumber) {return hasSubdivision(territoryNumber);} 
 function isState(territoryNumber) {return isSubdivision(territoryNumber);}
 function StateParent(territoryNumber) {return getParentOf(territoryNumber);}
 function ccode2iso(territoryNumber, format) { return getTerritoryAlphaCode(territoryNumber,format); }
@@ -1665,7 +1671,7 @@ function master_encode(orgy, orgx, tn, isrecursive, stop_with_one_result, alloww
 function distanceInMeters( latDeg1,lonDeg1,latDeg2,lonDeg2 ) {
 	if (latDeg1>latDeg2) { var t=latDeg1; latDeg1=latDeg2; latDeg2=t; }	
 	var worstParallel=0; // assume equator
-	if (latDeg2<0)
+	if (latDeg2<0) 
 		worstParallel=latDeg1;
 	else if (latDeg1>0)
 		worstParallel=latDeg2;
@@ -1691,10 +1697,11 @@ function convertToAlphabetAsHTML( mapcode, targetAlphabet) {
 /// PUBLIC decode a string (which may contain a full mapcode, including a territory)
 /// the optional contextTerritoryNumber is used in case the mapcode specifies no (unambiguous) territory.
 /// returns coordinate, or false.
-function decode(mapcodeString,contextTerritoryNumber)
+function decode(mapcodeString,territory)
 {
     mapcodeString = trim(mapcodeString);
-    if (contextTerritoryNumber == undefined)
+    var contextTerritoryNumber = getTerritoryNumber(territory);
+    if (contextTerritoryNumber == undefined) 
         contextTerritoryNumber = ccode_earth;
     var parts = mapcodeString.split(/\s+/);
     var dec = undefined;
@@ -1703,7 +1710,7 @@ function decode(mapcodeString,contextTerritoryNumber)
             contextTerritoryNumber=getParentOf(contextTerritoryNumber);
         var territoryNumber = getTerritoryNumber(parts[0],contextTerritoryNumber);
         if (territoryNumber>=0)
-            dec = master_decode(parts[1], territoryNumber);
+            dec = master_decode(parts[1], territoryNumber); 
     }
     else if (parts.length==1) {
         dec = master_decode(parts[0], contextTerritoryNumber);
@@ -1719,19 +1726,19 @@ function decode(mapcodeString,contextTerritoryNumber)
 /// the International variants only return the 9-letter "international" mapcode
 /// the WithPrecision variants produce mapcodes extended with high-precision letters (the parameter specifies how many letters: 0, 1, or 2).
 
-function encodeWithPrecision(latitudeDegrees,longitudeDegrees,precision,restrictToTerritoryNumber)
+function encodeWithPrecision(latitudeDegrees,longitudeDegrees,precision,territory)
 {
     use_high_precision=precision;
-    return mapcoderEngine(latitudeDegrees,longitudeDegrees,restrictToTerritoryNumber,false/*getshortest*/,false/*recursive*/,-1/*override*/);
+    return mapcoderEngine(latitudeDegrees,longitudeDegrees,getTerritoryNumber(territory),false/*getshortest*/,false/*recursive*/,-1/*override*/);
 }
 
-function encode(latitudeDegrees,longitudeDegrees,restrictToTerritoryNumber)
+function encode(latitudeDegrees,longitudeDegrees,territory)
 {
-    return encodeWithPrecision(latitudeDegrees,longitudeDegrees,0,restrictToTerritoryNumber)
+    return encodeWithPrecision(latitudeDegrees,longitudeDegrees,0,getTerritoryNumber(territory))
 }
 
 function encodeInternational(latitudeDegrees,longitudeDegrees)
-{
+{    
     return encodeWithPrecision(latitudeDegrees,longitudeDegrees,0,ccode_earth)
 }
 
@@ -1740,13 +1747,13 @@ function encodeInternationalWithPrecision(latitudeDegrees,longitudeDegrees,preci
     return encodeWithPrecision(latitudeDegrees,longitudeDegrees,precision,ccode_earth)
 }
 
-function encodeShortestWithPrecision(latitudeDegrees,longitudeDegrees,precision,restrictToTerritoryNumber)
+function encodeShortestWithPrecision(latitudeDegrees,longitudeDegrees,precision,territory)
 {
     use_high_precision=precision;
-    return mapcoderEngine(latitudeDegrees,longitudeDegrees,restrictToTerritoryNumber,true/*getshortest*/,false/*recursive*/,-1/*override*/);
+    return mapcoderEngine(latitudeDegrees,longitudeDegrees,getTerritoryNumber(territory),true/*getshortest*/,false/*recursive*/,-1/*override*/);
 }
 
-function encodeShortest(latitudeDegrees,longitudeDegrees,restrictToTerritoryNumber)
-{
-    return encodeShortestWithPrecision(latitudeDegrees,longitudeDegrees,0,restrictToTerritoryNumber);
+function encodeShortest(latitudeDegrees,longitudeDegrees, territory )
+{    
+    return encodeShortestWithPrecision(latitudeDegrees,longitudeDegrees,0,getTerritoryNumber(territory));
 }
