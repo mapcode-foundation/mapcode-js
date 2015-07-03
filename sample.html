@@ -19,8 +19,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <script src="ctrynams.js" type="text/javascript"></script>
-    <script src="mapcode.js" type="text/javascript"></script>
     <script src="ndata.js" type="text/javascript"></script>
+    <script src="mapcode.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -30,25 +30,26 @@
 
     <script type="text/javascript">
         function submitmc() {
-            var result = '?';
-            var isocode = document.getElementById("isocode").value;
-            var tc = iso2ccode(isocode);
-            if (tc < 0) {
-                result = 'Failed to decode territory code "' + isocode + '"';
-            }
-            else {
-                var mc = document.getElementById("mapcode").value.toUpperCase();
+            var alphacode = document.getElementById("alphacode").value;         
+            var mapcode = document.getElementById("mapcode").value.toUpperCase();
 
-                // decode mapcode
-                var coords = master_decode(mc, tc);
+            // decode mapcode
+            var coords = decode(mapcode, alphacode);
 
-                // show result
-                if (coords)
-                    result = 'Mapcode "' + mc + '" in "' + fullname(tc) + '": ' + coords.y + ", " + coords.x;
-                else
-                    result = 'Failed to decode mapcode "' + mc + '" in "' + fullname(tc) + '"';
-            }
-            document.getElementById("resultdiv").innerHTML = result;
+            // show html
+            var html = 'Mapcode "' + mapcode + '"';
+            
+			if (alphacode.length>0)
+				html+=' (in the context of "' + getTerritoryFullname(alphacode) + '")';
+			else
+				html+=' (in unknown context "'+alphacode+'")';
+
+            if (coords.x==undefined)
+                html += ' can not de decoded';
+            else
+                html += ': ' + coords.y + ", " + coords.x;
+            
+            document.getElementById("resultdiv").innerHTML = html;
             return false;
         }
     </script>
@@ -56,10 +57,10 @@
     <br/>
 
     <form action="#" onsubmit="return submitmc();">
-        Territory:
-        <input type="text" id="isocode" value="NLD" onkeyup="submitmc();">
         Mapcode:
         <input type="text" id="mapcode" value="XX.XX" onkeyup="submitmc();">
+        Territory context:
+        <input type="text" id="alphacode" value="NLD" onkeyup="submitmc();">
         <input type="submit" value="Decode">
     </form>
 
@@ -70,36 +71,36 @@
 
     <script type="text/javascript">
         function submitll() {
-            var result = '';
-            var isocode = document.getElementById("isocodell").value;
-            var tc = 0;
-            if (isocode)
-                tc = iso2ccode(isocode);
-            if (tc < 0) {
-                result = 'Failed to decode territory code "' + isocode + '"';
-            }
-            else {
-                var y = document.getElementById("llat").value.toUpperCase();
-                var x = document.getElementById("llon").value.toUpperCase();
+            var html = '';
+            var alphacode = document.getElementById("alphacodell").value;
+            var y = document.getElementById("llat").value;
+            var x = document.getElementById("llon").value;
 
-                for (var run = 1; run <= 2; run++) if ((run == 1) == (tc == ct)) {
-                    if (run == 2) result += '<P>Encoding in other areas:<BR>';
-                    for (var ct = 0; ct < MAX_CCODE; ct++) {
-                        // encode mapcode
-                        var results = master_encode(y, x, ct);
-                        // show result
-                        if (run == 1 || results.length) {
-                            result += '<p><B>' + results.length + ' results in "' + fullname(ct) + '" for (' + y + ", " + x + '):</b><p>';
-                            for (var i = 0; i < results.length; i++) {
-                                if (results[i][1] != ccode_earth)
-                                    result += '<small>' + ccode2iso(results[i][1], 2) + '</small> ';
-                                result += '<b>' + results[i][0] + '</b><br>';
-                            }
-                        }
-                    }
-                }
+			var results;
+
+			if (alphacode.length>0) {
+				if (!getTerritoryFullname(alphacode))
+					html = '"' + alphacode + '" is not a valid territory alphacode';
+				else {
+					results = encodeShortest(y, x, alphacode);
+					if (results.length>0)
+						html += '<P>Coordinate has mapcode <B>' + results[0].fullmapcode + '</B> in territory "'+getTerritoryFullname(alphacode)+'"<BR>';
+					else
+						html += '<P>Coordinate has no mapcode in territory "'+getTerritoryFullname(alphacode)+'"<BR>';					
+				}
+			}
+
+			results = encodeShortest(y, x);
+            html += '<P><U>Mapcodes are possible in '+results.length + ' territories:</U><BR>';
+            for (var i = 0; i < results.length; i++) {
+                 if ( results[i].territoryAlphaCode != "AAA" )
+                     html += '<small>' + results[i].territoryAlphaCode + '</small> ';
+                 html += '<b>' + results[i].mapcode + '</b>';
+                 html += ' ('+getTerritoryFullname(results[i].territoryNumber)+')';
+                 html += '<br>';
             }
-            document.getElementById("resultll").innerHTML = result;
+
+            document.getElementById("resultll").innerHTML = html;
             return false;
         }
     </script>
@@ -111,8 +112,8 @@
         <input type="text" id="llat" value="52.376514" onkeyup="submitll();">
         Longitude:
         <input type="text" id="llon" value="4.908542" onkeyup="submitll();">
-        Preferred territory:
-        <input type="text" id="isocodell" value="NLD" onkeyup="submitll();">
+        Restrict to territory::
+        <input type="text" id="alphacodell" value="" onkeyup="submitll();">
         <input type="submit" value="Encode">
     </form>
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
- *
+ * Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,86 +14,84 @@
  * limitations under the License.
  */
 
-var mapcode_cversion = "1.50.1";
-var MAX_CCODE = 533;
 
 var entity_iso = [
-    'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
-    'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
-    'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM',
-    'NIU', 'KNA', 'CYM', 'BES', 'MDV', 'SHN', 'MLT', 'GRD', 'VIR', 'MYT',
-    'SJM', 'VCT', 'HMD', 'BRB', 'ATG', 'CUW', 'SYC', 'PLW', 'MNP', 'AND',
-    'GUM', 'IMN', 'LCA', 'FSM', 'SGP', 'TON', 'DMA', 'BHR', 'KIR', 'TCA',
-    'STP', 'HKG', 'MTQ', 'FRO', 'GLP', 'COM', 'MUS', 'REU', 'LUX', 'WSM',
-    'SGS', 'PYF', 'CPV', 'TTO', 'BRN', 'ATF', 'PRI', 'CYP', 'LBN', 'JAM',
-    'GMB', 'QAT', 'FLK', 'VUT', 'MNE', 'BHS', 'TLS', 'SWZ', 'KWT', 'FJI',
-    'NCL', 'SVN', 'ISR', 'PSE', 'SLV', 'BLZ', 'DJI', 'MKD', 'RWA', 'HTI',
-    'BDI', 'GNQ', 'ALB', 'SLB', 'ARM', 'LSO', 'BEL', 'MDA', 'GNB', 'TWN',
-    'BTN', 'CHE', 'NLD', 'DNK', 'EST', 'DOM', 'SVK', 'CRI', 'BIH', 'HRV',
-    'TGO', 'LVA', 'LTU', 'LKA', 'GEO', 'IRL', 'SLE', 'PAN', 'CZE', 'GUF',
-    'ARE', 'AUT', 'AZE', 'SRB', 'JOR', 'PRT', 'HUN', 'KOR', 'ISL', 'GTM',
-    'CUB', 'BGR', 'LBR', 'HND', 'BEN', 'ERI', 'MWI', 'PRK', 'NIC', 'GRC',
-    'TJK', 'BGD', 'NPL', 'TUN', 'SUR', 'URY', 'KHM', 'SYR', 'SEN', 'KGZ',
-    'BLR', 'GUY', 'LAO', 'ROU', 'GHA', 'UGA', 'GBR', 'GIN', 'ECU', 'ESH',
-    'GAB', 'NZL', 'BFA', 'PHL', 'ITA', 'OMN', 'POL', 'CIV', 'NOR', 'MYS',
-    'VNM', 'FIN', 'COG', 'DEU', 'JPN', 'ZWE', 'PRY', 'IRQ', 'MAR', 'UZB',
-    'SWE', 'PNG', 'CMR', 'TKM', 'ESP', 'THA', 'YEM', 'FRA', 'ALA', 'KEN',
-    'BWA', 'MDG', 'UKR', 'SSD', 'CAF', 'SOM', 'AFG', 'MMR', 'ZMB', 'CHL',
-    'TUR', 'PAK', 'MOZ', 'NAM', 'VEN', 'NGA', 'TZA', 'EGY', 'MRT', 'BOL',
-    'ETH', 'COL', 'ZAF', 'MLI', 'AGO', 'NER', 'TCD', 'PER', 'MNG', 'IRN',
-    'LBY', 'SDN', 'IDN', 'DIF', 'TLA', 'MOR', 'AGU', '5CL', 'QUE', 'HID',
-    '5MX', 'TAB', 'NAY', 'GUA', 'PUE', 'YUC', 'ROO', 'SIN', 'CAM', 'MIC',
-    'SLP', 'GRO', 'NLE', 'BCN', 'VER', 'CHP', 'BCS', 'ZAC', 'JAL', 'TAM',
-    'OAX', 'DUR', 'COA', 'SON', 'CHH', 'GRL', 'SAU', 'COD', 'DZA', 'KAZ',
-    'ARG', '2DD', '2DN', '2CH', '2AN', '2LD', '2DL', '2ML', '2NL', '2MN',
-    '2TR', '2MZ', '2SK', '2PB', '2HR', '2AR', '2AS', '2BR', '2UT', '2GA',
-    '2KL', '2TN', '2HP', '2JK', '2CT', '2JH', '2KA', '2RJ', '2OR', '2GJ',
-    '2WB', '2MP', '2TG', '2AP', '2MH', '2UP', '2PY', 'NSW', 'ACT', 'JBT',
-    '4NT', '4SA', 'TAS', 'VIC', '4WA', 'QLD', '6DF', '6SE', '6AL', '6RJ',
-    '6ES', '6RN', '6PB', '6SC', '6PE', '6AP', '6CE', '6AC', '6PR', '6RR',
-    '6RO', '6SP', '6PI', '6TO', '6RS', '6MA', '6GO', '6MS', '6BA', '6MG',
-    '6MT', '6PA', '6AM', '1DC', '1RI', '1DE', '1CT', '1NJ', '1NH', '1VT',
-    '1MA', '1HI', '1MD', '1WV', '1SC', '1ME', '1IN', '1KY', '1TN', '1VA',
-    '1OH', '1PA', '1MS', '1LA', '1AL', '1AR', '1NC', '1NY', '1IA', '1IL',
-    '1GA', '1WI', '1FL', '1MO', '1OK', '1ND', '1WA', '1SD', '1NE', '1KS',
-    '1ID', '1UT', '1MN', '1MI', '1WY', '1OR', '1CO', '1NV', '1AZ', '1NM',
-    '1MT', '1CA', '1TX', '1AK', '3BC', '3AB', '3ON', '3QC', '3SK', '3MB',
-    '3NL', '3NB', '3NS', '3PE', '3YT', '3NT', '3NU', 'IND', 'AUS', 'BRA',
-    'USA', 'MEX', 'MOW', 'SPE', 'KGD', '7IN', '7AD', '7SE', '7KB', '7KC',
-    '7CE', '7CU', 'IVA', 'LIP', 'ORL', 'TUL', '7BE', 'VLA', 'KRS', 'KLU',
-    '7TT', 'BRY', 'YAR', 'RYA', 'AST', 'MOS', 'SMO', '7DA', 'VOR', 'NGR',
-    'PSK', 'KOS', 'STA', 'KDA', '7KL', 'TVE', 'LEN', 'ROS', 'VGG', 'VLG',
-    'MUR', '7KR', 'NEN', '7KO', 'ARK', '7MO', 'NIZ', 'PNZ', '7KI', '7ME',
-    'ORE', 'ULY', '7PM', '7BA', '7UD', '7TA', 'SAM', 'SAR', 'YAN', '7KM',
-    'SVE', 'TYU', 'KGN', '7CH', '7BU', 'ZAB', 'IRK', 'NVS', 'TOM', 'OMS',
-    '7KK', 'KEM', '7AL', 'ALT', '7TY', 'KYA', 'MAG', 'CHU', 'KAM', 'SAK',
-    '7PO', 'YEV', 'KHA', 'AMU', '7SA', 'CAN', 'RUS', '8SH', '8TJ', '8BJ',
-    '8HI', '8NX', '8CQ', '8ZJ', '8JS', '8FJ', '8AH', '8LN', '8SD', '8SX',
-    '8JX', '8HA', '8GZ', '8GD', '8HB', '8JL', '8HE', '8SN', '8NM', '8HL',
-    '8HN', '8GX', '8SC', '8YN', '8XZ', '8GS', '8QH', '8XJ', 'CHN', 'UMI',
+    'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM', 
+    'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR', 
+    'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM', 
+    'NIU', 'KNA', 'CYM', 'BES', 'MDV', 'SHN', 'MLT', 'GRD', 'VIR', 'MYT', 
+    'SJM', 'VCT', 'HMD', 'BRB', 'ATG', 'CUW', 'SYC', 'PLW', 'MNP', 'AND', 
+    'GUM', 'IMN', 'LCA', 'FSM', 'SGP', 'TON', 'DMA', 'BHR', 'KIR', 'TCA', 
+    'STP', 'HKG', 'MTQ', 'FRO', 'GLP', 'COM', 'MUS', 'REU', 'LUX', 'WSM', 
+    'SGS', 'PYF', 'CPV', 'TTO', 'BRN', 'ATF', 'PRI', 'CYP', 'LBN', 'JAM', 
+    'GMB', 'QAT', 'FLK', 'VUT', 'MNE', 'BHS', 'TLS', 'SWZ', 'KWT', 'FJI', 
+    'NCL', 'SVN', 'ISR', 'PSE', 'SLV', 'BLZ', 'DJI', 'MKD', 'RWA', 'HTI', 
+    'BDI', 'GNQ', 'ALB', 'SLB', 'ARM', 'LSO', 'BEL', 'MDA', 'GNB', 'TWN', 
+    'BTN', 'CHE', 'NLD', 'DNK', 'EST', 'DOM', 'SVK', 'CRI', 'BIH', 'HRV', 
+    'TGO', 'LVA', 'LTU', 'LKA', 'GEO', 'IRL', 'SLE', 'PAN', 'CZE', 'GUF', 
+    'ARE', 'AUT', 'AZE', 'SRB', 'JOR', 'PRT', 'HUN', 'KOR', 'ISL', 'GTM', 
+    'CUB', 'BGR', 'LBR', 'HND', 'BEN', 'ERI', 'MWI', 'PRK', 'NIC', 'GRC', 
+    'TJK', 'BGD', 'NPL', 'TUN', 'SUR', 'URY', 'KHM', 'SYR', 'SEN', 'KGZ', 
+    'BLR', 'GUY', 'LAO', 'ROU', 'GHA', 'UGA', 'GBR', 'GIN', 'ECU', 'ESH', 
+    'GAB', 'NZL', 'BFA', 'PHL', 'ITA', 'OMN', 'POL', 'CIV', 'NOR', 'MYS', 
+    'VNM', 'FIN', 'COG', 'DEU', 'JPN', 'ZWE', 'PRY', 'IRQ', 'MAR', 'UZB', 
+    'SWE', 'PNG', 'CMR', 'TKM', 'ESP', 'THA', 'YEM', 'FRA', 'ALA', 'KEN', 
+    'BWA', 'MDG', 'UKR', 'SSD', 'CAF', 'SOM', 'AFG', 'MMR', 'ZMB', 'CHL', 
+    'TUR', 'PAK', 'MOZ', 'NAM', 'VEN', 'NGA', 'TZA', 'EGY', 'MRT', 'BOL', 
+    'ETH', 'COL', 'ZAF', 'MLI', 'AGO', 'NER', 'TCD', 'PER', 'MNG', 'IRN', 
+    'LBY', 'SDN', 'IDN', 'DIF', 'TLA', 'MOR', 'AGU', '5CL', 'QUE', 'HID', 
+    '5MX', 'TAB', 'NAY', 'GUA', 'PUE', 'YUC', 'ROO', 'SIN', 'CAM', 'MIC', 
+    'SLP', 'GRO', 'NLE', 'BCN', 'VER', 'CHP', 'BCS', 'ZAC', 'JAL', 'TAM', 
+    'OAX', 'DUR', 'COA', 'SON', 'CHH', 'GRL', 'SAU', 'COD', 'DZA', 'KAZ', 
+    'ARG', '2DD', '2DN', '2CH', '2AN', '2LD', '2DL', '2ML', '2NL', '2MN', 
+    '2TR', '2MZ', '2SK', '2PB', '2HR', '2AR', '2AS', '2BR', '2UT', '2GA', 
+    '2KL', '2TN', '2HP', '2JK', '2CT', '2JH', '2KA', '2RJ', '2OR', '2GJ', 
+    '2WB', '2MP', '2TG', '2AP', '2MH', '2UP', '2PY', 'NSW', 'ACT', 'JBT', 
+    '4NT', '4SA', 'TAS', 'VIC', '4WA', 'QLD', '6DF', '6SE', '6AL', '6RJ', 
+    '6ES', '6RN', '6PB', '6SC', '6PE', '6AP', '6CE', '6AC', '6PR', '6RR', 
+    '6RO', '6SP', '6PI', '6TO', '6RS', '6MA', '6GO', '6MS', '6BA', '6MG', 
+    '6MT', '6PA', '6AM', '1DC', '1RI', '1DE', '1CT', '1NJ', '1NH', '1VT', 
+    '1MA', '1HI', '1MD', '1WV', '1SC', '1ME', '1IN', '1KY', '1TN', '1VA', 
+    '1OH', '1PA', '1MS', '1LA', '1AL', '1AR', '1NC', '1NY', '1IA', '1IL', 
+    '1GA', '1WI', '1FL', '1MO', '1OK', '1ND', '1WA', '1SD', '1NE', '1KS', 
+    '1ID', '1UT', '1MN', '1MI', '1WY', '1OR', '1CO', '1NV', '1AZ', '1NM', 
+    '1MT', '1CA', '1TX', '1AK', '3BC', '3AB', '3ON', '3QC', '3SK', '3MB', 
+    '3NL', '3NB', '3NS', '3PE', '3YT', '3NT', '3NU', 'IND', 'AUS', 'BRA', 
+    'USA', 'MEX', 'MOW', 'SPE', 'KGD', '7IN', '7AD', '7SE', '7KB', '7KC', 
+    '7CE', '7CU', 'IVA', 'LIP', 'ORL', 'TUL', '7BE', 'VLA', 'KRS', 'KLU', 
+    '7TT', 'BRY', 'YAR', 'RYA', 'AST', 'MOS', 'SMO', '7DA', 'VOR', 'NGR', 
+    'PSK', 'KOS', 'STA', 'KDA', '7KL', 'TVE', 'LEN', 'ROS', 'VGG', 'VLG', 
+    'MUR', '7KR', 'NEN', '7KO', 'ARK', '7MO', 'NIZ', 'PNZ', '7KI', '7ME', 
+    'ORE', 'ULY', '7PM', '7BA', '7UD', '7TA', 'SAM', 'SAR', 'YAN', '7KM', 
+    'SVE', 'TYU', 'KGN', '7CH', '7BU', 'ZAB', 'IRK', 'NVS', 'TOM', 'OMS', 
+    '7KK', 'KEM', '7AL', 'ALT', '7TY', 'KYA', 'MAG', 'CHU', 'KAM', 'SAK', 
+    '7PO', 'YEV', 'KHA', 'AMU', '7SA', 'CAN', 'RUS', '8SH', '8TJ', '8BJ', 
+    '8HI', '8NX', '8CQ', '8ZJ', '8JS', '8FJ', '8AH', '8LN', '8SD', '8SX', 
+    '8JX', '8HA', '8GZ', '8GD', '8HB', '8JL', '8HE', '8SN', '8NM', '8HL', 
+    '8HN', '8GX', '8SC', '8YN', '8XZ', '8GS', '8QH', '8XJ', 'CHN', 'UMI', 
     'CPT', 'ATA', 'AAA', '?'];
 
 
 var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1PR=PRI,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,COL=5CL,5ME=5MX,MEX=5MX,5TM=TAM,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,2OD=2OR,";
 
 var dependency = [
-    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
-    21, 408, 4, 408, 42, 408, 11, 408,
-    61, 528, 8, 528, 109, 528,
-    63, 113, 265, 113,
-    198, 181,
-    530, 197, 129, 197, 71, 197, 75, 197, 64, 197, 62, 197, 90, 197, 67, 197, 29, 197, 5, 197, 10, 197, 22, 197,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    25, 112, 33, 112, 45, 112, 9, 112,
-    28, 171, 30, 171, 3, 171,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    13, 178, 40, 178,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    77, 210,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
-    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
-    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
+	27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410, 
+    21, 408, 4, 408, 42, 408, 11, 408, 
+    61, 528, 8, 528, 109, 528, 
+    63, 113, 265, 113, 
+    198, 181, 
+    530, 197, 129, 197, 71, 197, 75, 197, 64, 197, 62, 197, 90, 197, 67, 197, 29, 197, 5, 197, 10, 197, 22, 197, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    25, 112, 33, 112, 45, 112, 9, 112, 
+    28, 171, 30, 171, 3, 171, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    13, 178, 40, 178, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    77, 210, 
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166, 
+    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410, 
+    27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410, 
     -1];
 
 var usa_from = 343;
@@ -128,47 +126,47 @@ var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 
 var ccode_start = 112; // NLD
-
+var mapcode_cversion = "2.0.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '1.50/C' + mapcode_cversion;
+var mapcode_javaversion = '2.0.0/C' + mapcode_cversion;
 
-/// returns string without leading spaces and plus-signs, and trailing spaces
+/// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
     return str.replace(/^\s+|\s+$/g, '');
 }
 
-/// return 2-letter parent country abbreviation (disam in range 1..8)
+/// PRIVATE return 2-letter parent country abbreviation (disam in range 1..8)
 function parentname2(disam) {
     return parents2.substr(disam * 3 - 3, 2);
 }
 
-/// given a parent country abbreviation, return disam (in range 1-8) or negative if error
-function parentletter(isocode) {
+/// PRIVATE given a parent country abbreviation, return disam (in range 1-8) or negative if error
+function parentletter(territoryAlphaCode) {
     var p = -1;
-    var len = isocode.length;
-    var srch = isocode.toUpperCase() + ',';
-    if (len == 2) p = parents2.indexOf(srch); else if (len == 3) p = parents3.indexOf(srch);
+    var srch = String(territoryAlphaCode).toUpperCase() + ',';
+    var len = srch.length;
+    if (len == 3) p = parents2.indexOf(srch); else if (len == 4) p = parents3.indexOf(srch);
     if (p < 0)
         return -2;
-    return 1 + (p / (len + 1));
+    return 1 + (p / len);
 }
 
-/// given an ISO abbreviation, set disambiguation for future calls to iso2ccode(); returns nonzero in case of error
+/// PRIVATE given an ISO abbreviation, set disambiguation for future calls to iso2ccode(); returns nonzero in case of error
 var disambiguate = 1; // GLOBAL
-function set_disambiguate(isocode) {
-    var p = parentletter(isocode);
+function set_disambiguate(territoryAlphaCode) {
+    var p = parentletter(territoryAlphaCode);
     if (p < 0)
         return -2;
     disambiguate = p;
     return 0;
 }
 
-/// returns alias of ISO abbreviation (if any), or return empty
-function alias2iso(isocode) {
+/// PRIVATE returns alias of ISO abbreviation (if any), or return empty
+function alias2iso(territoryAlphaCode) {
     var rx;
-    if (isocode.length == 2) rx = '[0-9]' + isocode; else rx = isocode;
+    if (territoryAlphaCode.length == 2) rx = '[0-9]' + territoryAlphaCode; else rx = territoryAlphaCode;
     rx = new RegExp(rx + '=', '');
     var p = aliases.search(rx);
     if (p >= 0)
@@ -176,121 +174,150 @@ function alias2iso(isocode) {
     return '';
 }
 
-/// given ISO code, return internal ccode (or negative if error)
-function iso2ccode(isocode) {
-    if (typeof isocode != "string")
-        return -1;
+/// PRIVATE given ISO code, return territoryNumber (or negative if error)
+function iso2ccode(territoryAlphaCode) {
+    if (territoryAlphaCode=="" || typeof territoryAlphaCode=="undefined")
+      return undefined;
+    if (!isNaN(territoryAlphaCode)) 
+      return territoryAlphaCode;
+    territoryAlphaCode = trim(String(territoryAlphaCode)).toUpperCase();
 
-    isocode = trim(isocode).toUpperCase();
-
-    var sep = isocode.lastIndexOf('-');
-    if (sep < 0) sep = isocode.lastIndexOf(' ');
+    var sep = territoryAlphaCode.lastIndexOf('-');
+    if (sep < 0) sep = territoryAlphaCode.lastIndexOf(' ');
     if (sep >= 0) {
 
-        prefix = isocode.substring(0, sep);
-        isocode = trim(isocode.substring(sep + 1));
+        var prefix = territoryAlphaCode.substring(0, sep);
+        territoryAlphaCode = trim(territoryAlphaCode.substring(sep + 1));
 
-        if (isocode.length != 2 && isocode.length != 3)
+        if (territoryAlphaCode.length != 2 && territoryAlphaCode.length != 3)
             return -1;
         if (set_disambiguate(prefix))
             return -2;
 
-        // FIRST see if the isocode is in this disambiguation
-        if (isocode.length == 2) {
-            return iso2ccode(disambiguate + '' + isocode);
+        // FIRST see if the territoryAlphaCode is in this disambiguation
+        if (territoryAlphaCode.length == 2) {
+            return iso2ccode(disambiguate + '' + territoryAlphaCode);
         }
-        else if (isocode.length == 3) {
-            var isoa = alias2iso(isocode);
+        else if (territoryAlphaCode.length == 3) {
+            var isoa = alias2iso(territoryAlphaCode);
             if (isoa) {
                 if (isoa.charAt(0) == disambiguate) {
-                    isocode = isoa;
+                    territoryAlphaCode = isoa;
                 }
             }
         }
     }
 
-    if (isocode.length != 2 && isocode.length != 3)
+    if (territoryAlphaCode.length != 2 && territoryAlphaCode.length != 3)
         return -1;
 
     {
+        var testiso = (territoryAlphaCode.length == 2 ? disambiguate + '' + territoryAlphaCode : territoryAlphaCode);
         var i;
-
-        var testiso = (isocode.length == 2 ? disambiguate + '' + isocode : isocode);
         for (i = 0; i < entity_iso.length; i++) if (testiso == entity_iso[i]) return i;
 
         // 1.31 improvement: recognise alias in current context
-        if (isocode.length == 2 && testiso.length == 3) {
+        if (territoryAlphaCode.length == 2 && testiso.length == 3) {
             var aliasiso = alias2iso(testiso);
             if (aliasiso)
                 return iso2ccode(aliasiso);
         }
 
         // look for any iso2 match
-        if (isocode.length == 2) {
+        if (territoryAlphaCode.length == 2) {
             for (i = 0; i < entity_iso.length; i++)
-                if (entity_iso[i].charCodeAt(0) <= 57 && isocode == entity_iso[i].substring(1, 3))
+                if (entity_iso[i].charCodeAt(0) <= 57 && territoryAlphaCode == entity_iso[i].substring(1, 3))
                     return i;
         }
 
-        isocode = alias2iso(isocode);
-        if (isocode)
-            return iso2ccode(isocode);
+        territoryAlphaCode = alias2iso(territoryAlphaCode);
+        if (territoryAlphaCode)
+            return iso2ccode(territoryAlphaCode);
     }
 
     return -1;
 }
 
-/// return parent country of ccode (just returns ccode if ccode is itself a country)
-function StateParent(ccode) {
-    if (ccode >= usa_from && ccode <= usa_upto) return ccode_usa;
-    if (ccode >= ind_from && ccode <= ind_upto) return ccode_ind;
-    if (ccode >= can_from && ccode <= can_upto) return ccode_can;
-    if (ccode >= aus_from && ccode <= aus_upto) return ccode_aus;
-    if (ccode >= mex_from && ccode <= mex_upto) return ccode_mex;
-    if (ccode >= bra_from && ccode <= bra_upto) return ccode_bra;
-    if (ccode >= rus_from && ccode <= rus_upto) return ccode_rus;
-    if (ccode >= chn_from && ccode <= chn_upto) return ccode_chn;
+/// PUBLIC given an alphacode (such as US-AL), returns the territory number (or negative).
+/// A contextTerritoryNumber helps to interpret ambiguous (abbreviated) AlphaCodes, such as "AL"
+function getTerritoryNumber( territoryAlphaCode, contextTerritoryNumber ) {
+    if (contextTerritoryNumber)
+      set_disambiguate(entity_iso[contextTerritoryNumber]);
+    return iso2ccode(territoryAlphaCode);
+}
+
+/// PUBLIC return full name of territory
+function getTerritoryFullname(territory) {
+    var territoryNumber = getTerritoryNumber(territory);
+    if (territoryNumber==undefined || territoryNumber<0 || territoryNumber>ccode_earth)
+        return undefined;
+    var idx = isofullname[territoryNumber].indexOf(' (');
+    if (idx > 0)
+      return isofullname[territoryNumber].substr(0, idx);
+    return isofullname[territoryNumber];
+}
+
+/// PUBLIC return parent country of territoryNumber (negative if territoryNumber is not a state)
+function getParentOf(territory) {
+    var territoryNumber = getTerritoryNumber(territory);
+    if (territoryNumber >= usa_from && territoryNumber <= usa_upto) return ccode_usa;
+    if (territoryNumber >= ind_from && territoryNumber <= ind_upto) return ccode_ind;
+    if (territoryNumber >= can_from && territoryNumber <= can_upto) return ccode_can;
+    if (territoryNumber >= aus_from && territoryNumber <= aus_upto) return ccode_aus;
+    if (territoryNumber >= mex_from && territoryNumber <= mex_upto) return ccode_mex;
+    if (territoryNumber >= bra_from && territoryNumber <= bra_upto) return ccode_bra;
+    if (territoryNumber >= rus_from && territoryNumber <= rus_upto) return ccode_rus;
+    if (territoryNumber >= chn_from && territoryNumber <= chn_upto) return ccode_chn;
     return -199;
 }
 
-/// return name of iso (optional keepindex=1 for bracketed aliases)
-function fullname(ccode, keepindex) {
-    if (ccode < 0) return;
-    if (keepindex != 1) {
-        var idx = isofullname[ccode].indexOf(' (');
-        if (idx > 0)
-            return isofullname[ccode].substr(0, idx);
-    }
-    return isofullname[ccode];
+/// PUBLIC returns true iff territoryNumber is a state
+function isSubdivision(territory) {
+    return getParentOf(territory) >= 0;
 }
 
-/// returns true iff ccode is a state
-function isState(ccode) {
-    return StateParent(ccode) >= 0;
+/// PUBLIC returns true iff territoryNumber is a country that has states
+function hasSubdivision(territory) {
+    var territoryNumber = getTerritoryNumber(territory);
+    return (territoryNumber == ccode_usa || territoryNumber == ccode_ind || territoryNumber == ccode_can || territoryNumber == ccode_aus || territoryNumber == ccode_mex || territoryNumber == ccode_bra || territoryNumber == ccode_chn || territoryNumber == ccode_rus);
 }
 
-/// returns true iff ccode is a country that has states
-function hasStates(ccode) {
-    return (ccode == ccode_usa || ccode == ccode_ind || ccode == ccode_can || ccode == ccode_aus || ccode == ccode_mex || ccode == ccode_bra || ccode == ccode_chn || ccode == ccode_rus);
-}
-
-/// returns true iff x in range [minx...maxx> in millionths
-function isInRange(x, minx, maxx) {
+/// PRIVATE returns true iff x in range (all values in millionths)
+function isInRangeX(x, minx, maxx) {
     if (minx <= x && x < maxx) return true;
     if (x < minx) x += 360000000; else x -= 360000000; // 1.32 fix FIJI edge case
     if (minx <= x && x < maxx) return true;
     return false;
 }
 
-/// return isocode (international=1:get full code; international=2:get shortest non-ambiguous code)
-function ccode2iso(ccode, international) {
-    if (ccode >= 0 && ccode < MAX_CCODE) {
-        var n = entity_iso[ccode];
+/// PRIVATE returns true iff coordinate inside rectangle (all values in millionths)
+function fitsInside( y, x, minx, maxx, miny, maxy )
+{
+    return ( miny <= y && y < maxy && isInRangeX(x, minx, maxx) );
+}
+
+/// PRIVATE returns true iff coordinate inside rectangle with some room to spare (all values in millionths)
+function fitsInsideWithRoom( coord, minx, maxx, miny, maxy )
+{
+    if ( (( miny - 45) > coord.y) || (coord.y >= (maxy + 45)) )
+        return false;
+    var xroom = xDivider4(miny, maxy)/4;
+    return isInRangeX(coord.x, minx - xroom, maxx + xroom);
+}
+
+
+/// PUBLIC return the AlphaCode (usually an ISO 3166 code) of a territory
+/// format: 0=local (often ambiguous), 1=international (full and unambiguous, DEFAULT), 2=shortest (shortest non-ambiguous abbreviation)
+function getTerritoryAlphaCode(territoryNumber, format) {
+    if (format == undefined) 
+        format=1;
+    if (territoryNumber >= 0 && territoryNumber <= ccode_earth) {
+        var n = entity_iso[territoryNumber];
         if (/^[0-9]/.test(n)) n = n.substring(1);
-        if (international) {
-            var parent = StateParent(ccode);
+        if (format) {
+            var parent = getParentOf(territoryNumber);
             if (parent >= 0) {
-                if (international == 2) {
+                if (format == 2) {
                     // see if n occurs multiple times, if not, don't bother with parent
                     var count = 0;
                     var i = aliases.indexOf(n + '=');
@@ -310,21 +337,21 @@ function ccode2iso(ccode, international) {
                             }
                     }
                     if (count == 1) return n;
-                } //international==2
+                }
                 return parentname2(parentletter(entity_iso[parent])) + '-' + n;
-            } //parent>=0
+            }
         }
         return n;
     }
 }
 
-/// low-level routines for data access
+/// PRIVATE low-level routines for data access
 var minx, miny, maxx, maxy; // GLOBAL
-function dataFirstRecord(ccode) {
-    return data_start[ccode];
+function dataFirstRecord(territoryNumber) {
+    return data_start[territoryNumber];
 }
-function dataLastRecord(ccode) {
-    return data_start[++ccode] - 1;
+function dataLastRecord(territoryNumber) {
+    return data_start[++territoryNumber] - 1;
 }
 function minmaxSetup(i) {
     miny = data_miny[i];
@@ -338,29 +365,28 @@ function minmaxSetup(i) {
     maxx = minx + data_maxx[i];
 }
 
-/// return a ccode which could PROBABLY encode coordinate (y,x) in degrees; preferred_ccode is returned if possible; returns "Worldwide" if all else fails;
-function find_bestiso(y, x, preferred_ccode) {
+/// DEPRECATED return a territoryNumber which could PROBABLY encode coordinate (y,x) in degrees; optional preferredTerritoryNumber is returned if possible; returns "international" if all else fails;
+function find_bestiso(y, x, preferredTerritoryNumber) {
     var ox = Math.round(x * 1000000);
     var oy = Math.round(y * 1000000);
-
-    var run;
-    for (run = 0; run <= 1; run++) {
-        var i;
-        for (i = 0; i < ccode_earth; i++) {
-            if (run == 0 && preferred_ccode && preferred_ccode >= 0 && preferred_ccode <= ccode_earth)
-                i = preferred_ccode;
-
-            var upto = dataLastRecord(i);
-            minmaxSetup(upto); // find encompassing rect
-            if (oy >= miny && oy < maxy && isInRange(ox, minx, maxx))
-                return i;
-            if (run == 0) break;
-        }
+    // see if inside preferredTerritoryNumber?
+    if (preferredTerritoryNumber && preferredTerritoryNumber >= 0 && preferredTerritoryNumber <= ccode_earth) {
+        minmaxSetup(dataLastRecord(preferredTerritoryNumber)); // get encompassing rectangle
+        if (fitsInside(oy, ox, minx, maxx, miny, maxy))
+            return preferredTerritoryNumber;
+    }    
+    // find first fit
+    var i;
+    for (i = 0; i < ccode_earth; i++) {
+        minmaxSetup(dataLastRecord(i)); // get encompassing rectangle
+        if (fitsInside(oy, ox, minx, maxx, miny, maxy))
+            return i;
     }
+    // assume earth
     return ccode_earth;
 }
 
-/// low-level tables for mapcode encoding and decosing
+/// low-level tables for mapcode encoding and decoding
 var xdivider19 = [
     360, 360, 360, 360, 360, 360, 361, 361, 361, 361,    //  5.2429 degrees
     362, 362, 362, 363, 363, 363, 364, 364, 365, 366,    // 10.4858 degrees
@@ -385,7 +411,7 @@ var nc = [1, 31, 961, 29791, 923521, 28629151, 887503681];
 var xside = [0, 5, 31, 168, 961, 168 * 31, 29791, 165869, 923521, 5141947, 28629151];
 var yside = [0, 6, 31, 176, 961, 176 * 31, 29791, 165869, 923521, 5141947, 28629151];
 
-var decode_chars = [
+var decodeChar = [
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -403,14 +429,14 @@ var decode_chars = [
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
-var encode_chars = [
+var encodeChar = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M',
     'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z',
     'A', 'E', 'U'];
-/* 1.50 */
 
-function x_divider(miny, maxy) {
+/// PRIVATE given a minimum and maximum latitude, returns a relative stretch factor (in 360th) for the longitude
+function xDivider4(miny, maxy) {
     if (miny >= 0)
         return xdivider19[(miny) >> 19];
     if (maxy >= 0)
@@ -418,26 +444,27 @@ function x_divider(miny, maxy) {
     return xdivider19[(-maxy) >> 19];
 }
 
-/// lowest level encode/decode routines
-function fast_decode(code) {
+/// PRIVATE lowest level encode/decode routines
+
+function decodeBase31(str) {
     var value = 0;
     var i;
-    for (i = 0; i < code.length; i++) {
-        var c = code.charCodeAt(i);
+    for (i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i);
         if (c == 46) // dot!
             return value;
-        if (decode_chars[c] < 0)
+        if (decodeChar[c] < 0)
             return NaN;
-        value = value * 31 + decode_chars[c];
+        value = value * 31 + decodeChar[c];
     }
     return value;
 }
 
 
-function decode_triple(result) {
+function decodeTriple(result) {
     var triplex, tripley;
-    var c1 = decode_chars[result.charCodeAt(0)];
-    var x = fast_decode(result.substr(1));
+    var c1 = decodeChar[result.charCodeAt(0)];
+    var x = decodeBase31(result.substr(1));
     if (c1 < 24) {
         triplex = (c1 % 6) * 28 + Math.floor(x / 34);
         tripley = Math.floor(c1 / 6) * 34 + Math.floor(x % 34);
@@ -449,7 +476,7 @@ function decode_triple(result) {
     return {y: tripley, x: triplex}
 }
 
-function decode6(v, width, height) {
+function decodeSixWide(v, width, height) {
     var D = 6;
     var col = Math.floor(v / (height * 6));
     var maxcol = Math.floor((width - 4) / 6);
@@ -463,7 +490,7 @@ function decode6(v, width, height) {
     return {y: y6, x: x6}
 }
 
-function encode6(x, y, width, height) {
+function encodeSixWide(x, y, width, height) {
     var D = 6;
     var col = Math.floor(x / 6);
     var maxcol = Math.floor((width - 4) / 6);
@@ -474,114 +501,125 @@ function encode6(x, y, width, height) {
     return (height * 6 * col) + (height - 1 - y) * D + (x - col * 6);
 }
 
+var getDebugInfo;    // caller must set this to 1 to get debug info about first successful encode
+var mcInfo;
+/*
+    type: 1=topdown nameless, 2=sixwide nameless, 3=regulargrid 4=irregular grid 5=rounded groups 6=unrounded groups
+    rectangles:
+        rectEncompassing : encompassing rectangle of country or subdivision
+        rectArea         : area of the encoding record
+        rectSubarea      : subArea (as determined by prefix)
+        rectZone         : subArea zone (only exists for huge regular grids, e.g. Antarctica)
+        rectRegion       : region in Subarea
+        rectCell         : cell for the mapcode (usually 10x10 meters)
+        rectCell1        : precision 1 cell (usually 2x2 meters)
+        rectCell2        : precision 2 cell (usually 33x33 cm)
+    other debug information:
+        form = alphanumeric description of mapcode form
+        dotPosition = position to insert dot in mapcode
+        prefixDivx,prefixDivy = how prefix divides the area (if any)
+*/
+
+function asDegreeRect(minx,miny,dx,dy) { return {minx:minx/1000000,miny:miny/1000000,maxx:(minx+dx)/1000000,maxy:(miny+dy)/1000000}; }
+
 /// high-precision extension routines
+function maxMapcodePrecision() { return 8; }
 var use_high_precision = 0; // nr of letters of high-precision postfix (if any) // GLOBAL
 var extrapostfix = ''; // GLOBAL
-function addpostfix(result, extrax4, extray, dividerx4, dividery) {
-    if (!use_high_precision)
-        return result;
-
-    var gx = Math.floor((30 * extrax4) / dividerx4);
-    var gy = Math.floor((30 * extray ) / dividery);
-    var x1 = Math.floor(gx / 6);
-    var x2 = (gx % 6);
-    var y1 = Math.floor(gy / 5);
-    var y2 = (gy % 5);
-
-    extrapostfix = encode_chars[y1 * 5 + x1];
-    if (use_high_precision == 2) extrapostfix += encode_chars[y2 * 6 + x2];
-    return result + '-' + extrapostfix;
+var fraclat=0,fraclon=0;
+function encodeExtension(result, extrax4, extray, dividerx4, dividery,extraDigits,ydirection) {
+  if (!extraDigits) 
+    return result;
+  if (extraDigits > maxMapcodePrecision())
+    extraDigits = maxMapcodePrecision();
+  var encx = (extrax4+4*fraclon) / (dividerx4);
+  var ency = (extray +  fraclat*ydirection) / (dividery );
+  extrapostfix='';    
+  while (extraDigits-->0) {
+    encx*=30;
+    var gx=Math.floor(encx); 
+    if (gx<0) gx=0; else if (gx>29) gx=29;      
+    ency*=30; 
+    var gy=Math.floor(ency); 
+    if (gy<0) gy=0; else if (gy>29) gy=29;
+    var column1=Math.floor(gx/6);
+    var column2=(gx%6);
+    var row1=Math.floor(gy/5);
+    var row2=(gy%5);
+    // add postfix:
+    extrapostfix += encodeChar[ row1*5+column1 ];
+    if (extraDigits-->0)
+      extrapostfix += encodeChar[ row2*6+column2 ];
+    encx-=gx;
+    ency-=gy;
+  } // while
+  return result + '-' + extrapostfix;
 }
 
-function add2res(y, x, dividerx4, dividery, ydirection, orginput) // returns millionths
+function decodeExtension(y, x, dividerx4, dividery, ydirection, orginput)
 {
-    var extrax, extray;
-    if (extrapostfix.length > 0) {
-        var c1 = extrapostfix.charCodeAt(0);
-        c1 = decode_chars[c1];
-        if (c1 < 0) c1 = 0; else if (c1 > 29) c1 = 29;
-        var y1 = Math.floor(c1 / 5);
-        var x1 = (c1 % 5);
-        var c2 = (extrapostfix.length == 2) ? extrapostfix.charCodeAt(1) : 72; // 72='H'=code 15=(3+2*6)
-        c2 = decode_chars[c2];
-        if (c2 < 0) c2 = 0; else if (c2 > 29) c2 = 29;
-        var y2 = Math.floor(c2 / 6);
-        var x2 = (c2 % 6);
-
-        extrax = Math.floor(((x1 * 12 + 2 * x2 + 1) * dividerx4 + 120) / 240);
-        extray = Math.floor(((y1 * 10 + 2 * y2 + 1) * dividery + 30) / 60);
-    }
-    else {
-        extrax = Math.floor(dividerx4 / 8);
-        extray = Math.floor(dividery / 2);
-    }
-
-    x += extrax;
-    y += extray * ydirection;
-    return {y: y, x: x}
+  var extrax, extray;
+  var dividerx=dividerx4 / 4;
+  var processor=1.0;
+  extrax=0;
+  extray=0;
+  var idx = 0;
+  while (idx < extrapostfix.length) {
+    var column1,row1,column2,row2;
+    var halfcolumn=0;
+    var c1 = decodeChar[extrapostfix.charCodeAt(idx++)];
+    if (c1<0) c1=0; else if (c1>29) c1=29;
+    row1 = Math.floor(c1/5); column1 = (c1%5);
+    if (idx < extrapostfix.length) {
+      var c2 = decodeChar[extrapostfix.charCodeAt(idx++)];
+      if (c2<0) c2=0; else if (c2>29) c2=29;
+      row2 =Math.floor(c2/6); column2 = (c2%6);
+    } else { //
+      row2 = 2; 
+      halfcolumn = 0.5;
+      column2 = 3;
+    } //
+    processor *= 30;
+    extrax += ((column1*6 + column2 ))/processor;
+    extray += ((row1*5 + row2 - halfcolumn))/processor;    
+  } //
+  extrax += (0.5/processor);
+  extray += (0.5/processor);  
+  extrax *= dividerx;
+  extray *= dividery;
+  extrax = x + extrax;
+  extray = y + extray*ydirection;
+  return {y: extray, x: extrax}
 }
 
-
-var zonedata = '?'; //    zonedata=?|0|1|array, 0=want zone/dot, 1=want zone/dot/letter, array=res [minx miny maxx maxy,...] set when decoding/encoding // GLOBAL
-var zonebase; //    zonebase=mapcode base for zone (set iff zonedata=0/1) // GLOBAL
-function addzonedata(rely, relx, ygridsize, xgridsize, RESULT, ccode, c1, dividerx, dividery) // returns millionths
-{
-    zonedata = [rely, relx, rely + ygridsize, relx + xgridsize, RESULT + (RESULT.indexOf('.') < 0 ? '.' : '') + (c1 < 0 ? '' : encode_chars[c1]), ccode];
-    if (c1 >= 0) {
-        var dx, dy;
-        var nx, ny;
-        if (c1 < 24) {
-            nx = (c1 % 6) * 28;
-            dx = 28;
-            ny = Math.floor(c1 / 6) * 34;
-            dy = 34;
-        }
-        else {
-            nx = 24 * (c1 - 24);
-            dx = 24;
-            ny = 136;
-            dy = 40;
-        }
-
-        zonedata[6] = rely + ygridsize - ((ny + dy) * dividery);
-        zonedata[7] = relx + (nx * dividerx);
-        zonedata[8] = rely + ygridsize - ((ny   ) * dividery);
-        zonedata[9] = relx + ((nx + dx) * dividerx);
-        return {y: (zonedata[6] + zonedata[8]) / 2, x: (zonedata[7] + zonedata[9]) / 2};
-    } else {
-        return {y: (rely + ygridsize / 2), x: (relx + xgridsize / 2)};
-    }
-}
-
-function decode_grid(result, minx, miny, maxx, maxy, pipe, ccode, m) // for a well-formed result, and integer variables // returns millionths
+function decodeGrid(result, minx, miny, maxx, maxy, headerletter, territoryNumber, m) // for a well-formed result, and integer variables // returns millionths
 {
     var relx, rely;
     var orgresult = result;
-    var codexlen = result.length - 1;
-    var dc = result.indexOf('.');
-    if (dc == 1 && codexlen == 5) {
-        dc++;
+    var prefixlength = result.indexOf('.');
+    var postfixlength = result.length - 1 - prefixlength;
+    if (prefixlength == 1 && postfixlength == 4) {
+        prefixlength++;
+        postfixlength--;
         result = result.charAt(0) + result.charAt(2) + '.' + result.substring(3);
     }
-    var codexlow = codexlen - dc;
-    var codex = 10 * dc + codexlow;
 
     divy = smartdiv(m);
     if (divy == 1) {
-        divx = xside[dc];
-        divy = yside[dc];
-    } else divx = Math.floor(nc[dc] / divy);
+        divx = xside[prefixlength];
+        divy = yside[prefixlength];
+    } else divx = Math.floor(nc[prefixlength] / divy);
 
-    if (dc == 4 && divx == xside[4] && divy == yside[4]) {
+    if (prefixlength == 4 && divx == xside[4] && divy == yside[4]) {
         result = result.charAt(0) + result.charAt(2) + result.charAt(1) + result.substr(3);
     }
 
     var d;
-    var v = fast_decode(result);
+    var v = decodeBase31(result);
 
-    if (divx != divy && codex > 24) // D==6
+    if (divx != divy && prefixlength > 2) // D==6
     {
-        d = decode6(v, divx, divy);
+        d = decodeSixWide(v, divx, divy);
         relx = d.x;
         rely = d.y;
     }
@@ -597,71 +635,89 @@ function decode_grid(result, minx, miny, maxx, maxy, pipe, ccode, m) // for a we
     rely = miny + (rely * ygridsize);
     relx = minx + (relx * xgridsize);
 
-    var dividery = Math.floor(( (((ygridsize)) + yside[codexlow] - 1) / yside[codexlow] ));
-    var dividerx = Math.floor(( (((xgridsize)) + xside[codexlow] - 1) / xside[codexlow] ));
+    var dividery = Math.floor(( (((ygridsize)) + yside[postfixlength] - 1) / yside[postfixlength] ));
+    var dividerx = Math.floor(( (((xgridsize)) + xside[postfixlength] - 1) / xside[postfixlength] ));
 
-    var rest = result.substr(dc + 1);
-
-    if (zonedata == 0 || zonedata == 1) {
-        var c1 = (zonedata == 0 || rest.length != 3) ? -1 : decode_chars[rest.charCodeAt(0)];
-        return addzonedata(rely, relx, dividery * yside[codexlow], dividerx * xside[codexlow], pipe + orgresult.substring(0, dc), ccode, c1, dividerx, dividery);
-    }
+    var rest = result.substr(prefixlength + 1);
 
     // decoderelative (postfix vs rely,relx)
     var difx;
     var dify;
-    var nrchars = rest.length;
-
-    if (nrchars == 3) {
-        d = decode_triple(rest);
+    if (postfixlength == 3) {
+        d = decodeTriple(rest);
         difx = d.x;
         dify = d.y;
     }
     else {
-        if (nrchars == 4)
+        if (postfixlength == 4)
             rest = rest.charAt(0) + rest.charAt(2) + rest.charAt(1) + rest.charAt(3);
-        v = fast_decode(rest);
-        difx = Math.floor(v / yside[nrchars]);
-        dify = Math.floor(v % yside[nrchars]);
+        v = decodeBase31(rest);
+        difx = Math.floor(v / yside[postfixlength]);
+        dify = Math.floor(v % yside[postfixlength]);
     }
 
-    dify = yside[nrchars] - 1 - dify;
+    dify = yside[postfixlength] - 1 - dify;
 
     var cornery = rely + (dify * dividery);
     var cornerx = relx + (difx * dividerx);
-    return add2res(cornery, cornerx, dividerx << 2, dividery, 1, pipe + result)
+    return decodeExtension(cornery, cornerx, dividerx << 2, dividery, 1, headerletter + result)
 }
 
 
-function fast_encode(value, nrchars) {
+function encodeBase31(value, nrchars) {
     var result = '';
     while (nrchars-- > 0) {
-        result = encode_chars[value % 31] + result;
+        result = encodeChar[value % 31] + result;
         value = Math.floor(value / 31);
     }
     return result;
 }
 
-function encode_triple(difx, dify) {
+function encodeTriple(difx, dify, dividerx, dividery) {
     if (dify < 4 * 34)
-        return encode_chars[(Math.floor(difx / 28) + 6 * Math.floor(dify / 34))] + fast_encode((difx % 28) * 34 + (dify % 34), 2);
+    {
+        var rx=Math.floor(difx / 28);
+        var ry=Math.floor(dify / 34);
+        var cx=(difx % 28);
+        var cy=(dify % 34);
+        if (getDebugInfo) mcInfo.rectRegion=asDegreeRect( (1000000*mcInfo.rectSubarea.minx)+((28 * rx * dividerx)), (1000000*(mcInfo.rectSubarea.maxy))-(((34*ry)+34) * dividery),28*dividerx,34*dividery);
+        return encodeChar[(rx + 6 * ry)] + encodeBase31(cx * 34 + cy, 2);
+    }
     else
-        return encode_chars[Math.floor(difx / 24) + 24] + fast_encode((difx % 24) * 40 + (dify - 136), 2);
+    {
+        var rx=Math.floor(difx / 24);
+        var cx=(difx % 24);
+        if (getDebugInfo) mcInfo.rectRegion=asDegreeRect( (1000000*mcInfo.rectSubarea.minx)+(24 * rx * dividerx) , 1000000*mcInfo.rectSubarea.miny, 24*dividerx, 40*dividery );
+        return encodeChar[rx + 24] + encodeBase31(cx * 40 + (dify - 136), 2);
+    }
 }
 
 
-function encode_grid(m, y, x, codex, minx, miny, maxx, maxy, pipe, ccode) {
+function encodeGrid(m, y, x, codex, minx, miny, maxx, maxy, headerletter, territoryNumber) {
     var orgcodex = codex;
     if (codex == 14) codex = 23;
-    var dc = Math.floor(codex / 10);
-    var codexlow = (codex % 10);
+    var prefixlength = Math.floor(codex / 10);
+    var postfixlength = (codex % 10);
 
     divy = smartdiv(m);
     if (divy == 1) {
-        divx = xside[dc];
-        divy = yside[dc];
-    } else divx = Math.floor(nc[dc] / divy);
+        divx = xside[prefixlength];
+        divy = yside[prefixlength];
+        if (getDebugInfo) mcInfo={type:3,regular:true,form:(prefixlength==2 ? 'rr' : 'rrrr')};
+    }
+    else {
+        divx = Math.floor(nc[prefixlength] / divy);
+        if (getDebugInfo) mcInfo={type:4,regular:false,form:(prefixlength==2 ? 'ss' : prefixlength==3 ? 'sss' : 'ssss')};
+        
+    }
 
+    if (getDebugInfo) {
+        mcInfo.dotPosition = (headerletter ? prefixlength+1 : prefixlength);
+        if (headerletter) mcInfo.form = 'h' + mcInfo.form;
+        mcInfo.headerletter = headerletter;
+        mcInfo.prefixDivx = divx;
+        mcInfo.prefixDivy = divy;
+    }
 
     var ygridsize = Math.floor((maxy - miny + divy - 1) / divy);
     var rely = y - miny;
@@ -685,28 +741,30 @@ function encode_grid(m, y, x, codex, minx, miny, maxx, maxy, pipe, ccode) {
     var v;
     if (divx != divy && codex > 24) // D==6
     {
-        v = encode6(relx, rely, divx, divy);
+        v = encodeSixWide(relx, rely, divx, divy);
     }
     else {
         v = relx * divy + (divy - 1 - rely);
     }
-    result = fast_encode(v, dc);
+    result = encodeBase31(v, prefixlength);
 
 
-    if (dc == 4 && divx == xside[4] && divy == yside[4])
-        result = result.charAt(0) + result.charAt(2) + result.charAt(1) + result.charAt(3);
+    if (prefixlength == 4 && divx == 961 && divy == 961) {
+        result = result.charAt(0) + result.charAt(2) + result.charAt(1) + result.charAt(3);        
+    }
+
+    if (getDebugInfo && prefixlength == 4 && divx == 961 && divy == 961) 
+       mcInfo.rectZone=asDegreeRect( minx + 31 * xgridsize * Math.floor(relx/31), miny + 31 * ygridsize * Math.floor(rely/31), xgridsize * 31, ygridsize * 31 );
 
     rely = miny + (rely * ygridsize);
     relx = minx + (relx * xgridsize);
 
-    var dividery = Math.floor((((ygridsize)) + yside[codexlow] - 1) / yside[codexlow]);
-    var dividerx = Math.floor((((xgridsize)) + xside[codexlow] - 1) / xside[codexlow]);
+    var dividery = Math.floor((((ygridsize)) + yside[postfixlength] - 1) / yside[postfixlength]);
+    var dividerx = Math.floor((((xgridsize)) + xside[postfixlength] - 1) / xside[postfixlength]);
 
     result += '.';
 
     // encoderelative
-
-    var nrchars = codexlow;
 
     var difx = x - relx;
     var dify = y - rely;
@@ -714,16 +772,23 @@ function encode_grid(m, y, x, codex, minx, miny, maxx, maxy, pipe, ccode) {
     var extray = dify % dividery;
     difx = Math.floor(difx / dividerx);
     dify = Math.floor(dify / dividery);
+    dify = yside[postfixlength] - 1 - dify;
 
-    dify = yside[nrchars] - 1 - dify;
-    if (nrchars == 3) {
-        result += encode_triple(difx, dify);
+    if (getDebugInfo) {
+        mcInfo.rectSubarea=asDegreeRect( relx, rely, dividerx * xside[postfixlength], dividery * yside[postfixlength] );
+        mcInfo.rectCell=asDegreeRect( (relx+difx*dividerx), (rely+(yside[postfixlength] - 1 - dify)*dividery) , dividerx, dividery );
+        mcInfo.form += (postfixlength==2 ? 'pp' : (postfixlength==3 ? 'ppp' : 'pppp'))
+        mcInfo.postfixType=postfixlength;
+    }
+
+    if (postfixlength == 3) {
+        result += encodeTriple(difx, dify, dividerx, dividery);
     }
     else {
-
-        var postfix = fast_encode((difx) * yside[nrchars] + dify, nrchars);
-        if (nrchars == 4) {
+        var postfix = encodeBase31((difx) * yside[postfixlength] + dify, postfixlength);
+        if (postfixlength == 4) {
             postfix = postfix.charAt(0) + postfix.charAt(2) + postfix.charAt(1) + postfix.charAt(3);
+            if (getDebugInfo) mcInfo.rectRegion=asDegreeRect( relx + (31 * Math.floor(difx/31) * dividerx), rely + (31 * Math.floor((yside[postfixlength] - 1 - dify)/31) * dividery), 31*dividerx, 31*dividery );
         }
         result += postfix;
     }
@@ -731,14 +796,10 @@ function encode_grid(m, y, x, codex, minx, miny, maxx, maxy, pipe, ccode) {
 
     if (orgcodex == 14) {
         result = result.charAt(0) + '.' + result.charAt(1) + result.substring(3);
+        if (getDebugInfo) mcInfo.dotPosition--;
     }
 
-    if (codexlow == 3 || (codex == 44)) if (zonedata == 0 || zonedata == 1) {
-        var c1 = (zonedata == 0 || codexlow != 3) ? -1 : decode_chars[result.charCodeAt(dc + 1)];
-        addzonedata(rely, relx, dividery * yside[codexlow], dividerx * xside[codexlow], pipe + result.substring(0, dc + 1), ccode, c1, dividerx, dividery)
-    }
-
-    return addpostfix(pipe + result, extrax << 2, extray, dividerx << 2, dividery);
+    return encodeExtension(headerletter + result, extrax << 2, extray, dividerx << 2, dividery,use_high_precision,1); // grid
 }
 
 
@@ -752,7 +813,7 @@ var asc2lan = [
     [1488, 1489, 1490, 1491, 1507, 1492, 1494, 1495, 1493, 1496, 1497, 1498, 1499, 1500, 1505, 1501, 1502, 1504, 1506, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Hebrew
     [2309, 2325, 2327, 2328, 2319, 2330, 2332, 2335, 63, 2336, 2339, 2340, 2342, 2343, 63, 2344, 2346, 2349, 2350, 2352, 2347, 2354, 2357, 2360, 2361, 2337, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415], // Hindi
     [3346, 3349, 3350, 3351, 3339, 3354, 3356, 3359, 3335, 3361, 3364, 3365, 3366, 3367, 3360, 3368, 3374, 3376, 3377, 3378, 3337, 3380, 3381, 3382, 3384, 3385, 3430, 3431, 3432, 3433, 3434, 3435, 3436, 3437, 3438, 3439], // Malay
-    [4256, 4257, 4259, 4262, 4260, 4265, 4267, 4268, 4275, 4270, 4272, 4273, 4274, 4276, 4269, 4277, 4278, 4279, 4280, 4281, 4264, 4282, 4283, 4285, 4286, 4287, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Georgisch
+    [4256, 4257, 4259, 4262, 4260, 4265, 4267, 4268, 4275, 4270, 4272, 4273, 4274, 4276, 4269, 4277, 4278, 4279, 4280, 4281, 4264, 4282, 4283, 4285, 4286, 4287, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Georgian
     [12450, 12459, 12461, 12463, 12458, 12465, 12467, 12469, 12452, 12473, 12481, 12488, 12490, 12492, 12454, 12498, 12501, 12504, 12507, 12513, 12456, 12514, 12520, 12521, 12525, 12530, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Katakana
     [3632, 3585, 3586, 3588, 3634, 3591, 3592, 3593, 3633, 3594, 3601, 3604, 3606, 3607, 3597, 3608, 3610, 3612, 3617, 3619, 3628, 3621, 3623, 3629, 3630, 3631, 3664, 3665, 3666, 3667, 3668, 3669, 3670, 3671, 3672, 3673], // Thai
     [3760, 3713, 3714, 3716, 3779, 3719, 3720, 3722, 3780, 3725, 3732, 3735, 3737, 3738, 3782, 3740, 3742, 3745, 3746, 3747, 3773, 3751, 3754, 3755, 3757, 3759, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Lao
@@ -770,7 +831,7 @@ var lannam = [
     ["Hebrew"],
     ["Hindi"],
     ["Malay"],
-    ["Georgisch"],
+    ["Georgian"],
     ["Katakana"],
     ["Thai"],
     ["Lao"],
@@ -799,7 +860,7 @@ var lanlannam = [
 ];
 
 
-/// substitute characters in str with characters form the specified language (pass asHTML=1 to explicitly HTML-encode characters)
+/// PRIVATE substitute characters in str with characters form the specified language (pass asHTML=1 to explicitly HTML-encode characters)
 function showinlan(str, lan, asHTML) {
     if (!lan) return str;
 
@@ -818,12 +879,12 @@ function showinlan(str, lan, asHTML) {
         var i;
         for (i = 0; i < str.length; i++) {
             var c = str.charCodeAt(i);
-            if (c >= 65 && c <= 93)
+            if (c >= 65 && c <= 90)
                 c = asc2lan[lan][c - 65];
             else if (c >= 48 && c <= 57)
                 c = asc2lan[lan][c + 26 - 48];
 
-            if (asHTML)
+            if (asHTML && (c<32 || c>93))
                 result += '&#' + c + ';';
             else
                 result += String.fromCharCode(c);
@@ -832,10 +893,11 @@ function showinlan(str, lan, asHTML) {
     return result;
 }
 
-
+/// PRIVATE convert all characters to Roman (ASCII) alphabet (if possible)
 function to_ascii(str) {
     var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     var result = '';
+    str=trim(str).toUpperCase();
     var len = str.length;
     var i;
     var trans = 0;
@@ -868,9 +930,10 @@ function to_ascii(str) {
 }
 
 
-/// low-level data access // GLOBAL
-var flags, codex, codexlo, codexhi, codexlen;
-var iscountry, isnameless, isuseless, pipetype, pipeletter, isSpecialShape22;
+/// PRIVATE lowest-level data access 
+
+var flags, codex, codexlo, codexhi, codexlen; // GLOBAL
+var isnameless, isrestricted, recType, isSpecialShape22; // GLOBAL
 
 function dataSetup(i) {
     flags = data_flags[i];
@@ -878,13 +941,11 @@ function dataSetup(i) {
     codexlo = ((flags & 31) % 5) + 1;
     codexlen = codexlo + codexhi;
     codex = 10 * codexhi + codexlo;
-    iscountry = (flags & 32);
+    // iscountry = (flags & 32);
     isnameless = (flags & 64);
-    isuseless = (flags & 512);
+    isrestricted = (flags & 512);
     isSpecialShape22 = (flags & 1024);
-    pipetype = ((flags >> 5) & 12); // 4=pipe 8=plus 12=star
-    if (pipetype == 4)
-        pipeletter = encode_chars[(flags >> 11) & 31];
+    recType = ((flags >> 7) & 3); // 1=pipe 2=plus 3=star
     if (codex == 21 && isnameless == 0) {
         codex++;
         codexlo++;
@@ -893,16 +954,22 @@ function dataSetup(i) {
     minmaxSetup(i);
 }
 
+function headerLetter(i) {
+    var flags = data_flags[i];
+    if (((flags >> 7) & 3)==1)
+        return encodeChar[(flags >> 11) & 31];
+    return '';
+}
 function smartdiv(i) {
     return data_special1[i];
 }
-function isUseless(i) {
+function isRestricted(i) {
     return data_flags[i] & 512;
 }
 function isNameless(i) {
     return data_flags[i] & 64;
 }
-function isStarpipe(i) {
+function isAutoHeader(i) {
     return data_flags[i] & (8 << 5);
 }
 function CodexLen(i) {
@@ -919,24 +986,27 @@ function isSpecialShape(i) {
     return data_flags[i] & 1024;
 }
 
-var first_nameless_record; // GLOBAL
-function count_city_coordinates_for_country(samecodex, index, firstcode) {
+function firstNamelessRecord(samecodex, index, firstcode) {
     var i = index;
     while (i >= firstcode && Codex(i) == samecodex && isNameless(i)) i--;
     i++;
-    first_nameless_record = i;
-    var e = index;
-    while (Codex(e) == samecodex) e++;
-    e--;
-    return (e - i + 1);
+    return i;
 }
 
+function countNamelessRecords(samecodex, index, firstcode) {
+    var i = firstNamelessRecord(samecodex, index, firstcode);
+    var e = index;
+    while (Codex(e) == samecodex) e++;
+    return (e-i);
+}
+
+
 // mid-level encode/decode
-function encode_nameless(x, y, index, firstcode) {
-    var A = count_city_coordinates_for_country(codex, index, firstcode);
+function encodeNameless(x, y, index, firstcode) {
+    var A = countNamelessRecords(codex, index, firstcode);
     var p = Math.floor(31 / A);
     var r = (31 % A);
-    var X = index - first_nameless_record;
+    var X = index - firstNamelessRecord(codex, index, firstcode);
 
     if (A > 1) {
         var storage_offset = 0;
@@ -975,47 +1045,73 @@ function encode_nameless(x, y, index, firstcode) {
             xSIDE = Math.floor(xSIDE / SIDE);
         }
 
-        var dividerx4 = x_divider(miny, maxy); // 4 times too large
-        var dx = Math.floor((4 * (x - minx)) / dividerx4); // div with floating point value
-        var extrax4 = (x - minx) * 4 - dx * dividerx4; // mod with floating point value
+        var dividerx4 = xDivider4(miny, maxy); // note that xDivider4 is 4 times too large
+        var xFracture = Math.floor(4*fraclon);
+        var dx = Math.floor((4 * (x - minx) + xFracture) / dividerx4); // dx is in millionths
+        var extrax4 = (x - minx) * 4 - dx * dividerx4; // extrax4 is in quarter-millionths
 
         var dividery = 90;
         var dy = Math.floor((maxy - y) / dividery);
         var extray = (maxy - y) % dividery;
 
-        var v = storage_offset;
-        if (isSpecialShape22)
-            v += encode6(dx, SIDE - 1 - dy, xSIDE, SIDE);
-        else
-            v += (dx * SIDE + dy);
+        if (extray==0 && fraclat>0) {
+            dy--;
+            extray += dividery;              
+        }
 
-        var result = fast_encode(v, codexlen + 1);
+        var v = storage_offset;
+        if (isSpecialShape22) {
+            v += encodeSixWide(dx, SIDE - 1 - dy, xSIDE, SIDE);
+        }
+        else {
+            v += (dx * SIDE + dy);
+        }
+
+        if (getDebugInfo) {
+            mcInfo={type:(isSpecialShape22 ? 2 : 1),regular:false}; 
+            mcInfo.rectCell=asDegreeRect( minx + dx*(dividerx4/4), maxy - (dy+1)*dividery, dividerx4/4, dividery );
+            mcInfo.prefixDivx = xSIDE;
+            mcInfo.prefixDivy = SIDE;
+            mcInfo.dotPosition = (codex==22 ? 3 : 2);
+            mcInfo.form = (codexlen == 3 ? 'nnnn' : 'nnnnn');
+            mcInfo.postfixType=0;
+        }
+
+        var result = encodeBase31(v, codexlen + 1);
 
         if (codexlen == 3) {
             result = result.substr(0, 2) + '.' + result.substr(2);
         }
         else if (codexlen == 4) {
-            if (codex == 22 && A < 62 && orgSIDE == 961 && !isSpecialShape22)
+            if (codex == 22 && orgSIDE == 961 && !isSpecialShape22) {
+                if (getDebugInfo) {
+                    mcInfo.form = 'hrrpp';
+                    mcInfo.headerletter = encodeChar[storage_offset/(961*961)];
+                    mcInfo.postfixType=2;
+                    mcInfo.regular = true;
+                    mcInfo.rectRegion=asDegreeRect( (minx+(31*Math.floor(dx/31)*dividerx4/4)), maxy - (31 * dividery) * (1 + Math.floor(dy/31)), 31*dividerx4/4, 31*dividery );
+                }
                 result = result.charAt(0) + result.charAt(1) + result.charAt(3) + result.charAt(2) + result.charAt(4);
+            }
             if (codex == 13)
                 result = result.substr(0, 2) + '.' + result.substr(2);
             else
                 result = result.substr(0, 3) + '.' + result.substr(3);
         }
 
-        return addpostfix(result, extrax4, extray, dividerx4, dividery)
+        return encodeExtension(result, extrax4, extray, dividerx4, dividery,use_high_precision,-1); // nameless
     }
 }
 
 
-function decode_nameless(result, firstrec) // returns millionths
+function decodeNameless(result, firstrec) // returns millionths
 {
     if (codex == 22)
         result = result.substr(0, 3) + result.substr(4);
     else
         result = result.substr(0, 2) + result.substr(3);
 
-    var A = count_city_coordinates_for_country(codex, firstrec, firstrec);
+    var A = countNamelessRecords(codex, firstrec, firstrec);
     if (A < 2) A = 1; // paranoia
 
     var p = Math.floor(31 / A);
@@ -1025,7 +1121,7 @@ function decode_nameless(result, firstrec) // returns millionths
     var swapletters = 0;
 
     if (codex != 21 && A <= 31) {
-        var offset = decode_chars[result.charCodeAt(0)];
+        var offset = decodeChar[result.charCodeAt(0)];
 
         if (offset < r * (p + 1)) {
             X = Math.floor(offset / (p + 1));
@@ -1036,7 +1132,7 @@ function decode_nameless(result, firstrec) // returns millionths
         }
     }
     else if (codex != 21 && A < 62) {
-        X = decode_chars[result.charCodeAt(0)];
+        X = decodeChar[result.charCodeAt(0)];
         if (X < (62 - A)) {
             swapletters = (codex == 22);
         }
@@ -1051,7 +1147,7 @@ function decode_nameless(result, firstrec) // returns millionths
         if (A == 62) BASEPOWERA++; else BASEPOWERA = 961 * Math.floor(BASEPOWERA / 961);
 
         // decode and determine x
-        v = fast_decode(result);
+        v = decodeBase31(result);
         X = Math.floor(v / BASEPOWERA);
         v %= BASEPOWERA;
     }
@@ -1062,13 +1158,13 @@ function decode_nameless(result, firstrec) // returns millionths
     }
 
     if (codex != 21 && A <= 31) {
-        v = fast_decode(result);
+        v = decodeBase31(result);
         if (X > 0) {
             v -= ( (X * p + (X < r ? X : r)) * (961 * 961) );
         }
     }
     else if (codex != 21 && A < 62) {
-        v = fast_decode(result.substr(1));
+        v = decodeBase31(result.substr(1));
         if (X >= (62 - A))
             if (v >= (16 * 961 * 31)) {
                 v -= (16 * 961 * 31);
@@ -1090,7 +1186,7 @@ function decode_nameless(result, firstrec) // returns millionths
 
     var dx, dy;
     if (isSpecialShape22) {
-        var d = decode6(v, xSIDE, SIDE);
+        var d = decodeSixWide(v, xSIDE, SIDE);
         dx = d.x;
         dy = SIDE - 1 - d.y;
     }
@@ -1102,97 +1198,100 @@ function decode_nameless(result, firstrec) // returns millionths
     if (dx >= xSIDE) // else out-of-range!
         return false;
 
-    var dividerx4 = x_divider(miny, maxy); // 4 times too large!
+    var dividerx4 = xDivider4(miny, maxy); // 4 times too large!
     var dividery = 90;
 
     var cornerx = minx + Math.floor((dx * dividerx4) / 4); // FIRST multiply, THEN divide!
     var cornery = maxy - (dy * dividery);
-    return add2res(cornery, cornerx, dividerx4, dividery, -1, result)
+    var ret = decodeExtension(cornery, cornerx, dividerx4, dividery, -1, result);
+    ret.x += ((dx * dividerx4)%4) / 4.0;
+    return ret;
 }
 
 
-/// returns result, or empty if error
-var first_encode_record = -1; // GLOBAL
-var results = []; // GLOBAL
-
-function encode_starpipe(y, x, thiscodexlen, thisindex, ccode) {
-    var starpipe_result;
-    var done = false;
+function encodeAutoHeader(y, x, thiscodexlen, thisindex, territoryNumber) 
+{
     var STORAGE_START = 0;
 
-    // search back to first pipe star
+    // search back to first of the group
     var firstindex = thisindex;
-    while (isStarpipe(firstindex - 1) && CodexLen(firstindex - 1) == thiscodexlen)
+    while (isAutoHeader(firstindex - 1) && CodexLen(firstindex - 1) == thiscodexlen)
         firstindex--;
 
-    starpipe_result = '';
+    var i;
+    for (i = firstindex; CodexLen(i) == thiscodexlen; i++) {
+        dataSetup(i);
+        var H = Math.floor((maxy - miny + 89) / 90);
+        var xdiv = xDivider4(miny, maxy);
+        var W = Math.floor(( (maxx - minx) * 4 + (xdiv - 1) ) / xdiv);
 
-    for (i = firstindex; ; i++) {
-        if (CodexLen(i) != thiscodexlen) {
-            return starpipe_result;
+        H = 176 * Math.floor((H + 176 - 1) / 176);
+        W = 168 * Math.floor((W + 168 - 1) / 168);
+
+        var product = Math.floor(W / 168) * Math.floor(H / 176) * 961 * 31;
+
+        if (recType == 2) { // *+
+            var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
+            product = Math.floor((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER) * GOODROUNDER - STORAGE_START;
         }
 
-        dataSetup(i);
-        if (!done) {
-            var H = Math.floor((maxy - miny + 89) / 90);
-            var xdiv = x_divider(miny, maxy);
-            var W = Math.floor(( (maxx - minx) * 4 + (xdiv - 1) ) / xdiv);
+        if (i == thisindex) {
+            if (fitsInside(y, x, minx, maxx, miny, maxy)) {
+                var dividerx = Math.floor((maxx - minx + W - 1) / W);
+                var vx = Math.floor((x - minx) / dividerx);
+                var extrax = ((x - minx) % dividerx);
 
-            H = 176 * Math.floor((H + 176 - 1) / 176);
-            W = 168 * Math.floor((W + 168 - 1) / 168);
+                var dividery = Math.floor((maxy - miny + H - 1) / H);
+                var vy = Math.floor((maxy - y) / dividery);
+                var extray = ((maxy - y) % dividery);
 
-            var product = Math.floor(W / 168) * Math.floor(H / 176) * 961 * 31;
+                var spx = vx % 168;
+                var spy = vy % 176;
 
-            if (pipetype == 8) { // *+
-                var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
-                product = Math.floor((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER) * GOODROUNDER - STORAGE_START;
-            }
+                vx = Math.floor(vx / 168);
+                var value = vx * Math.floor(H / 176);
 
-            if (i == thisindex)
-                if (miny <= y && y < maxy && isInRange(x, minx, maxx)) {
-                    var dividerx = Math.floor((maxx - minx + W - 1) / W);
-                    var vx = Math.floor((x - minx) / dividerx);
-                    var extrax = ((x - minx) % dividerx);
-
-                    var dividery = Math.floor((maxy - miny + H - 1) / H);
-                    var vy = Math.floor((maxy - y) / dividery);
-                    var extray = ((maxy - y) % dividery);
-
-                    var spx = vx % 168;
-                    var spy = vy % 176;
-
-                    vx = Math.floor(vx / 168);
-                    vy = Math.floor(vy / 176);
-
-                    var value = (vx * Math.floor(H / 176) + vy);
-
-                    starpipe_result = fast_encode(Math.floor(STORAGE_START / (961 * 31)) + value, codexlen - 2);
-                    starpipe_result += '.';
-                    starpipe_result += encode_triple(spx, spy);
-
-                    if (zonedata == 0 || zonedata == 1) {
-                        var c1 = (zonedata == 0) ? -1 : decode_chars[starpipe_result.charCodeAt(starpipe_result.length - 3)];
-                        addzonedata(maxy - (vy + 1) * dividery * 176, minx + vx * dividerx * 168, 176 * dividery, 168 * dividerx, starpipe_result.substring(0, starpipe_result.length - 3), ccode, c1, dividerx, dividery);
-                    }
-
-                    if (results.length == 0) first_encode_record = i;
-
-                    starpipe_result = addpostfix(starpipe_result, extrax << 2, extray, dividerx << 2, dividery);
-                    done = true; // will be returned soon, but look for end of pipes
+                if ( extray==0 && fraclat>0 ) {
+                  if (vy==0) { 
+                    STORAGE_START += product;
+                    continue;
+                  }
+                  vy--;
+                  extray += dividery;
                 }
-            STORAGE_START += product;
 
-        } //!done
+                vy = Math.floor(vy / 176);
+                value += vy;
+
+
+                if (getDebugInfo) {
+                    mcInfo={type:(recType == 2 ? 6 : 5),regular:false}; // 5=unrounded groups / 6=rounded groups
+                    mcInfo.form = (codexlen==4 ? 'ggppp' : 'gggppp');
+                    mcInfo.postfixType=3;
+                    mcInfo.dotPosition = codexlen-2;
+                    mcInfo.prefixDivx = Math.floor(W / 168);
+                    mcInfo.prefixDivy = Math.floor(H / 176);
+                    mcInfo.rectSubarea=asDegreeRect(minx + (vx*168    )*dividerx, maxy - ((vy+1)*176      )* dividery,168 * dividerx,176 * dividery);                
+                    mcInfo.rectCell   =asDegreeRect(minx + (vx*168+spx)*dividerx, maxy - ((vy  )*176+spy+1)* dividery,      dividerx,      dividery);                
+                }
+
+                var mapc = encodeBase31(Math.floor(STORAGE_START / (961 * 31)) + value, codexlen - 2) + '.' + encodeTriple(spx, spy, dividerx, dividery);
+
+                return encodeExtension(mapc, extrax << 2, extray, dividerx << 2, dividery,use_high_precision,-1); // autoheader
+            }
+        }
+        STORAGE_START += product;
     }
+    return ''; // fail
 }
 
-function decode_starpipe(input, firstindex, ccode) {
+function decodeAutoHeader(input, firstindex, territoryNumber) {
     var STORAGE_START = 0;
     var thiscodexlen = codexlen;
 
-    var value = fast_decode(input); // decode top (before dot)
+    var value = decodeBase31(input); // decode top (before dot)
     value *= (961 * 31);
-    var triple = decode_triple(input.substr(input.length - 3)); // decode bottom 3 chars
+    var triple = decodeTriple(input.substr(input.length - 3)); // decode bottom 3 chars
 
     var i;
     for (i = firstindex; ; i++) {
@@ -1202,7 +1301,7 @@ function decode_starpipe(input, firstindex, ccode) {
         if (i > firstindex) dataSetup(i);
 
         var H = Math.floor((maxy - miny + 89) / 90);
-        var xdiv = x_divider(miny, maxy);
+        var xdiv = xDivider4(miny, maxy);
         var W = Math.floor(( (maxx - minx) * 4 + (xdiv - 1) ) / xdiv);
 
         H = 176 * Math.floor((H + 176 - 1) / 176);
@@ -1210,7 +1309,7 @@ function decode_starpipe(input, firstindex, ccode) {
 
         var product = Math.floor(W / 168) * Math.floor(H / 176) * 961 * 31;
 
-        if (pipetype == 8) { // *+
+        if (recType == 2) { // *+
             var GOODROUNDER = codex >= 23 ? (961 * 961 * 31) : (961 * 961);
             product = Math.floor((STORAGE_START + product + GOODROUNDER - 1) / GOODROUNDER) * GOODROUNDER - STORAGE_START;
         }
@@ -1228,15 +1327,8 @@ function decode_starpipe(input, firstindex, ccode) {
 
             var cornery = maxy - vy * dividery;
             var cornerx = minx + vx * dividerx;
-            /* 1.28 commented out for now while looking into problem feedback
-             {
-             var c1 = (zonedata==0) ? -1 : decode_chars[input.charCodeAt(input.length-3)];
-             var zd=addzonedata(cornery+(triple.y-176)*dividery,cornerx-triple.x*dividerx,176*dividery,168*dividerx,input.substring(0,input.length-3),ccode,c1,dividerx,dividery);
-             cornery=zd.y;
-             cornerx=zd.x;
-             }
-             */
-            var retval = add2res(cornery, cornerx, dividerx << 2, dividery, -1, input);
+
+            var retval = decodeExtension(cornery, cornerx, dividerx << 2, dividery, -1, input);
             if (retval.x < minx || retval.x >= maxx || retval.y < miny || retval.y > maxy)
                 return false;
             return retval;
@@ -1246,6 +1338,7 @@ function decode_starpipe(input, firstindex, ccode) {
 }
 
 
+/// PRIVATE add vowels to prevent a mapcode r from being all-digit
 function aeu_pack(r, short) /* v1.50 */ {
     var dotpos = -9;
     var rlen = r.length;
@@ -1267,120 +1360,152 @@ function aeu_pack(r, short) /* v1.50 */ {
     if (rlen - 2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?
         if (short) { /* v1.50 new way: use only A */
             v = (r.charCodeAt(0) - 48) * 100 + (r.charCodeAt(rlen - 2) - 48) * 10 + (r.charCodeAt(rlen - 1) - 48);
-            r = 'A' + r.substring(1, rlen - 2) + encode_chars[Math.floor(v / 32)] + encode_chars[v % 32]; // 1.50
+            r = 'A' + r.substring(1, rlen - 2) + encodeChar[Math.floor(v / 32)] + encodeChar[v % 32]; // 1.50
         }
         else { /* old way: use A, E and U */
             v = (r.charCodeAt(rlen - 2) - 48) * 10 + (r.charCodeAt(rlen - 1) - 48);
-            r = r.substring(0, rlen - 2) + encode_chars[Math.floor(v / 34) + 31] + encode_chars[v % 34]; // v1.50
+            r = r.substring(0, rlen - 2) + encodeChar[Math.floor(v / 34) + 31] + encodeChar[v % 34]; // v1.50
         }
     }
     return r + rest;
 }
 
-var stop_at_encode = -1; // GLOBAL
-function master_encode(orgy, orgx, ccode, isrecursive, stop_with_one_result, allowworld, state_override) {
-    if (!isrecursive) {
-        results.length = 0;
-        first_encode_record = -1;
-    }
-    var first_result_index = results.length;
-
-    if (isNaN(ccode) || ccode < 0 || ccode > ccode_earth) ccode = ccode_earth;
+// PRIVATE (defaults for last 4 are false,false,false,-1)
+var debugStopRecord = -1; // GLOBAL
+/// returns result, or empty if error
+var results; // GLOBAL
+function mapcoderEngine(orgy, orgx, tn, getshortest, isrecursive, state_override) 
+{
+    // round to millionths and normalise
     if (isNaN(orgx)) orgx = 0;
     if (isNaN(orgy)) orgy = 0;
-    if (orgy > 90) orgy -= 180; else if (orgy < -90) orgy += 180;
-    if (orgx > 179.999999) orgx -= 360; else if (orgx < -180) orgx += 180;
+    orgy=Number(orgy);
+    orgx=Number(orgx);
+    if (orgy > 90) orgy = 90; else if (orgy < -90) orgy = -90; // cut within [-90..+90]
+    if (orgx >= 180) orgx -= 360; else if (orgx < -180) orgx += 360; // move within [-180..+180>
 
-    var from = dataFirstRecord(ccode);
-    if (!data_flags[from]) return '';   // 1.27 survive partially filled data_ array
-    var upto = dataLastRecord(ccode);
+{ // seperate out the fraction
+    var y = orgy +  90;
+    var x = orgx + 180;
+    y*=1000000;
+    x*=1000000;
+    var lat32=Math.floor(y);
+    var lon32=Math.floor(x);
+    fraclat=y-lat32; // get fraction
+    fraclon=x-lon32; // get fraction
+  
+    // for 8-digit precision, cells are divided into 810,000 by 810,000 minicells. So take care of math errors
+    fraclat *= 810000; if (fraclat<1) fraclat=0; else { if (fraclat>809999) { fraclat=0; lat32++; } else fraclat /= 810000; }
+    fraclon *= 810000; if (fraclon<1) fraclon=0; else { if (fraclon>809999) { fraclon=0; lon32++; } else fraclon /= 810000; }
 
-    var y = Math.round(orgy * 1000000);
-    var x = Math.round(orgx * 1000000);
 
-    // LIMIT_TO_OUTRECT : make sure it fits the country
-    if (ccode != ccode_earth) {
+    y = lat32 -  90000000;
+    x = lon32 - 180000000;
+} //
+
+    mcInfo = {type:0};
+	
+    if (!isrecursive) results=[];
+
+    var fromTerritory=0;
+    var uptoTerritory=ccode_earth;
+    if (tn!=undefined) {
+        if (isNaN(tn) || tn < 0 || tn > ccode_earth)
+            tn = ccode_earth;
+        fromTerritory=tn;
+        uptoTerritory=tn;
+    }
+
+  var debugStopFailed = 1;
+  var territoryNumber;
+  for(territoryNumber=fromTerritory;territoryNumber<=uptoTerritory;territoryNumber++)
+  {
+    var original_length = results.length;
+    var from = dataFirstRecord(territoryNumber);
+    if (!data_flags[from]) continue;   // 1.27 survive partially filled data_ array
+    var upto = dataLastRecord(territoryNumber);
+
+    // make sure it fits the country
+    if (territoryNumber != ccode_earth) {
         minmaxSetup(upto); // find encompassing rect
-        if (!( miny <= y && y < maxy && isInRange(x, minx, maxx) )) // no fit?
-        {
+        if (!(fitsInside(y, x, minx, maxx, miny, maxy))) { // does not fit?
             if (isrecursive)
-                return '';
+                return;
             from = upto + 1; // empty the range
         }
     }
 
-    var i;
-    for (i = from; i <= upto; i++) {
+    for (var i=from; i <= upto; i++) {
         dataSetup(i);
         if (codex < 54) // exlude 54 and 55
         {
-            if (miny <= y && y < maxy && isInRange(x, minx, maxx)) {
-                var r = '';
-                if (results.length == 0) first_encode_record = i;
-                if (isuseless && i == upto && StateParent(ccode) >= 0) {
-                    //if ( ! isrecursive ) // 1.30 always produce recursive results
-                    {
-                        master_encode(orgy, orgx, StateParent(ccode), true, stop_with_one_result, allowworld, ccode); // ccode= state override
-                    }
-                    continue;
+            if (fitsInside(y, x, minx, maxx, miny, maxy)) {
+                var r;
+                if (isnameless) {
+                    r = encodeNameless(x, y, i, from);
                 }
-                else if (pipetype == 0 && isnameless == 0) {
-                    if (isuseless && results.length == first_result_index) {
-                        // RESTRICTUSELESS : ignore! nothing was found yet in non-useless records!
+                else if (recType > 1) {
+                    r = encodeAutoHeader(y, x, codexlen, i, territoryNumber);
+                }
+                else if (isrestricted && i == upto && getParentOf(territoryNumber) >= 0) {
+                    mapcoderEngine(orgy, orgx, getParentOf(territoryNumber), getshortest, true/*recursive*/, territoryNumber);
+                    continue;
+                }                
+                else {
+                    if (isrestricted && results.length == original_length) {
+                        r = ''; // restricted, and no shorter mapcodes exist: do not generate mapcodes
                     }
                     else {
-                        r = encode_grid(i, y, x, codex, minx, miny, maxx, maxy, '', ccode);
+                        r = encodeGrid(i, y, x, codex, minx, miny, maxx, maxy, headerLetter(i), territoryNumber);
                     }
                 }
-                else if (pipetype == 4) {
-                    r = encode_grid(i, y, x, codex, minx, miny, maxx, maxy, pipeletter, ccode);
-                }
-                else if (isnameless) { // auto-pipe 21/22
-                    r = encode_nameless(x, y, i, from);
-                }
-                else { // pipe star, pipe plus
-                    r = encode_starpipe(y, x, codexlen, i, ccode);
-                }
-
-                var rlen = r.length;
-                if (rlen > 4) {
+                
+                if (r.length > 4) {
                     r = aeu_pack(r);
 
-                    var storecode = ccode;
-                    if (typeof state_override != undefined)
-                        if (state_override >= 0)
-                            storecode = state_override;
+                    var storecode = territoryNumber;
+                    if (state_override != undefined && state_override >= 0)
+                        storecode = state_override;
 
-                    if (stop_at_encode >= 0 && stop_at_encode == i) {
-                        results.length = 0;
-                        results[0] = [r, storecode];
-                        return results;
+                    if (debugStopRecord==i) { 
+                        debugStopFailed = 0; 
+                        results.length = 0; // clear all other results
                     }
 
-                    results[results.length] = [r, storecode];
+					
+                    if (getDebugInfo) {
+                        mcInfo.mapcode=r;
+                        mcInfo.record=i;
+                        mcInfo.rectArea=asDegreeRect(minx,miny,maxx-minx,maxy-miny);
+                        mcInfo.form=mcInfo.form.substr(0,mcInfo.dotPosition)+'.'+mcInfo.form.substr(mcInfo.dotPosition);
+                        dataSetup(upto);
+                        mcInfo.rectEncompassing=asDegreeRect(minx,miny,maxx-minx,maxy-miny);
+                    }
+                    else {
+                        mcInfo={mapcode:r};
+                    }
+                    mcInfo.territoryAlphaCode=getTerritoryAlphaCode(storecode);
+                    mcInfo.fullmapcode=(storecode==ccode_earth ? '' : mcInfo.territoryAlphaCode+' ') + r;
+                    mcInfo.territoryNumber=storecode;
+                    results.push(mcInfo);
 
-                    if (stop_with_one_result)
-                        return results;
-
-
+                    if (getshortest || debugStopRecord==i)
+                        break;
                 }
-            } // in rect
+            } // inside territory rectangle
         }
     }
+  }
 
-    if (allowworld)
-        if (!isrecursive)
-            if (ccode != ccode_earth)
-                return master_encode(orgy, orgx, ccode_earth, true, stop_with_one_result, false, -1);
-
-    if (stop_at_encode >= 0)
+  if (debugStopRecord>=0 && debugStopFailed)
         results.length = 0;
 
-    return results;
+  return results;
 }
 
 
-function aeu_unpack(str) // unpack encoded into all-digit (assume str already uppercase!)
+/// PRIVATE remove vowels from mapcode str into an all-digit mapcode (assumes str is already uppercase!)
+function aeu_unpack(str)
 {
     var voweled = 0;
     var lastpos = str.length - 1;
@@ -1389,9 +1514,9 @@ function aeu_unpack(str) // unpack encoded into all-digit (assume str already up
 
     if (str.charAt(0) == 'A') /* V1.50 */
     {
-        var v1 = decode_chars[str.charCodeAt(lastpos)];
+        var v1 = decodeChar[str.charCodeAt(lastpos)];
         if (v1 < 0) v1 = 31;
-        var v2 = decode_chars[str.charCodeAt(lastpos - 1)];
+        var v2 = decodeChar[str.charCodeAt(lastpos - 1)];
         if (v2 < 0) v2 = 31;
         var s = String(1000 + v1 + 32 * v2);
         str = s.charAt(1) + str.substring(1, lastpos - 1) + s.charAt(2) + s.charAt(3);
@@ -1409,77 +1534,75 @@ function aeu_unpack(str) // unpack encoded into all-digit (assume str already up
         if (v >= 0) {
             var e = str.charAt(lastpos);
             if (e == 'A') v += 31; else if (e == 'E') v += 32; else if (e == 'U') v += 33; else {
-                var ve = decode_chars[str.charCodeAt(lastpos)];
+                var ve = decodeChar[str.charCodeAt(lastpos)];
                 if (ve < 0) return '';
                 v += ve;
             }
             if (v >= 100) return '';
             voweled = 1;
-            str = str.substring(0, lastpos - 1) + encode_chars[Math.floor(v / 10)] + encode_chars[Math.floor(v % 10)];
+            str = str.substring(0, lastpos - 1) + encodeChar[Math.floor(v / 10)] + encodeChar[Math.floor(v % 10)];
         }
     }
 
     if (dotpos < 2 || dotpos > 5) return '';
 
     for (v = 0; v <= lastpos; v++) if (v != dotpos)
-        if (decode_chars[str.charCodeAt(v)] < 0)
+        if (decodeChar[str.charCodeAt(v)] < 0)
             return ''; // bad char!
-        else if (voweled && decode_chars[str.charAt(v)] > 9)
+        else if (voweled && decodeChar[str.charAt(v)] > 9)
             return ''; // nonodigit!
 
 
     return str;
 }
 
-function master_decode(mapcode, ccode) // returns object with y and x fields, or false
+/// PRIVATE decode a PROPER mapcode within a KNOWN territory number to an x,y coordinate (or false)
+function master_decode(mapcode, territoryNumber) // returns object with y and x fields, or false
 {
-    var result;
+    mapcode = to_ascii(mapcode);
 
     var minpos = mapcode.indexOf('-');
     if (minpos > 0) {
         extrapostfix = trim(mapcode.substring(minpos + 1));
-        mapcode = mapcode.substring(0, minpos);
+        mapcode = trim(mapcode.substring(0, minpos));
     } else {
         extrapostfix = '';
     }
 
-    mapcode = trim(aeu_unpack(mapcode));
+    mapcode = aeu_unpack(mapcode);
     if (mapcode == '')
         return false; // failed to decode!
 
 
-    var incodexlen = mapcode.length - 1;
+    var mclen = mapcode.length;
 
+    if (mclen >= 10) territoryNumber = ccode_earth;
     // *** long codes in states are handled by the country
-    if (incodexlen >= 9) ccode = ccode_earth;
-    else if (incodexlen >= 8 && StateParent(ccode) == ccode_usa) ccode = ccode_usa;
-    else if (incodexlen >= 7 && StateParent(ccode) == ccode_ind) ccode = ccode_ind;
-    else if (incodexlen >= 8 && StateParent(ccode) == ccode_can) ccode = ccode_can;
-    else if (incodexlen >= 8 && StateParent(ccode) == ccode_aus) ccode = ccode_aus;
-    else if (incodexlen >= 7 && StateParent(ccode) == ccode_mex) ccode = ccode_mex;
-    else if (incodexlen >= 8 && StateParent(ccode) == ccode_bra) ccode = ccode_bra;
-    else if (incodexlen >= 8 && StateParent(ccode) == ccode_chn) ccode = ccode_chn;
-    else if (incodexlen >= 8 && StateParent(ccode) == ccode_rus) ccode = ccode_rus;
+    var parent = getParentOf(territoryNumber);
+    if (parent>=0)
+        if (mclen >= 9 || (mclen >= 8 && (parent == ccode_ind || parent == ccode_mex)))
+            territoryNumber = parent;
 
-    var from = dataFirstRecord(ccode);
+    var from = dataFirstRecord(territoryNumber);
     if (!data_flags[from]) return false; // 1.27 survive partially filled data_ array
-    var upto = dataLastRecord(ccode);
+    var upto = dataLastRecord(territoryNumber);
 
-    var incodexhi = mapcode.indexOf('.');
-    var xdiv8;
+    var prefixlength = mapcode.indexOf('.');
+    var postfixlength = mclen - 1 - prefixlength;
+    
+    var result;
+    var i;
     for (i = from; i <= upto; i++) {
         dataSetup(i);
-        if (pipetype == 0 && isnameless == 0 && codexlen == incodexlen && codexhi == incodexhi) {
-            result = decode_grid(mapcode, minx, miny, maxx, maxy, '', ccode, i);
-            // RESTRICTUSELESS
-            if (isuseless && result) {
+        if (recType == 0 && isnameless == 0 && codexhi == prefixlength && codexlo == postfixlength) {
+            result = decodeGrid(mapcode, minx, miny, maxx, maxy, '', territoryNumber, i);
+            if (isrestricted && result) {
                 var fitssomewhere = 0;
                 var j;
                 for (j = upto - 1; j >= from; j--) { // look in previous rects
                     dataSetup(j);
-                    if (isuseless) continue;
-                    xdiv8 = x_divider(miny, maxy) / 4; // 1.32 allow extra room, just like for all other results
-                    if (miny - 45 <= result.y && result.y < maxy + 45 && isInRange(result.x, minx - xdiv8, maxx + xdiv8)) {
+                    if (isrestricted) continue;
+                    if (fitsInsideWithRoom(result, minx, maxx, miny, maxy)) {
                         fitssomewhere = 1;
                         break;
                     }
@@ -1488,16 +1611,16 @@ function master_decode(mapcode, ccode) // returns object with y and x fields, or
             }
             break;
         }
-        else if (pipetype == 4 && codexlen + 1 == incodexlen && codexhi + 1 == incodexhi && pipeletter == mapcode.charAt(0)) {
-            result = decode_grid(mapcode.substr(1), minx, miny, maxx, maxy, mapcode.substr(0, 1), ccode, i);
+        else if (recType == 1 && codexlo == postfixlength && codexhi + 1 == prefixlength && headerLetter(i) == mapcode.charAt(0)) {
+            result = decodeGrid(mapcode.substr(1), minx, miny, maxx, maxy, mapcode.substr(0, 1), territoryNumber, i);
             break;
         }
-        else if (isnameless && ((codex == 21 && incodexlen == 4 && incodexhi == 2) || (codex == 22 && incodexlen == 5 && incodexhi == 3) || (codex == 13 && incodexlen == 5 && incodexhi == 2))) {
-            result = decode_nameless(mapcode, i);
+        else if (isnameless && ((codex == 21 && prefixlength == 2 && postfixlength == 2 ) || (codex == 22 && prefixlength == 3 && postfixlength == 2) || (codex == 13 && prefixlength == 2 && postfixlength == 3))) {
+            result = decodeNameless(mapcode, i);
             break;
         }
-        else if (pipetype > 4 && incodexlen == incodexhi + 3 && codexlen + 1 == incodexlen) {
-            result = decode_starpipe(mapcode, i, ccode);
+        else if (recType > 1 && postfixlength == 3 && codexlo + codexhi == prefixlength+2) {
+            result = decodeAutoHeader(mapcode, i, territoryNumber);
             break;
         }
     }
@@ -1505,11 +1628,10 @@ function master_decode(mapcode, ccode) // returns object with y and x fields, or
     if (result) {
         if (result.x > 180000000) result.x -= 360000000; else if (result.x < -180000000) result.x += 360000000; // 1.33 normalize <-180
 
-        // LIMIT_TO_OUTRECT : make sure it fits the country
-        if (ccode != ccode_earth) {
+        // make sure result is in the country
+        if (territoryNumber != ccode_earth) {
             minmaxSetup(upto); // find encompassing rect
-            xdiv8 = x_divider(miny, maxy) / 4; // should be /8 but there's some extra margin
-            if (!( miny - 45 <= result.y && result.y < maxy + 45 && isInRange(result.x, minx - xdiv8, maxx + xdiv8) )) { // no fit?
+            if (!(fitsInsideWithRoom(result, minx, maxx, miny, maxy))) { // does not fit?
                 return false;
             }
         }
@@ -1517,7 +1639,121 @@ function master_decode(mapcode, ccode) // returns object with y and x fields, or
 
     if (result) {
         result.x = result.x / 1000000.0;
-        result.y = result.y / 1000000.0;
+        result.y = result.y / 1000000.0; if (result.y>90) result.y=90;
     }
     return result;
+}
+
+// ******************** legacy interface *****************
+
+function hasStates(territoryNumber) {return hasSubdivision(territoryNumber);} 
+function isState(territoryNumber) {return isSubdivision(territoryNumber);}
+function StateParent(territoryNumber) {return getParentOf(territoryNumber);}
+function ccode2iso(territoryNumber, format) { return getTerritoryAlphaCode(territoryNumber,format); }
+function fullname(territoryNumber, keepindex) {
+    if (keepindex)
+        return isofullname[territoryNumber];
+    return getTerritoryFullname(territoryNumber);
+}
+function master_encode(orgy, orgx, tn, isrecursive, stop_with_one_result, allowworld, state_override) {
+	mapcoderEngine(orgy, orgx, tn, stop_with_one_result, isrecursive, state_override);
+    if (allowworld && !isrecursive && tn!=ccode_earth && (results.length==0 || results[results.length-1].territoryNumber!=ccode_earth))
+        mapcoderEngine(orgy, orgx, ccode_earth, stop_with_one_result, true/*recursive*/, -1);
+    var strArray=[];
+    for(var i=0;i<results.length;i++) strArray.push([results[i].mapcode,results[i].territoryNumber]);
+    return strArray;
+}
+
+// ******************** public interface *****************
+
+/// PUBLIC returns {distance,width,height}, the distance between two coordinates, and the longitudinal distance ("width") and latitudinal distance ("height") - all expressed in meters
+/// Warning: accurate only for coordinates within a few hundred meters of each other
+function distanceInMeters( latDeg1,lonDeg1,latDeg2,lonDeg2 ) {
+	if (latDeg1>latDeg2) { var t=latDeg1; latDeg1=latDeg2; latDeg2=t; }	
+	var worstParallel=0; // assume equator
+	if (latDeg2<0) 
+		worstParallel=latDeg1;
+	else if (latDeg1>0)
+		worstParallel=latDeg2;
+	var dy=(latDeg2-latDeg1) * 1000000/9;	
+	var dx=(lonDeg2-lonDeg1) * Math.cos( Math.PI * worstParallel / 180 ) * 1000000/9;
+	return { distance:Math.sqrt(dx*dx+dy*dy), width:(dx<0 ? -dx : dx), height:(dy<0 ? -dy : dy) };
+}
+
+/// PUBLIC convert a mapcode (without territory abbreviation) into a particular alphabet
+/// targetAlphabet: 0=roman, 1=greek etc.
+/// returns: string
+function convertToAlphabet( mapcode, targetAlphabet ) {
+  return showinlan(to_ascii(mapcode),targetAlphabet,false)
+}
+
+/// PUBLIC convert a mapcode (without territory abbreviation) into a particular alphabet
+/// targetAlphabet: 0=roman, 1=greek etc.
+/// returns: HTML-encoded string
+function convertToAlphabetAsHTML( mapcode, targetAlphabet) {
+  return showinlan(to_ascii(mapcode),targetAlphabet,true)
+}
+
+/// PUBLIC decode a string (which may contain a full mapcode, including a territory)
+/// the optional contextTerritoryNumber is used in case the mapcode specifies no (unambiguous) territory.
+/// returns coordinate, or false.
+function decode(mapcodeString,territory)
+{
+    mapcodeString = trim(mapcodeString);
+    var contextTerritoryNumber = getTerritoryNumber(territory);
+    if (contextTerritoryNumber == undefined) 
+        contextTerritoryNumber = ccode_earth;
+    var parts = mapcodeString.split(/\s+/);
+    var dec = undefined;
+    if (parts.length==2) {
+        if (isSubdivision(contextTerritoryNumber))
+            contextTerritoryNumber=getParentOf(contextTerritoryNumber);
+        var territoryNumber = getTerritoryNumber(parts[0],contextTerritoryNumber);
+        if (territoryNumber>=0)
+            dec = master_decode(parts[1], territoryNumber); 
+    }
+    else if (parts.length==1) {
+        dec = master_decode(parts[0], contextTerritoryNumber);
+    }
+    if (dec) return dec;
+    return {x:undefined,y:undefined};
+}
+
+/// PUBLIC encode variants.
+/// return an array of mapcodes, each representing the specified coordinate.
+/// if a territory number is specified, only mapcodes (if any) within that territory are returned.
+/// the Shortest variants return at most one mapcode (the "default" and "shortest possible" mapcode) in any territory.
+/// the International variants only return the 9-letter "international" mapcode
+/// the WithPrecision variants produce mapcodes extended with high-precision letters (the parameter specifies how many letters: 0, 1, or 2).
+
+function encodeWithPrecision(latitudeDegrees,longitudeDegrees,precision,territory)
+{
+    use_high_precision=precision;
+    return mapcoderEngine(latitudeDegrees,longitudeDegrees,getTerritoryNumber(territory),false/*getshortest*/,false/*recursive*/,-1/*override*/);
+}
+
+function encode(latitudeDegrees,longitudeDegrees,territory)
+{
+    return encodeWithPrecision(latitudeDegrees,longitudeDegrees,0,getTerritoryNumber(territory))
+}
+
+function encodeInternational(latitudeDegrees,longitudeDegrees)
+{    
+    return encodeWithPrecision(latitudeDegrees,longitudeDegrees,0,ccode_earth)
+}
+
+function encodeInternationalWithPrecision(latitudeDegrees,longitudeDegrees,precision)
+{
+    return encodeWithPrecision(latitudeDegrees,longitudeDegrees,precision,ccode_earth)
+}
+
+function encodeShortestWithPrecision(latitudeDegrees,longitudeDegrees,precision,territory)
+{
+    use_high_precision=precision;
+    return mapcoderEngine(latitudeDegrees,longitudeDegrees,getTerritoryNumber(territory),true/*getshortest*/,false/*recursive*/,-1/*override*/);
+}
+
+function encodeShortest(latitudeDegrees,longitudeDegrees, territory )
+{    
+    return encodeShortestWithPrecision(latitudeDegrees,longitudeDegrees,0,getTerritoryNumber(territory));
 }

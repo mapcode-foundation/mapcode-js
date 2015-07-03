@@ -44,7 +44,23 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 ## Version History
 
+* July 2015
+
+    * 2.0.0
+
+    Fixes to the data rectangles (primarily intended for ISO proposal), see Word document for details.
+
+* June 2015
+
+    * 1.54
+
+    Removed unneeded mminfo flags (no effect on functionality).
+
 * May 2015
+
+    * 1.50.3
+    
+    Redesign of the API to conform to Javascript standards and match the Java implementation of the mapcode system
 
     * 1.50.1
     
