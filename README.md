@@ -46,7 +46,7 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 * July 2015
 
-    * 2.0
+    * 2.0.0
 
     Fixes to the data rectangles (primarily intended for ISO proposal), see Word document for details.
 

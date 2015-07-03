@@ -126,11 +126,11 @@ var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 
 var ccode_start = 112; // NLD
-var mapcode_cversion = "2.00";
+var mapcode_cversion = "2.0.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.00.0/C' + mapcode_cversion;
+var mapcode_javaversion = '2.0.0/C' + mapcode_cversion;
 
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
