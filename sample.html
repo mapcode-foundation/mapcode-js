@@ -30,7 +30,7 @@
 
     <script type="text/javascript">
         function submitmc() {
-            var alphacode = document.getElementById("alphacode").value;         
+            var alphacode = document.getElementById("alphacode").value;
             var mapcode = document.getElementById("mapcode").value.toUpperCase();
 
             // decode mapcode
@@ -38,17 +38,19 @@
 
             // show html
             var html = 'Mapcode "' + mapcode + '"';
-            
-			if (alphacode.length>0)
-				html+=' (in the context of "' + getTerritoryFullname(alphacode) + '")';
-			else
-				html+=' (in unknown context "'+alphacode+'")';
 
-            if (coords.x==undefined)
+            if (alphacode.length > 0) {
+                html += ' (in the context of "' + getTerritoryFullname(alphacode) + '")';
+            } else {
+                html += ' (in unknown context "' + alphacode + '")';
+            }
+
+            if (coords.x == undefined) {
                 html += ' can not de decoded';
-            else
+            } else {
                 html += ': ' + coords.y + ", " + coords.x;
-            
+            }
+
             document.getElementById("resultdiv").innerHTML = html;
             return false;
         }
@@ -76,28 +78,30 @@
             var y = document.getElementById("llat").value;
             var x = document.getElementById("llon").value;
 
-			var results;
+            var results;
 
-			if (alphacode.length>0) {
-				if (!getTerritoryFullname(alphacode))
-					html = '"' + alphacode + '" is not a valid territory alphacode';
-				else {
-					results = encodeShortest(y, x, alphacode);
-					if (results.length>0)
-						html += '<P>Coordinate has mapcode <B>' + results[0].fullmapcode + '</B> in territory "'+getTerritoryFullname(alphacode)+'"<BR>';
-					else
-						html += '<P>Coordinate has no mapcode in territory "'+getTerritoryFullname(alphacode)+'"<BR>';					
-				}
-			}
+            if (alphacode.length > 0) {
+                if (!getTerritoryFullname(alphacode)) {
+                    html = '"' + alphacode + '" is not a valid territory alphacode';
+                } else {
+                    results = encodeShortest(y, x, alphacode);
+                    if (results.length > 0) {
+                        html += '<P>Coordinate has mapcode <B>' + results[0].fullmapcode + '</B> in territory "' + getTerritoryFullname(alphacode) + '"<BR>';
+                    } else {
+                        html += '<P>Coordinate has no mapcode in territory "' + getTerritoryFullname(alphacode) + '"<BR>';
+                    }
+                }
+            }
 
-			results = encodeShortest(y, x);
-            html += '<P><U>Mapcodes are possible in '+results.length + ' territories:</U><BR>';
+            results = encodeShortest(y, x);
+            html += '<P><U>Mapcodes are possible in ' + results.length + ' territories:</U><BR>';
             for (var i = 0; i < results.length; i++) {
-                 if ( results[i].territoryAlphaCode != "AAA" )
-                     html += '<small>' + results[i].territoryAlphaCode + '</small> ';
-                 html += '<b>' + results[i].mapcode + '</b>';
-                 html += ' ('+getTerritoryFullname(results[i].territoryNumber)+')';
-                 html += '<br>';
+                if (results[i].territoryAlphaCode != "AAA") {
+                    html += '<small>' + results[i].territoryAlphaCode + '</small> ';
+                }
+                html += '<b>' + results[i].mapcode + '</b>';
+                html += ' (' + getTerritoryFullname(results[i].territoryNumber) + ')';
+                html += '<br>';
             }
 
             document.getElementById("resultll").innerHTML = html;
