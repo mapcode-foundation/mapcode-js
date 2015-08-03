@@ -7,15 +7,14 @@ Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
 **Online documentation can be found at: http://mapcode-foundation.github.io/mapcode-js/**
 
 If you plan to use mapcodes in HTML/Javascript extensively, you may be interested in
-looking at running an instance of a Mapcode REST API server in your applications 
-landscape. 
+looking at running an instance of a Mapcode REST API server in your applications
+landscape.
 
-This reduces the payload the HTML/Javascript tremendously, as the mapcode tables will 
+This reduces the payload the HTML/Javascript tremendously, as the mapcode tables will
 not need to be transported to the client.
 
 You can find the Mapcode REST API sources, ready to be deployed on any JVM server,
 like Tomcat or Jetty, on: **https://github.com/mapcode-foundation/mapcode-rest-service**
-
 
 ## License
 
@@ -46,6 +45,10 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 * July 2015
 
+    * 2.0.1
+
+    Prettyfied source and minor fixes.
+
     * 2.0.0
 
     Fixes to the data rectangles (primarily intended for ISO proposal), see Word document for details.
@@ -59,15 +62,15 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 * May 2015
 
     * 1.50.3
-    
+
     Redesign of the API to conform to Javascript standards and match the Java implementation of the mapcode system
 
     * 1.50.1
-    
+
     Bugfix for mapcodes in IN-DD (in India).
 
-    * 1.50 
-    
+    * 1.50
+
     Major release. This version is not backwards compatible with mapcode 1.4x: is has dropped support for
     Antartica AT0-8 codes and has a changed (improved) way of dealing with the Greek alphabet.
 
@@ -79,49 +82,49 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 * January 2015
 
-    * 1.41 
-    
+    * 1.41
+
     Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
 
 * August 2014
 
-    * 1.33 
-    
+    * 1.33
+
     Normalise results when longitude below -180 degrees.
 
-    * 1.32 
-    
+    * 1.32
+
     Prevent FIJI failing to decode at exactly 180 degrees; prevent invalid filtering near the territory bounding rectangle.
 
 * April 2014
 
-    * 1.31 
-    
+    * 1.31
+
     Make iso2ccode() even more forgiving by allowing a state alias to be recognized in context.
 
-    * 1.3 
-    
+    * 1.3
+
     Disable 7-char state codes for large states in India, and instead generate country mapcodes for states.
 
-    * 1.28 
-    
+    * 1.28
+
     Fix for starpipe "zoning" error, causing the last 2 mapcode characters to be ignored in certain areas.
 
-    * 1.27 
-    
+    * 1.27
+
     Support undefined ranges in data array (useful for partial JavaScript builds).
 
 * May 2013
 
-    * 1.26 
-    
+    * 1.26
+
     Added alias OD for India, and 2.3 code for Daman and Diu.
 
-    * 1.25 
-    
+    * 1.25
+
     Ccode2iso(c,2) support added.
 
-    * 1.24 
-    
+    * 1.24
+
     Public domain release.
 
