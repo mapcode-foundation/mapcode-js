@@ -1,5 +1,5 @@
 <!--
-    ~ Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
+    ~ Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
     ~
     ~ Licensed under the Apache License, Version 2.0 (the "License");
     ~ you may not use this file except in compliance with the License.
@@ -65,7 +65,9 @@
         <input type="text" id="alphacode" value="NLD" onkeyup="submitmc();">
         <input type="submit" value="Decode">
     </form>
-    <div id="resultdiv"><font color=grey>Enter a territory and enter a mapcode</font></div>
+
+    <div id="resultdiv"><font color=grey>Enter a territory and enter a mapcode:</font></div>
+
     <hr>
     <br/>
 
@@ -114,11 +116,13 @@
         <input type="text" id="llat" value="52.376514" onkeyup="submitll();">
         Longitude:
         <input type="text" id="llon" value="4.908542" onkeyup="submitll();">
-        Restrict to territory:
+        Restrict to territory::
         <input type="text" id="alphacodell" value="" onkeyup="submitll();">
         <input type="submit" value="Encode">
     </form>
-    <div id="resultll"><font color=grey>Enter a latitude, a longitude, and a default territory context</font></div>
+
+    <div id="resultll"><font color=grey>Enter a latitude, a longitude, and a default territory context:</font></div>
+
 </center>
 </body>
 </html>

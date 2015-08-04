@@ -1,6 +1,6 @@
 # Mapcode Library for JavaScript
 
-Copyright (C) 2014 Stichting Mapcode Foundation (http://www.mapcode.com)
+Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
 
 ----
 
@@ -16,7 +16,7 @@ not need to be transported to the client.
 You can find the Mapcode REST API sources, ready to be deployed on any JVM server,
 like Tomcat or Jetty, on: **https://github.com/mapcode-foundation/mapcode-rest-service**
 
-## License
+# License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ limitations under the License.
 Original C library created by Pieter Geelen. Work on Java version
 of the Mapcode library by Rijn Buve and Matthew Lowden.
 
-## Javascript Files for Mapcode Support
+# Javascript Files for Mapcode Support
 
     mapcode.js  - Key routines for mapcode support
     ndata.js    - Data table for mapcode support
@@ -41,35 +41,29 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
     sample.html - Sample code to interpret / generate mapcodes
     ctrynams.js - Optional js array with the names of territories (in English)
 
-## Version History
+# Version History
 
-* July 2015
+* 2.0.1 - August 2015
 
-    * 2.0.1
+    Minor fixes.
 
-    Prettyfied source and minor fixes.
-
-    * 2.0.0
+* 2.0.0 - July 2015
 
     Fixes to the data rectangles (primarily intended for ISO proposal), see Word document for details.
 
-* June 2015
-
-    * 1.54
+* 1.54 - June 2015
 
     Removed unneeded mminfo flags (no effect on functionality).
 
-* May 2015
-
-    * 1.50.3
+* 1.50.3 - May 2015
 
     Redesign of the API to conform to Javascript standards and match the Java implementation of the mapcode system
 
-    * 1.50.1
+* 1.50.1 - May 2015
 
     Bugfix for mapcodes in IN-DD (in India).
 
-    * 1.50
+* 1.50 - May 2015
 
     Major release. This version is not backwards compatible with mapcode 1.4x: is has dropped support for
     Antartica AT0-8 codes and has a changed (improved) way of dealing with the Greek alphabet.
@@ -80,51 +74,43 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
     Retired legacy Antarctica claims AT0 through AT8.
 
-* January 2015
-
-    * 1.41
+* 1.41 - January 2015
 
     Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
 
-* August 2014
-
-    * 1.33
+* 1.33 - August 2014
 
     Normalise results when longitude below -180 degrees.
 
-    * 1.32
+* 1.32 - August 2014
 
     Prevent FIJI failing to decode at exactly 180 degrees; prevent invalid filtering near the territory bounding rectangle.
 
-* April 2014
-
-    * 1.31
+* 1.31 - April 2014
 
     Make iso2ccode() even more forgiving by allowing a state alias to be recognized in context.
 
-    * 1.3
+* 1.3 - April 2014
 
     Disable 7-char state codes for large states in India, and instead generate country mapcodes for states.
 
-    * 1.28
+* 1.28 - April 2014
 
     Fix for starpipe "zoning" error, causing the last 2 mapcode characters to be ignored in certain areas.
 
-    * 1.27
+* 1.27 - April 2014
 
     Support undefined ranges in data array (useful for partial JavaScript builds).
 
-* May 2013
-
-    * 1.26
+* 1.26 - May 2013
 
     Added alias OD for India, and 2.3 code for Daman and Diu.
 
-    * 1.25
+* 1.25 - May 2013
 
     Ccode2iso(c,2) support added.
 
-    * 1.24
+* 1.24 - May 2013
 
     Public domain release.
 
