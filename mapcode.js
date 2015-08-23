@@ -121,7 +121,7 @@ var mapcode_dataversion = "2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.0.1/Data2.0';
+var mapcode_javaversion = '2.0.3/Data2.0';
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -1028,8 +1028,9 @@ function to_ascii(str) {
             }
         }
     }
-    if (result.charAt(0) == 'A') {
-        result = aeu_pack(aeu_unpack(result), false);
+    var p = result.lastIndexOf(' '); if (p<0) p=0; else p++;
+    if (result.charAt(p) == 'A') {
+        result = result.substr(0,p) + aeu_pack(aeu_unpack(result.substr(p)), false);
         /* v1.50 repack A-voweled to AEU-voweled */
     }
     return result;

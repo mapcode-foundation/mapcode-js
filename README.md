@@ -43,6 +43,11 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 # Version History
 
+* 2.0.3 - August 2015
+
+    Minor fix. Added unittest\unittest.html - open to peform
+    tests that try to verify that the library works as intended;
+
 * 2.0.1 - August 2015
 
     Minor fixes.
