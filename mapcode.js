@@ -1916,10 +1916,7 @@ function decode(mapcodeString, territory) {
     else if (parts.length == 1) {
         dec = master_decode(parts[0], contextTerritoryNumber);
     }
-    if (dec) {
-        return dec;
-    }
-    return {x: undefined, y: undefined};
+    return dec;
 }
 
 /// PUBLIC encode variants.

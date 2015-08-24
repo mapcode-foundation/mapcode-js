@@ -45,7 +45,7 @@
                 html += ' (in unknown context "' + alphacode + '")';
             }
 
-            if (coords.x == undefined) {
+            if (!coords) {
                 html += ' can not de decoded';
             } else {
                 html += ': ' + coords.y + ", " + coords.x;
