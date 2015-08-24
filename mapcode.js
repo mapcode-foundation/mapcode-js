@@ -1354,20 +1354,15 @@ function encodeAutoHeader(enc, m, extraDigits) {
             var extray = ((mm.maxy - enc.coord32.y) % dividery);
 
             var spx = vx % 168;
-            var spy = vy % 176;
-
             vx = Math.floor(vx / 168);
             var value = vx * Math.floor(H / 176);
 
             if (extray == 0 && enc.fraclat > 0) {
-                if (vy == 0) {
-                    STORAGE_START += product;
-                    continue;
-                }
                 vy--;
                 extray += dividery;
             }
 
+            var spy = vy % 176;
             vy = Math.floor(vy / 176);
             value += vy;
 
