@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mapcode Javascript Unit Test</title>
+<script src="../ndata.js" type="text/javascript"></script>
+<script src="../mapcode.js" type="text/javascript"></script>
+<script src="test_territories.js" type="text/javascript"></script>
+<script src="test_encodes.js" type="text/javascript"></script>
+<script>
+	function out(str) {
+		var e = document.getElementById('out');
+		if (e) e.innerHTML = e.innerHTML + str + '<BR>';
+	}
+</script>
+</head>
+<body>
+
+Mapcode Javascript Unit Test 2.1.0<BR>
+<DIV id="out"></DIV>
+<DIV id="perc"></DIV>
+
+<script type="text/javascript">
+
+// globals to count tests, errors and warnings
+var nrTests=0;
+var nrErrors=0;
+var nrWarnings=0;
+
+// test the alphabet conversion routines 
+function alphabet_tests() {
+	out( MAXLANS + ' alphabets');
+
+	for(var i=0;i<MAXLANS;i++) {
+		var enc,dec;
+
+        // see if alphabets (re)convert as expected
+		var str    = "OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ";
+		var expect = "OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ";
+		nrTests++;	
+		var enc = convertToAlphabet(str,i);
+		var dec = convertToAlphabet(enc,0);
+		if (dec != expect) {
+			nrErrors++;
+			out( 'convertToAlphabet(convertToAlphabet("'+str+'",'+i+'))= "'+dec+'", expected "'+expect+'"');
+		}
+
+        // see if E/U voweled mapcodes (re)convert as expected
+		str    = "OMN 112.3AU";
+		expect = str;
+		nrTests++;
+		dec = convertToAlphabet(convertToAlphabet(str,i),0);
+		if (dec != expect) 
+		{
+			nrErrors++;
+			out( 'convertToAlphabet(convertToAlphabet("'+str+'",'+i+'))= "'+dec+'", expected "'+expect+'"');
+		}
+	}
+}
+
+function printGeneratedMapcodes(r) {
+	var n = r.length;
+	var t = ' &nbsp; ' + n + ' results generated:';
+	for (var i=0;i<n;i++) 
+		t += ' (' + r[i].fullmapcode + ')';
+	out(t);
+}
+
+var maxErrorForPrecision = [
+	7.49,
+	1.45,
+	0.2502,
+	0.0462,
+	0.00837,
+	0.00154,
+	0.00028,
+	0.000052,
+	0.0000093,
+];
+
+// perform an encode/decode test
+function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
+	nrTests++;
+	str=trim(str);
+	var p = str.indexOf(' ');
+	var territory = (p>0) ? str.substr(0,p) : 'AAA';
+	var precision = 2;	
+
+	if (y < -90) { y = -90; } else if (y > 90) { y = 90; }
+
+	if (localsolutions || str!="") {
+
+		// encode locally
+		var r = encodeWithPrecision( y,x,precision,territory );
+		
+		// test if correct nr of local solutions (if requested)
+		if (localsolutions) {
+			nrTests++;
+			if (r.length!=localsolutions) {
+				nrErrors++;
+				out('*** ERROR *** encode('+y.toFixed(10)+', '+x.toFixed(10)+', "'+territory+'" ) does not deliver '+localsolutions+' solutions\n');
+				printGeneratedMapcodes(r);
+			}
+		}
+
+		// test that expected solution is there
+		var found=0;
+		for (var i=0;i<r.length;i++) {
+			if (r[i].fullmapcode.indexOf(str)==0)
+			  found = 1;
+		}
+		if (!found) {
+			nrErrors++;
+			out('*** ERROR *** encode('+y.toFixed(10)+', '+x.toFixed(10)+', "'+territory+'" ) does not deliver "'+str+'"');
+			printGeneratedMapcodes(r);
+		}
+	}
+  
+	// encode globally
+	var r = encodeWithPrecision( y,x,precision );	
+
+	if (globalsolutions)
+	{
+		// test if correct nr of local solutions (if requested)
+		nrTests++;
+		if (r.length!=globalsolutions) {
+			nrErrors++;
+			out('*** ERROR *** encode('+y.toFixed(10)+', '+x.toFixed(10)+') does not deliver '+globalsolutions+' solutions\n');
+			printGeneratedMapcodes(r);
+		}
+	}
+
+	// check that all global solutions are within 9 milimeters of coordinate
+	for (precision = 0; precision <= 8; precision++ ) {
+		r = encodeWithPrecision( y,x,precision );	
+		for (i = 0; i < r.length; i++) {
+			str = r[i].fullmapcode;
+			nrTests++;
+			var p = decode(str);
+			if ( p ) {
+				var dm = distanceInMeters(y, x, p.y, p.x).distance;
+				var maxerror = maxErrorForPrecision[precision];
+				if (dm>maxerror) {
+					nrErrors++;
+					out('*** ERROR *** decode('+str+') = ('+p.y.toFixed(8)+', '+p.x.toFixed(8)+'), which is '+ (dm*100).toFixed(4)+' cm away (>'+(maxerror*100)+' cm) from ('+y.toFixed(11)+', '+x.toFixed(11)+')');
+				}
+				else if ( nrWarnings < 16 ) {
+					// see if decode encodes back to the same solution
+					var r2 = encodeWithPrecision( p.y, p.x, precision, r[i].territoryAlphaCode );
+					var found=0;
+					for(var i2=0; i2<r2.length; i2++) {
+						if (r2[i2].fullmapcode==str) { 
+							found=1; 
+							break; 
+						}
+					}
+					// of, if inherited from parent country: the same parent solution
+					if (!found) {
+						var parent = getParentOf(r[i].territoryAlphaCode);
+						if (parent>=0) {
+							r2 = encodeWithPrecision( p.y, p.x, precision, parent );
+							for(var i2=0; i2<r2.length; i2++) {
+								if (r2[i2].fullmapcode.split(" ")[1]==str.split(" ")[1]) { 
+									found=1; 
+									break; 
+								}
+							}
+						}
+					}
+					if (!found) {
+						nrWarnings++;
+						out('*** WARNING *** decode(' + str + ') = (' + p.y.toFixed(15) + ', ' + p.x.toFixed(15) + ') does not re-encode from ('+y.toFixed(15)+', '+x.toFixed(15)+')'+r[i].territoryAlphaCode);
+						printGeneratedMapcodes(r);
+						printGeneratedMapcodes(r2);
+					}						
+				}
+			}
+			else {
+					nrErrors++;
+					out('*** ERROR *** no result from decode('+str+'), expected ('+y.toFixed(11)+', '+x.toFixed(11)+')');
+			}
+		}
+	}
+}
+
+
+// test strings that are expected to FAIL a decode
+function test_failing_decodes() {
+	var badcodes = [
+		"",              // empty
+		"NLD 00.00",     // all-digits
+		"12345.6789",    // all-digits
+		"12345.6789-X",  // all-digits
+		"GGG XX.XX",     // unknown country
+		"GGG-GG XX.XX",  // unknown country
+		"NLDX XX.XX",    // unknown/long country
+		"NLDNLDNLD XX.XX", // unknown/long country
+		"USAUSA-CA XX.XX", // unknown/long country
+		"USA-CACA XX.XX",  // unknown/long state
+		"US-CACACA XX.XX", // unknown/long state
+		"US-US XX00.XX00",     // parent as state
+		"US-RU XX00.XX00",     // parent as state
+		"CA-CA XX00.XX00",     // state as country
+		"US-GG XX.XX",   // unknown state (anywhere)
+		"RU-CA XX.XX",   // unknown state (in RU)
+		"RUS-CA XX.XX",  // unknown state (in RUS)
+		"NLD-CA XX.XX",  // unknown state (NL has none)
+		"NLD X.XXX",     // short prefix
+		"NLD XXXXXX.XX", // long prefix
+		"NLD XXX.X",     // short postfix
+		"NLD XXX.XXXXX", // long postfix
+		"NLD XXXXX.XXX", // invalid codex 5+3
+		"NLD XXXX.XXXX", // non-existing codex in NLD
+		"NLD XXXX",      // no dot
+		"NLD XXXXX",     // no dot
+		"NLD XXX.",      // no postfix
+		"NLD .XXX",      // no prefix
+		"AAA x234.6789", // too short for AAA
+		"x234.6789",     // too short for AAA
+
+		"NLD XXX..XXX",  // 2 dots
+		"NLD XXX.XX.X",  // 2 dots
+
+		"NLD XX.XX-Z",   // Z in extension
+		"NLD XX.XX-1Z",  // Z in extension
+		"NLD XX.XX-X-",  // 2nd -
+		"NLD XX.XX-X-X", // 2nd -
+
+		// "NLD XXX.XXX-",  // empty extension ALLOWED!
+
+		"NLD XX.XX-123456789", // extension too long
+		"NLD XXX.#XX",   // invalid char
+		"NLD XXX.UXX",   // invalid char
+		"NLD 123.A45",   // A in invalid position
+		"NLD 123.E45",   // E in invalid position
+		"NLD 123.U45",   // U in invalid position
+		"NLD 123.1UE",   // UE illegal vowel-encode
+		"NLD 123.1UU",   // UU illegal
+		"NLD x23.1A0",   // A0 with nondigit
+		"NLD 1x3.1A0",   // A0 with nondigit
+		"NLD 12x.1A0",   // A0 with nondigit
+		"NLD 123.xA0",   // A0 with nondigit
+		"NLD 123.1U#",   // U#
+
+		"NLD ZZ.ZZ",     // nameless out of range
+		"NLD Q000.000",  // grid out of range
+		"NLD ZZZ.ZZZ",   // grid out of range
+		"NLD L222.222",  // grid out of range (restricted)
+		"end"
+	];
+
+	var i;
+	for (i=0;;i++)
+	{
+		str = badcodes[i];
+		if (str=='end') 
+			break;
+
+		nrTests++;
+		var p = decode(str);
+		if ( p ) {
+			nrErrors++;
+			out('*** ERROR *** invalid mapcode "'+str+'" should produce error');
+		}
+	}
+}
+
+// test encode/decodes from testdata array; returns nonzero if more tests are needed
+var next_encode_to_test = 0;
+function test_encodes_decodes()
+{
+	var tests_per_timeslot = 50;
+	for (var i=next_encode_to_test; testdata[i] != -1 ; i+=5) {
+		if (nrErrors>20) {
+			out('Too many errors!');
+			return 0;
+		}
+		if (tests_per_timeslot-- == 0) {
+			next_encode_to_test = i; 
+			document.getElementById('perc').innerHTML = ((i/5) * 100.0 / 15822).toFixed(2) + '%';
+			return 1;
+		}
+		test_encode_decode(testdata[i],testdata[i+1],testdata[i+2],testdata[i+3],testdata[i+4]);
+	}
+	document.getElementById('perc').innerHTML = '';
+	return 0;
+}
+
+
+var next_corner_to_test = 0;
+function test_corner_encodes()
+{
+	var tests_per_timeslot = 20;
+	var last = dataLastRecord(ccode_earth);
+	for (var m=next_corner_to_test; m<last; m++) {
+		if (nrErrors>20) {
+			out('Too many errors!');
+			return 0;
+		}
+		if (tests_per_timeslot-- == 0) {
+			next_corner_to_test = m;
+			document.getElementById('perc').innerHTML = ((m) * 100.0 / last).toFixed(2) + '%';
+			return 1;
+		}
+		var mm = minmaxSetup(m);
+		test_encode_decode( "", (mm.miny+mm.maxy)/2000000, (mm.minx+mm.maxx)/2000000, 0,0 );
+		test_encode_decode( "", mm.miny/1000000.0, mm.minx/1000000.0, 0,0 );
+		test_encode_decode( "", (mm.maxy-0.000001)/1000000.0, (mm.maxx-0.000001)/1000000.0, 0,0 );
+		test_encode_decode( "", (mm.maxy-0.000001)/1000000.0, (mm.minx+0.000001)/1000000.0, 0,0 );
+		test_encode_decode( "", (mm.miny+0.000001)/1000000.0, (mm.maxx-0.000001)/1000000.0, 0,0 );
+	}
+	document.getElementById('perc').innerHTML = '';
+	return 0;
+}
+
+// perform tests on alphacodes (used from test_territories.js)
+function test_territory(alphacode,tc,isAlias,needsParent,tcParent) {
+  var ccode = tc-1;
+  var ccodeParent = tcParent - 1;
+  if (nrErrors>30) return;
+  nrTests++;
+
+  var tn = getTerritoryNumber(alphacode,needsParent ? ccodeParent : 0);
+
+  if (tn!=ccode) {
+    nrErrors++;
+	out('*** ERROR *** getTerritoryNumber('+alphacode + (needsParent ? ','+getTerritoryAlphaCode(ccodeParent) : "")+')=' +tn+ ' but expected ' + ccode );
+  }
+
+  if (needsParent==0 && isAlias==0 && (alphacode.length<=3 || alphacode.charAt(3)!='-')) {
+	nrTests++;
+	var nam = getTerritoryAlphaCode(ccode);
+	if ( nam!=alphacode && nam.indexOf('-'+alphacode)<0 ) {
+	  nrErrors++;
+	  out('*** ERROR *** getTerritoryAlphaCode('+ccode+')="'+nam+'" does not equal or contain "'+alphacode+'"');
+	}
+  }
+}
+
+var myVar = setInterval(function(){stepper()},20);
+var dostep=0;
+function stepper()
+{
+	switch(dostep++) {
+		case 0:
+			out('JavaScript version '+mapcode_javaversion);
+			break;
+		case 1:
+			out('<HR>Alphabet tests');
+			break;
+		case 2:
+			alphabet_tests();
+			break;
+		case 3:
+			out('<HR>Territory tests');
+			out( (ccode_earth+1) + ' territories');
+			break;
+		case 4:
+			test_territories();
+			break;
+		case 5:
+			out('<HR>Failing decode tests');
+			break;
+		case 6:
+			test_failing_decodes();
+			break;
+		case 7:
+			out('<HR>Encode/Decode tests');
+			break;
+		case 8:
+			if (test_encodes_decodes()) dostep--;
+			break;
+		case 9:
+			out('<HR>Edge-case Encode/Decode tests');
+			break;
+		case 10:
+			if (test_corner_encodes()) dostep--;
+			break;
+		case 11:
+			out('<HR>Done.');
+			out('Executed '+nrTests+' tests, found '+nrErrors+' errors');
+			clearInterval(myVar);
+			break;
+	}
+}
+</script>
+
+</body>
+</html>
+
