@@ -121,7 +121,7 @@ var mapcode_dataversion = "2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.0.3/Data2.0';
+var mapcode_javaversion = '2.1.0/Data2.0';
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -579,24 +579,27 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
     if (extraDigits > maxMapcodePrecision()) {
         extraDigits = maxMapcodePrecision();
     }
-    var encx = (extrax4 + 4 * enc.fraclon) / (dividerx4);
-    var ency = (extray + enc.fraclat * ydirection) / (dividery );
+
+    // the following are all perfect integers
+    var factorx = 810000 * dividerx4; // 810000 = 30^4
+    var factory = 810000 * dividery;
+    var valx = (810000 * extrax4) + (enc.fraclon);
+    var valy = (810000 * extray ) + (enc.fraclat * ydirection);
+
+    // protect against floating point errors
+    if (valx < 0) { valx=0; } else if (valx >= factorx) { valx=factorx-1; }
+    if (valy < 0) { valy=0; } else if (valy >= factory) { valy=factory-1; }
+
     result += '-';
     while (extraDigits-- > 0) {
-        encx *= 30;
-        var gx = Math.floor(encx);
-        if (gx < 0) {
-            gx = 0;
-        } else if (gx > 29) {
-            gx = 29;
-        }
-        ency *= 30;
-        var gy = Math.floor(ency);
-        if (gy < 0) {
-            gy = 0;
-        } else if (gy > 29) {
-            gy = 29;
-        }
+        factorx /= 30;
+        var gx = Math.floor(valx / factorx);
+        valx -= factorx * gx;
+
+        factory /= 30;
+        var gy = Math.floor(valy / factory);
+        valy -= factory * gy;
+
         var column1 = Math.floor(gx / 6);
         var column2 = (gx % 6);
         var row1 = Math.floor(gy / 5);
@@ -606,25 +609,22 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
         if (extraDigits-- > 0) {
             result += encodeChar[row2 * 6 + column2];
         }
-        encx -= gx;
-        ency -= gy;
     }
     return result;
 }
 
-function decodeExtension(extensionchars, y, x, dividerx4, dividery, ydirection) {
-    var extrax, extray;
+function decodeExtension(extensionchars, y, x, dividerx4, dividery, lon_offset4) {
     var dividerx = dividerx4 / 4;
-    var processor = 1.0;
-    extrax = 0;
-    extray = 0;
+    var processor = 1;
+    var lon32 = 0;
+    var lat32 = 0;
+    var odd = 0;
     var idx = 0;
     if (extensionchars.length > 8) {
-        return false;
+        return false; // too many digits
     }
     while (idx < extensionchars.length) {
         var column1, row1, column2, row2;
-        var halfcolumn = 0;
         var c1 = decodeChar[extensionchars.charCodeAt(idx++)];
         if (c1 < 0 || c1 == 30) {
             return false;
@@ -639,21 +639,37 @@ function decodeExtension(extensionchars, y, x, dividerx4, dividery, ydirection) 
             row2 = Math.floor(c2 / 6);
             column2 = (c2 % 6);
         } else { //
-            row2 = 2;
-            halfcolumn = 0.5;
-            column2 = 3;
+            row2 = 0;
+            odd = 1;
+            column2 = 0;
         } //
         processor *= 30;
-        extrax += ((column1 * 6 + column2 )) / processor;
-        extray += ((row1 * 5 + row2 - halfcolumn)) / processor;
+        lon32 = lon32 * 30 + column1 * 6 + column2;
+        lat32 = lat32 * 30 + row1 * 5 + row2;
     } //
-    extrax += (0.5 / processor);
-    extray += (0.5 / processor);
-    extrax *= dividerx;
-    extray *= dividery;
-    extrax = x + extrax;
-    extray = y + extray * ydirection;
-    return {y: extray, x: extrax}
+
+    var lon = x + ((lon32 * dividerx) / processor) + ( lon_offset4 / 4.0 );
+    var lat = y + ((lat32 * dividery) / processor);
+
+    // FORCE_RECODE
+    var range = {minlon:lon, maxlon:lon, minlat:lat, maxlat:lat};
+    if (odd) {
+        range.maxlon += (dividerx / (processor / 6));
+        range.maxlat += (dividery / (processor / 5));
+    } else {
+        range.maxlon += (dividerx / processor);
+        range.maxlat += (dividery / processor);
+    } // FORCE_RECODE
+
+    if (odd) {
+        lon += (dividerx / (2 * processor / 6));
+        lat += (dividery / (2 * processor / 5));
+    } else {
+        lon += (dividerx / (2 * processor));
+        lat += (dividery / (2 * processor));
+    } // not odd
+
+    return {y: lat, x: lon, range:range};
 }
 
 function decodeGrid(input, extensionchars, headerletter, m) // for a well-formed input, and integer variables // returns millionths
@@ -728,7 +744,26 @@ function decodeGrid(input, extensionchars, headerletter, m) // for a well-formed
 
     var cornery = rely + (dify * dividery);
     var cornerx = relx + (difx * dividerx);
-    return decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, dividery, 1)
+    if (!fitsInside({y:cornery,x:cornerx},mm)) {
+        return false;
+    } // even corner does not fit!
+    var r = decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, dividery, 0) // grid
+    if (r) { 
+        // FORCE_RECODE
+        if (r.x>= relx + xgridsize) {
+            r.x = relx + xgridsize - 0.000001;
+        } // keep in inner cell
+        if (r.y>= rely + ygridsize) {
+            r.y = rely + ygridsize - 0.000001;
+        } // keep in inner cell
+        if (r.x>= mm.maxx) {
+            r.x = mm.maxx - 0.000001;
+        } // keep in territory
+        if (r.y>= mm.maxy) {
+            r.y = mm.maxy - 0.000001;
+        } // keep in territory
+    } // FORCE_RECODE
+    return r;
 }
 
 function encodeBase31(value, nrchars) {
@@ -1142,7 +1177,7 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
     }
 
     var dividerx4 = xDivider4(mm.miny, mm.maxy); // note that xDivider4 is 4 times too large
-    var xFracture = Math.floor(4 * enc.fraclon);
+    var xFracture = Math.floor(enc.fraclon / 810000);
     var dx = Math.floor((4 * (enc.coord32.x - mm.minx) + xFracture) / dividerx4); // dx is in millionths
     var extrax4 = (enc.coord32.x - mm.minx) * 4 - dx * dividerx4; // extrax4 is in quarter-millionths
 
@@ -1309,11 +1344,17 @@ function decodeNameless(input, extensionchars, m, firstindex) {
 
     var cornerx = mm.minx + Math.floor((dx * dividerx4) / 4); // FIRST multiply, THEN divide!
     var cornery = mm.maxy - (dy * dividery);
-    var ret = decodeExtension(extensionchars, cornery, cornerx, dividerx4, dividery, -1);
-    if (ret) {
-        ret.x += ((dx * dividerx4) % 4) / 4.0;
-    }
-    return ret;
+    var r = decodeExtension(extensionchars, cornery, cornerx, dividerx4, -dividery, ((dx * dividerx4) % 4)); // nameless
+    if (r) {
+        // FORCE_RECODE
+        if (r.y < mm.miny) {
+            r.y = mm.miny;
+        } // keep in territory
+        if (r.x>= mm.maxx) {
+            r.x = mm.maxx - 0.000001;
+        } // keep in territory
+    } // FORCE_RECODE
+    return r;
 }
 
 function encodeAutoHeader(enc, m, extraDigits) {
@@ -1428,7 +1469,17 @@ function decodeAutoHeader(input, extensionchars, m) {
             if (cornerx < mm.minx || cornerx >= mm.maxx || cornery < mm.miny || cornery > mm.maxy) {
                 return false;
             }
-            return decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, dividery, -1);
+            var r = decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, -dividery, 0); // autoheader decode
+            if (r) { 
+                // FORCE_RECODE
+                if (r.y < mm.miny) {
+                    r.y = mm.miny;
+                } // keep in territory
+                if (r.x>= mm.maxx) {
+                    r.x = mm.maxx - 0.000001;
+                } // keep in territory
+            }
+            return r;
         }
         STORAGE_START += product;
     }
@@ -1477,57 +1528,26 @@ var debugStopRecord = -1; // GLOBAL
 
 function getEncodeRec(lat, lon) {
 
-    if (isNaN(lat)) {
-        lat = 0;
-    }
-    lat = Number(lat);
-    if (lat > 90) {
-        lat = 90;
-    } else if (lat < -90) {
-        lat = -90;
-    }
-    // seperate out the fraction
-    var y = lat + 90;
-    y *= 1000000;
-    var lat32 = Math.floor(y);
-    fraclat = y - lat32; // get fraction
-    // solve math errors for 810,000 minicells (30^4)
-    fraclat *= 810000;
-    if (fraclat < 1) {
-        fraclat = 0;
-    } else if (fraclat > 809999) {
-        fraclat = 0;
-        lat32++;
-    } else {
-        fraclat /= 810000;
-    }
+    if (isNaN(lat)) lat = 0; else lat = Number(lat);
+    if (lat < -90) lat = -90; else if (lat > 90) lat = 90;
+    lat += 90; // lat now [0..180]
+    lat *= 810000000000;
+    var fraclat = Math.floor(lat+0.1);
+    var d = fraclat / 810000;
+    var lat32 = Math.floor(d);
+    fraclat -= (lat32 * 810000);
+    lat32 -= 90000000;
 
-    if (isNaN(lon)) {
-        lon = 0;
-    }
-    lon = Number(lon);
-    if (lon >= 180) {
-        lon -= 360;
-    } else if (lon < -180) {
-        lon += 360;
-    }
-    // seperate out the fraction
-    var x = lon + 180;
-    x *= 1000000;
-    var lon32 = Math.floor(x);
-    fraclon = x - lon32; // get fraction
-    // solve math errors for 810,000 minicells (30^4)
-    fraclon *= 810000;
-    if (fraclon < 1) {
-        fraclon = 0;
-    } else if (fraclon > 809999) {
-        fraclon = 0;
-        lon32++;
-    } else {
-        fraclon /= 810000;
-    }
+    if (isNaN(lon)) lon = 0; else lon = Number(lon);
+    lon -= (360 * Math.floor(lon / 360)); // lon now in [0..360>
+    lon *= 3240000000000;
+    var fraclon = Math.floor(lon+0.1);
+    d = fraclon / 3240000;
+    var lon32 = Math.floor(d);
+    fraclon -= (lon32 * 3240000);   
+    if (lon32 >= 180000000) lon32-=360000000;
 
-    return {coord32: {y: lat32 - 90000000, x: lon32 - 180000000}, fraclat: fraclat, fraclon: fraclon};
+    return {coord32: {y: lat32, x: lon32}, fraclat: fraclat, fraclon: fraclon};
 }
 
 function mapcoderEngine(enc, tn, getshortest, isrecursive, state_override, extraDigits) {
@@ -1772,12 +1792,55 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
                 var j;
                 for (j = upto - 1; j >= from; j--) { // look in previous rects
                     if (!isRestricted(j)) {
-                        if (fitsInsideWithRoom(result, minmaxSetup(j))) {
+                        if (fitsInside(result, minmaxSetup(j))) {
                             fitssomewhere = 1;
                             break;
                         }
                     }
                 }
+                
+                if (!fitssomewhere) { // FORCE_RECODE
+                    for (j = from; j < m; j++) { // try all smaller rectangles j
+                      if (!isRestricted(j)) {
+                        var plat = result.y;
+                        var plon = result.x;
+
+                        var mm = minmaxSetup(j);
+                        var bminx = mm.minx;
+                        var bmaxx = mm.maxx;                                    
+                        if (bmaxx < 0 && plon > 0) {
+                            bminx += 360000000;
+                            bmaxx += 360000000;
+                        }
+                        
+                        // force p in range
+                        if (plat < mm.miny && mm.miny <= result.range.maxlat) { 
+                            plat = mm.miny; 
+                        }
+                        if (plat >= mm.maxy && mm.maxy > result.range.minlat) { 
+                            plat = mm.maxy - 0.000001; 
+                        }
+                        if (plon < bminx && bminx <= result.range.maxlon) { 
+                            plon = bminx; 
+                        }
+                        if (plon >= bmaxx && bmaxx > result.range.minlon) { 
+                            plon = bmaxx - 0.000001; 
+                        }
+                        // better?
+                        if ( plat > result.range.minlat && plat < result.range.maxlat &&
+                             plon > result.range.minlon && plon < result.range.maxlon &&
+                                 mm.miny <= plat && plat < mm.maxy && 
+                                 bminx <= plon && plon < bmaxx ) {
+
+                            result.y = plat;
+                            result.x = plon;
+                            fitssomewhere = 1;
+                            break;                                        
+                        }
+                      }
+                    }
+                } //FORCE_RECODE
+
                 if (!fitssomewhere) {
                     result = 0;
                 }
@@ -1809,6 +1872,27 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
         if (territoryNumber != ccode_earth) {
             if (!(fitsInsideWithRoom(result, minmaxSetup(upto)))) {
                 return false;
+            }
+            else { // FORCE_RECODE
+                var mm = minmaxSetup(upto);
+                if (result.y < mm.miny) {
+                    result.y = mm.miny;
+                }
+                if (result.y>= mm.maxy) {
+                    result.y = mm.maxy - 0.000001;
+                }
+                var bminx = mm.minx;
+                var bmaxx = mm.maxx;
+                if (result.x < 0 && bminx > 0) {
+                    bminx -= 360000000;
+                    bmaxx -= 360000000;
+                }
+                if (result.x < bminx) {
+                    result.x = bminx;
+                }
+                if (result.x>= bmaxx) {
+                    result.x = bmaxx - 0.000001;
+                }
             }
         }
 
@@ -1875,6 +1959,8 @@ function distanceInMeters(latDeg1, lonDeg1, latDeg2, lonDeg2) {
         }
     }
     var dy = (latDeg2 - latDeg1) * 1000000 / 9;
+    if (lonDeg1 < 0 && lonDeg2 > 1) { lonDeg1 += 360; }
+    if (lonDeg2 < 0 && lonDeg1 > 1) { lonDeg2 += 360; }
     var dx = (lonDeg2 - lonDeg1) * Math.cos(Math.PI * worstParallel / 180) * 1000000 / 9;
     return {distance: Math.sqrt(dx * dx + dy * dy), width: (dx < 0 ? -dx : dx), height: (dy < 0 ? -dy : dy)};
 }
