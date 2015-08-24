@@ -43,6 +43,10 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 # Version History
 
+* 2.1.0 - August 2015
+
+    Rewrote fraction floating points to integer arithmetic
+
 * 2.0.3 - August 2015
 
     Minor fix. Added unittest\unittest.html - open to peform
