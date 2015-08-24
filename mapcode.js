@@ -1711,17 +1711,19 @@ function aeu_unpack(str) {
         return '';
     }
 
+    var hasletters = 0;
     for (v = 0; v <= lastpos; v++) {
         if (v != dotpos) {
             if (decodeChar[str.charCodeAt(v)] < 0) {
                 return '';
             }// bad char!
-            else if (voweled && decodeChar[str.charAt(v)] > 9) {
-                return '';
+            else if (decodeChar[str.charCodeAt(v)] > 9) {
+                hasletters++;
             }
         }
-    } // nonodigit!
-
+    }
+    if (voweled && hasletters) return '';
+    if (!voweled && !hasletters) return '';
     return str;
 }
 
