@@ -121,7 +121,7 @@ var mapcode_dataversion = "2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.1.0/Data2.0';
+var mapcode_javaversion = '2.1.1/Data2.0';
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -1939,26 +1939,11 @@ function master_encode(orgy, orgx, tn, isrecursive, stop_with_one_result, alloww
 /// PUBLIC returns {distance,width,height}, the distance between two coordinates, and the longitudinal distance ("width") and latitudinal distance ("height") - all expressed in meters
 /// Warning: accurate only for coordinates within a few hundred meters of each other
 function distanceInMeters(latDeg1, lonDeg1, latDeg2, lonDeg2) {
-    var worstParallel = 0; // assume equator
-    if (latDeg1 > latDeg2) {
-        if (latDeg1 < 0) {
-            worstParallel = latDeg2;
-        } else if (latDeg2 > 0) {
-            worstParallel = latDeg1;
-        }
-    }
-    else {
-        if (latDeg2 < 0) {
-            worstParallel = latDeg1;
-        } else if (latDeg1 > 0) {
-            worstParallel = latDeg2;
-        }
-    }
-    var dy = (latDeg2 - latDeg1) * 1000000 / 9;
     if (lonDeg1 < 0 && lonDeg2 > 1) { lonDeg1 += 360; }
     if (lonDeg2 < 0 && lonDeg1 > 1) { lonDeg2 += 360; }
-    var dx = (lonDeg2 - lonDeg1) * Math.cos(Math.PI * worstParallel / 180) * 1000000 / 9;
-    return {distance: Math.sqrt(dx * dx + dy * dy), width: (dx < 0 ? -dx : dx), height: (dy < 0 ? -dy : dy)};
+    var dx = 111319.49079327 * (lonDeg2 - lonDeg1) * Math.cos((latDeg1 + latDeg2) * Math.PI / 360.0);
+    var dy = 110946.25213273 * (latDeg2 - latDeg1);
+    return Math.sqrt(dx * dx + dy * dy);
 }
 
 /// PUBLIC convert a mapcode (skipping the territory abbreviation) into a particular alphabet

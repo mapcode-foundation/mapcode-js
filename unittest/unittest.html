@@ -15,7 +15,7 @@
 </head>
 <body>
 
-Mapcode Javascript Unit Test 2.1.0<BR>
+Mapcode Javascript Unit Test 2.1.1<BR>
 <DIV id="out"></DIV>
 <DIV id="perc"></DIV>
 
@@ -137,7 +137,7 @@ function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
 			nrTests++;
 			var p = decode(str);
 			if ( p ) {
-				var dm = distanceInMeters(y, x, p.y, p.x).distance;
+				var dm = distanceInMeters(y, x, p.y, p.x);
 				var maxerror = maxErrorForPrecision[precision];
 				if (dm>maxerror) {
 					nrErrors++;
@@ -336,6 +336,44 @@ function test_territory(alphacode,tc,isAlias,needsParent,tcParent) {
   }
 }
 
+function distance_tests()
+{
+	if (mapcode_javaversion>'2.1.0') {
+		var i,distance;
+		var coordpairs = [
+			// lat1, lon1, lat2, lon2, expected distance * 100000
+			1,1,1,1,0,
+			0,0,0,1,11131949079,
+			89,0,89,1,194279300,
+			3,0,3,1,11116693130,
+			-3,0,-3,1,11116693130,
+			-3,-179.5,-3,179.5,11116693130,
+			-3,179.5,-3,-179.5,11116693130,
+			3,8,3,9,11116693130,
+			3,-8,3,-9,11116693130,
+			3,-0.5,3,0.5,11116693130,
+			54,5,54.000001,5,11095,
+			54,5,54,5.000001,6543,
+			54,5,54.000001,5.000001,12880,
+			90,0,90,50,0,
+			0.11,0.22,0.12,0.2333,185011466,
+		-1];
+		
+		for(i=0;coordpairs[i]!=-1;i+=5) {
+			nrTests++;
+			distance = distanceInMeters( 
+				coordpairs[i],coordpairs[i+1],
+				coordpairs[i+2],coordpairs[i+3]);
+			if ( Math.round(100000.0 * distance) != coordpairs[i+4] ) {
+				nrErrors++;
+				out('*** ERROR *** distanceInMeters '+i+' failed: '+distance);
+			}
+		}
+	}
+}
+
+
+
 var myVar = setInterval(function(){stepper()},20);
 var dostep=0;
 function stepper()
@@ -351,6 +389,8 @@ function stepper()
 			alphabet_tests();
 			break;
 		case 3:
+			out('<HR>Distance tests');
+			distance_tests();
 			out('<HR>Territory tests');
 			out( (ccode_earth+1) + ' territories');
 			break;
