@@ -1170,11 +1170,6 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
     var SIDE = smartdiv(m);
     var orgSIDE = SIDE;
     var xSIDE = SIDE;
-    if (isSpecialShape(m)) {
-        xSIDE *= SIDE;
-        SIDE = 1 + Math.floor((mm.maxy - mm.miny) / 90);
-        xSIDE = Math.floor(xSIDE / SIDE);
-    }
 
     var dividerx4 = xDivider4(mm.miny, mm.maxy); // note that xDivider4 is 4 times too large
     var xFracture = Math.floor(enc.fraclon / 810000);
@@ -1192,6 +1187,9 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
 
     var v = storage_offset;
     if (isSpecialShape(m)) {
+        xSIDE *= SIDE;
+        SIDE = 1 + Math.floor((mm.maxy - mm.miny) / 90);
+        xSIDE = Math.floor(xSIDE / SIDE);
         v += encodeSixWide(dx, SIDE - 1 - dy, xSIDE, SIDE);
     }
     else {
@@ -1318,14 +1316,12 @@ function decodeNameless(input, extensionchars, m, firstindex) {
     SIDE = smartdiv(m);
     var xSIDE = SIDE;
 
+    var dx, dy;
     if (isSpecialShape(m)) {
         xSIDE *= SIDE;
         SIDE = 1 + Math.floor((mm.maxy - mm.miny) / 90);
         xSIDE = Math.floor(xSIDE / SIDE);
-    }
-
-    var dx, dy;
-    if (isSpecialShape(m)) {
+        
         var d = decodeSixWide(v, xSIDE, SIDE);
         dx = d.x;
         dy = SIDE - 1 - d.y;
@@ -1464,8 +1460,8 @@ function decodeAutoHeader(input, extensionchars, m) {
             var vx = triple.x + 168 * Math.floor(value / Math.floor(H / 176));
             var vy = triple.y + 176 * (value % Math.floor(H / 176));
 
-            var cornery = mm.maxy - vy * dividery;
-            var cornerx = mm.minx + vx * dividerx;
+            var cornery = mm.maxy - (vy * dividery);
+            var cornerx = mm.minx + (vx * dividerx);
             if (cornerx < mm.minx || cornerx >= mm.maxx || cornery < mm.miny || cornery > mm.maxy) {
                 return false;
             }
