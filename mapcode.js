@@ -121,7 +121,7 @@ var mapcode_dataversion = "2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.1.1/Data2.0';
+var mapcode_javaversion = '2.1.2/Data2.0';
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -277,7 +277,7 @@ function getTerritoryFullname(territory) {
     return isofullname[territoryNumber];
 }
 
-/// PUBLIC return parent country of territoryNumber (negative if territoryNumber is not a state)
+/// PUBLIC return parent country of subdivision (negative if territory is not a subdivision)
 function getParentOf(territory) {
     var territoryNumber = getTerritoryNumber(territory);
     if (territoryNumber >= usa_from && territoryNumber <= usa_upto) {
@@ -338,13 +338,27 @@ function fitsInside(coord, mm) {
     return ( mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx, mm.maxx) );
 }
 
-/// PRIVATE returns true iff coordinate inside rectangle with some room to spare (all values in millionths)
+/// PRIVATE returns true iff coordinate inside rectangle with some room to spare outside (all values in millionths)
 function fitsInsideWithRoom(coord, mm) {
     if ((( mm.miny - 45) > coord.y) || (coord.y >= (mm.maxy + 45))) {
         return false;
     }
     var xroom = xDivider4(mm.miny, mm.maxy) / 4;
     return isInRangeX(coord.x, mm.minx - xroom, mm.maxx + xroom);
+}
+
+/// PRIVATE returns true iff coordinate inside rectangle with some room to spare inside (all values in millionths)
+function fitsWellInside(coord, mm) {
+    if ((( mm.miny + 45) > coord.y) || (coord.y >= (mm.maxy - 45))) {
+        return false;
+    }
+    var xroom = xDivider4(mm.miny, mm.maxy) / 4;
+    return isInRangeX(coord.x, mm.minx + xroom, mm.maxx - xroom);
+}
+
+/// PRIVATE returns true iff coordinate near the rectangle border
+function isNearBorderOf(coord, mm) {
+    return fitsInsideWithRoom(coord, mm) && (!fitsWellInside(coord, mm));
 }
 
 /// PUBLIC return the AlphaCode (usually an ISO 3166 code) of a territory
@@ -591,24 +605,25 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
     if (valy < 0) { valy=0; } else if (valy >= factory) { valy=factory-1; }
 
     result += '-';
-    while (extraDigits-- > 0) {
+    for(;;) {
         factorx /= 30;
         var gx = Math.floor(valx / factorx);
-        valx -= factorx * gx;
 
         factory /= 30;
         var gy = Math.floor(valy / factory);
-        valy -= factory * gy;
 
         var column1 = Math.floor(gx / 6);
-        var column2 = (gx % 6);
-        var row1 = Math.floor(gy / 5);
-        var row2 = (gy % 5);
-        // add postfix:
+        var row1 = Math.floor(gy / 5);        
         result += encodeChar[row1 * 5 + column1];
-        if (extraDigits-- > 0) {
-            result += encodeChar[row2 * 6 + column2];
-        }
+        if (--extraDigits == 0) { break; }
+
+        var column2 = (gx % 6);
+        var row2 = (gy % 5);
+        result += encodeChar[row2 * 6 + column2];
+        if (--extraDigits == 0) { break; }
+
+        valx -= factorx * gx;
+        valy -= factory * gy;
     }
     return result;
 }
@@ -1934,6 +1949,18 @@ function master_encode(orgy, orgx, tn, isrecursive, stop_with_one_result, alloww
     return strArray;
 }
 
+var maxErrorInMetersForDigits = [
+            7.49,
+            1.39,
+            0.251,
+            0.0462,
+            0.00837,
+            0.00154,
+            0.00028,
+            0.000052,
+            0.0000093
+];
+
 // ******************** public interface *****************
 
 /// PUBLIC returns {distance,width,height}, the distance between two coordinates, and the longitudinal distance ("width") and latitudinal distance ("height") - all expressed in meters
@@ -2015,4 +2042,39 @@ function encodeShortestWithPrecision(latitudeDegrees, longitudeDegrees, precisio
 
 function encodeShortest(latitudeDegrees, longitudeDegrees, territory) {
     return encodeShortestWithPrecision(latitudeDegrees, longitudeDegrees, 0, territory);
+}
+
+// returns true iff coordinate is near more than one territory border
+function multipleBordersNearby(latitudeDegrees, longitudeDegrees, territory) {
+    var territoryNumber = getTerritoryNumber(territory);
+    if ((territoryNumber >= 0) && (territoryNumber < ccode_earth)) {
+        var parentTerritory = getParentOf(territoryNumber);
+        if (parentTerritory >= 0) {
+            // there is a parent! check its borders as well...
+            if (multipleBordersNearby(latitudeDegrees, longitudeDegrees, parentTerritory)) {
+                return true;
+            }
+        }
+        var coord32 = getEncodeRec(latitudeDegrees, longitudeDegrees).coord32;
+        var nrFound = 0;
+        var from = dataFirstRecord(territoryNumber);
+        var upto = dataLastRecord(territoryNumber);
+        for (var m = upto; m >= from; m--) {
+            if (!isRestricted(m)) {
+                if (isNearBorderOf(coord32, minmaxSetup(m))) {
+                    nrFound++;
+                    if (nrFound > 1) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+/// PUBLIC returns the worst-case distance (in meters) between a decoded mapcode and the original encoded location,
+/// given the number of high-precision digits after the hyphen of the mapcode.
+function maxErrorInMeters(extraDigits) {
+    maxErrorInMetersForDigits[extraDigits];
 }

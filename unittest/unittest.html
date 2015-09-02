@@ -167,10 +167,13 @@ function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
 						}
 					}
 					if (!found) {
-						nrWarnings++;
-						out('*** WARNING *** decode(' + str + ') = (' + p.y.toFixed(15) + ', ' + p.x.toFixed(15) + ') does not re-encode from ('+y.toFixed(15)+', '+x.toFixed(15)+')'+r[i].territoryAlphaCode);
-						printGeneratedMapcodes(r);
-						printGeneratedMapcodes(r2);
+						if( ! multipleBordersNearby( p.y, p.x, r[i].territoryAlphaCode) )  // should re-encode
+						{
+							nrWarnings++;
+							out('*** WARNING *** decode(' + str + ') = (' + p.y.toFixed(15) + ', ' + p.x.toFixed(15) + ') does not re-encode from ('+y.toFixed(15)+', '+x.toFixed(15)+')'+r[i].territoryAlphaCode);
+							printGeneratedMapcodes(r);
+							printGeneratedMapcodes(r2);
+						}
 					}						
 				}
 			}
@@ -336,6 +339,57 @@ function test_territory(alphacode,tc,isAlias,needsParent,tcParent) {
   }
 }
 
+function test_territory_insides() {
+	if (mapcode_javaversion>'2.1.2') {
+		var iTestData = [
+			"AAA", 0, 0,0,
+			"AAA", 0, 5000,0,
+			"AAA", 90, 0,0,
+			"AAA", -90, 0,0,
+			"AAA", 0, 180,0,
+			"AAA", 0, -180,0,
+			"ATA", -90, 0,0,
+			"ATA", -70, 0,0,
+
+			"USA", 31, -70,0, // interational waters (not in state)
+			"MEX", 19,-115,0, // interational waters (not in state)
+			"MEX", 18.358525, -114.722672,0, // Isla Clarion, not in a state
+			"MX-ROO", 20, -87,0,  // just in ROO
+			"MX-ROO", 20,-87.3,0, // in ROO because in MEX
+			"MEX", 20,-87.3,0, // in ROO because in MEX
+
+			"IND", 19, 87, 0,
+
+			"NLD", 52.6, 4.8,0,
+			"US-WV", 40.18, -80.87,0,
+			"USA", 40.18, -80.87,0,
+			"US-FL", 24.7, -82.7,0,
+			"USA", 24.7, -82.7,0,
+			"IN-TG", 16.13, 78.75,0,
+			"IN-AP", 16.13, 78.75,0,
+			"IN-MH", 16.13, 78.75,0,
+			"IN-PY", 16.13, 78.75,0,
+			"IND", 16.13, 78.75,0,
+			"USA", 40.7, -74,0,
+
+			"US-NY", 40.7, -74,1,
+			"MEX", 20.252060, -89.779821,1,
+			"NLD", 52.467314, 4.494037,1,
+			"MEX",21.431778909671 , -89.779828861356,1,
+			"MEX",21.431788272457 , -89.779820144176,1,
+
+		"end"];
+		for (var i = 0; iTestData[i] != "end"; i += 4) {
+			nrTests++;
+			if (multipleBordersNearby(iTestData[i+1],iTestData[i+2],iTestData[i])!=iTestData[i+3]) {
+				nrErrors++;
+				out('*** ERROR *** '+iTestData[i+1]+', '+iTestData[i+2]+' not multipleBordersNearby '+iTestData[i]);
+			}
+		}
+	}
+}
+
+
 function distance_tests()
 {
 	if (mapcode_javaversion>'2.1.0') {
@@ -370,6 +424,14 @@ function distance_tests()
 			}
 		}
 	}
+	if (mapcode_javaversion>'2.1.2') {
+		nrTests++;
+		if (maxErrorInMeters(0) < 7.5 || maxErrorInMeters(8) > 0.00001) {
+			nrErrors++;
+			out("*** ERROR *** maxErrorInMeters failed");
+		}
+	}
+
 }
 
 
@@ -393,6 +455,7 @@ function stepper()
 			distance_tests();
 			out('<HR>Territory tests');
 			out( (ccode_earth+1) + ' territories');
+			test_territory_insides();
 			break;
 		case 4:
 			test_territories();
