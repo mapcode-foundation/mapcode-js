@@ -43,7 +43,7 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 # Version History
 
-* 2.1.4
+* 2.1.5
 
     Added maxErrorInMeters to API;
 
