@@ -121,7 +121,7 @@ var mapcode_dataversion = "2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.1.2/Data2.0';
+var mapcode_javaversion = '2.1.4/Data2.0';
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -340,7 +340,7 @@ function fitsInside(coord, mm) {
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare outside (all values in millionths)
 function fitsInsideWithRoom(coord, mm) {
-    if ((( mm.miny - 45) > coord.y) || (coord.y >= (mm.maxy + 45))) {
+    if ((( mm.miny - 60) > coord.y) || (coord.y >= (mm.maxy + 60))) {
         return false;
     }
     var xroom = xDivider4(mm.miny, mm.maxy) / 4;
@@ -349,7 +349,7 @@ function fitsInsideWithRoom(coord, mm) {
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare inside (all values in millionths)
 function fitsWellInside(coord, mm) {
-    if ((( mm.miny + 45) > coord.y) || (coord.y >= (mm.maxy - 45))) {
+    if ((( mm.miny + 60) > coord.y) || (coord.y >= (mm.maxy - 60))) {
         return false;
     }
     var xroom = xDivider4(mm.miny, mm.maxy) / 4;
@@ -628,28 +628,118 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
     return result;
 }
 
-function decodeExtension(extensionchars, y, x, dividerx4, dividery, lon_offset4) {
-    var dividerx = dividerx4 / 4;
+
+
+// ***** MapcodeZone *****
+
+// cconstruct and return empty MapcodeZone
+function mzEmpty() {
+    return {fminx: 0, fmaxx: 0, fminy: 0, fmaxy: 0};
+}
+
+// construct and return copy of MapcodeZone
+function mzCopy(zone) {
+    return {
+      fminx: zone.fminx, 
+      fmaxx: zone.fmaxx,
+      fminy: zone.fminy, 
+      fmaxy: zone.fmaxy };
+}
+
+// return true iff MapcodeZone is empty
+function mzIsEmpty(zone) {
+    return ((zone.fmaxx <= zone.fminx) || (zone.fmaxy <= zone.fminy));
+}
+
+// comstruct MapcodeZone based on coordinate and deltas (in Fractions)
+function mzSetFromFractions(y, x, yDelta, xDelta) {
+    if (yDelta < 0) {
+        return {
+          fminx: x, 
+          fmaxx: x + xDelta,
+          fminy: y + 1 + yDelta, // y+yDelta can NOT be represented
+          fmaxy: y + 1 };        // y CAN be represented
+    }
+    else {
+        return {
+          fminx: x, 
+          fmaxx: x + xDelta,
+          fminy: y,
+          fmaxy: y + yDelta };
+    }
+}
+
+function mzMidPointFractions(zone) {
+    return {
+      y: Math.floor((zone.fminy + zone.fmaxy) / 2),
+      x: Math.floor((zone.fminx + zone.fmaxx) / 2) };
+}
+
+function convertFractionsToCoord32(p) {
+    p.y = Math.floor(p.y /  810000);
+    p.x = Math.floor(p.x / 3240000);
+    return p;
+}
+
+function convertFractionsToDegrees(p) {
+    p.y /= ( 810000 * 1000000);
+    p.x /= (3240000 * 1000000);
+    return p;
+}
+
+function mzRestrictZoneTo(zone, mm) {
+    var z = mzCopy(zone);
+    var miny = mm.miny * 810000;
+    if (z.fminy < miny) {
+        z.fminy = miny;
+    }
+    var maxy = mm.maxy * 810000;
+    if (z.fmaxy > maxy) {
+        z.fmaxy = maxy;
+    }
+    if (z.fminy < z.fmaxy) {
+        var minx = mm.minx * 3240000;
+        var maxx = mm.maxx * 3240000;
+        if ((maxx < 0) && (z.fminx > 0)) {
+            minx += (360000000 * 3240000);
+            maxx += (360000000 * 3240000);
+        }
+        else if ((minx > 1) && (z.fmaxx < 0)) {
+            minx -= (360000000 * 3240000);
+            maxx -= (360000000 * 3240000);
+        }
+        if (z.fminx < minx) {
+            z.fminx = minx; 
+        }
+        if (z.fmaxx > maxx) {
+            z.fmaxx = maxx;
+        }
+    }
+    return z;
+}
+
+// returns (possibly empty) MapcodeZone
+function decodeExtension(extensionchars, y, x, dividerx4, dividery, lon_offset4, extremeLatMicroDeg, maxLonMicroDeg) {
     var processor = 1;
     var lon32 = 0;
     var lat32 = 0;
     var odd = 0;
     var idx = 0;
     if (extensionchars.length > 8) {
-        return false; // too many digits
+        return mzEmpty(); // too many digits
     }
     while (idx < extensionchars.length) {
         var column1, row1, column2, row2;
         var c1 = decodeChar[extensionchars.charCodeAt(idx++)];
         if (c1 < 0 || c1 == 30) {
-            return false;
+            return mzEmpty();
         }
         row1 = Math.floor(c1 / 5);
         column1 = (c1 % 5);
         if (idx < extensionchars.length) {
             var c2 = decodeChar[extensionchars.charCodeAt(idx++)];
             if (c2 < 0 || c2 == 30) {
-                return false;
+                return mzEmpty();
             }
             row2 = Math.floor(c2 / 6);
             column2 = (c2 % 6);
@@ -663,31 +753,40 @@ function decodeExtension(extensionchars, y, x, dividerx4, dividery, lon_offset4)
         lat32 = lat32 * 30 + row1 * 5 + row2;
     } //
 
-    var lon = x + ((lon32 * dividerx) / processor) + ( lon_offset4 / 4.0 );
-    var lat = y + ((lat32 * dividery) / processor);
+    while (processor < 810000.0) {
+        dividerx4 *= 30;
+        dividery *= 30;
+        processor *= 30;
+    }
 
-    // FORCE_RECODE
-    var range = {minlon:lon, maxlon:lon, minlat:lat, maxlat:lat};
-    if (odd) {
-        range.maxlon += (dividerx / (processor / 6));
-        range.maxlat += (dividery / (processor / 5));
-    } else {
-        range.maxlon += (dividerx / processor);
-        range.maxlat += (dividery / processor);
-    } // FORCE_RECODE
+    var lon4 = (x * 3240000.0) + (lon32 * dividerx4) + (lon_offset4 * 810000.0);
+    var lat1 = (y *  810000.0) + (lat32 * dividery );
 
-    if (odd) {
-        lon += (dividerx / (2 * processor / 6));
-        lat += (dividery / (2 * processor / 5));
-    } else {
-        lon += (dividerx / (2 * processor));
-        lat += (dividery / (2 * processor));
+    // determine the range of coordinates that are encode to this mapcode
+    var mapcodeZone;
+    if (odd) { // odd
+        mapcodeZone = mzSetFromFractions(lat1, lon4, 5 * dividery, 6 * dividerx4);
+    } else { // not odd
+        mapcodeZone = mzSetFromFractions(lat1, lon4, dividery, dividerx4);
     } // not odd
 
-    return {y: lat, x: lon, range:range};
+    // FORCE_RECODE - restrict the coordinate range to the extremes that were provided
+    if (mapcodeZone.fmaxx > (maxLonMicroDeg * 3240000.0)) { 
+        mapcodeZone.fmaxx = (maxLonMicroDeg * 3240000.0);
+    }
+    if (dividery >= 0 ) {
+        if (mapcodeZone.fmaxy > (extremeLatMicroDeg * 810000.0)) {
+            mapcodeZone.fmaxy = (extremeLatMicroDeg * 810000.0);
+        }
+    } else {
+        if (mapcodeZone.fminy < (extremeLatMicroDeg * 810000.0)) {
+            mapcodeZone.fminy = (extremeLatMicroDeg * 810000.0);
+        }
+    }
+    return mapcodeZone;
 }
 
-function decodeGrid(input, extensionchars, headerletter, m) // for a well-formed input, and integer variables // returns millionths
+function decodeGrid(input, extensionchars, headerletter, m)
 {
     var relx, rely;
     var prefixlength = input.indexOf('.');
@@ -760,25 +859,13 @@ function decodeGrid(input, extensionchars, headerletter, m) // for a well-formed
     var cornery = rely + (dify * dividery);
     var cornerx = relx + (difx * dividerx);
     if (!fitsInside({y:cornery,x:cornerx},mm)) {
-        return false;
+        return mzEmpty();
     } // even corner does not fit!
-    var r = decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, dividery, 0) // grid
-    if (r) { 
-        // FORCE_RECODE
-        if (r.x>= relx + xgridsize) {
-            r.x = relx + xgridsize - 0.000001;
-        } // keep in inner cell
-        if (r.y>= rely + ygridsize) {
-            r.y = rely + ygridsize - 0.000001;
-        } // keep in inner cell
-        if (r.x>= mm.maxx) {
-            r.x = mm.maxx - 0.000001;
-        } // keep in territory
-        if (r.y>= mm.maxy) {
-            r.y = mm.maxy - 0.000001;
-        } // keep in territory
-    } // FORCE_RECODE
-    return r;
+
+    var decodeMaxx = ((relx + xgridsize) < mm.maxx) ? (relx + xgridsize) : mm.maxx;
+    var decodeMaxy = ((rely + ygridsize) < mm.maxy) ? (rely + ygridsize) : mm.maxy;
+    return decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, dividery, 
+              0, decodeMaxy, decodeMaxx); // grid
 }
 
 function encodeBase31(value, nrchars) {
@@ -1322,9 +1409,10 @@ function decodeNameless(input, extensionchars, m, firstindex) {
         }
     }
 
-    if (X > A) {
-        return false;
-    } // past end!
+    if (X > A) {  // past end!
+        return mzEmpty();
+    }
+
     m = F + X;
     var mm = minmaxSetup(m);
 
@@ -1347,7 +1435,7 @@ function decodeNameless(input, extensionchars, m, firstindex) {
     }
 
     if (dx >= xSIDE) { // else out-of-range!
-        return false;
+        return mzEmpty();
     }
 
     var dividerx4 = xDivider4(mm.miny, mm.maxy); // 4 times too large!
@@ -1355,17 +1443,8 @@ function decodeNameless(input, extensionchars, m, firstindex) {
 
     var cornerx = mm.minx + Math.floor((dx * dividerx4) / 4); // FIRST multiply, THEN divide!
     var cornery = mm.maxy - (dy * dividery);
-    var r = decodeExtension(extensionchars, cornery, cornerx, dividerx4, -dividery, ((dx * dividerx4) % 4)); // nameless
-    if (r) {
-        // FORCE_RECODE
-        if (r.y < mm.miny) {
-            r.y = mm.miny;
-        } // keep in territory
-        if (r.x>= mm.maxx) {
-            r.x = mm.maxx - 0.000001;
-        } // keep in territory
-    } // FORCE_RECODE
-    return r;
+    return decodeExtension(extensionchars, cornery, cornerx, dividerx4, -dividery, 
+              ((dx * dividerx4) % 4), mm.miny, mm.maxx); // nameless
 }
 
 function encodeAutoHeader(enc, m, extraDigits) {
@@ -1478,19 +1557,10 @@ function decodeAutoHeader(input, extensionchars, m) {
             var cornery = mm.maxy - (vy * dividery);
             var cornerx = mm.minx + (vx * dividerx);
             if (cornerx < mm.minx || cornerx >= mm.maxx || cornery < mm.miny || cornery > mm.maxy) {
-                return false;
+                return mzEmpty();
             }
-            var r = decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, -dividery, 0); // autoheader decode
-            if (r) { 
-                // FORCE_RECODE
-                if (r.y < mm.miny) {
-                    r.y = mm.miny;
-                } // keep in territory
-                if (r.x>= mm.maxx) {
-                    r.x = mm.maxx - 0.000001;
-                } // keep in territory
-            }
-            return r;
+            return decodeExtension(extensionchars, cornery, cornerx, dividerx << 2, -dividery,
+                      0, mm.miny, mm.maxx); // autoheader
         }
         STORAGE_START += product;
     }
@@ -1792,128 +1862,84 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
     var postfixlength = mclen - 1 - prefixlength;
     var incodex = prefixlength * 10 + postfixlength;
 
-    var result;
+    var zone = mzEmpty();
     var m;
     for (m = from; m <= upto; m++) {
         var codex = Codex(m);
         if (recType(m) == 0 && isNameless(m) == 0 && (incodex == codex || (incodex == 22 && codex == 21))) {
-            result = decodeGrid(mapcode, extensionchars, '', m);
-            if (result && isRestricted(m)) {
-                var fitssomewhere = 0;
+            zone = decodeGrid(mapcode, extensionchars, '', m);
+
+            // first of all, make sure the zone fits the country
+            if (!mzIsEmpty(zone) && territoryNumber != ccode_earth) {
+                zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
+            }    
+
+            if (!mzIsEmpty(zone) && isRestricted(m)) {
+                var nrZoneOverlaps = 0;
                 var j;
-                for (j = upto - 1; j >= from; j--) { // look in previous rects
+                // get midpoint in microdegrees
+                var coord32 = convertFractionsToCoord32(mzMidPointFractions(zone));
+                for (j = m - 1; j >= from; j--) { // look in previous rects
                     if (!isRestricted(j)) {
-                        if (fitsInside(result, minmaxSetup(j))) {
-                            fitssomewhere = 1;
+                        if (fitsInside(coord32, minmaxSetup(j))) {
+                            nrZoneOverlaps++;
                             break;
                         }
                     }
                 }
                 
-                if (!fitssomewhere) { // FORCE_RECODE
+                if (nrZoneOverlaps == 0) {
+                    // see if mapcode zone OVERLAPS any sub-area...
+                    var zfound;
                     for (j = from; j < m; j++) { // try all smaller rectangles j
-                      if (!isRestricted(j)) {
-                        var plat = result.y;
-                        var plon = result.x;
-
-                        var mm = minmaxSetup(j);
-                        var bminx = mm.minx;
-                        var bmaxx = mm.maxx;                                    
-                        if (bmaxx < 0 && plon > 0) {
-                            bminx += 360000000;
-                            bmaxx += 360000000;
+                        if (!isRestricted(j)) {
+                            var z = mzRestrictZoneTo(zone, minmaxSetup(j));
+                            if (!mzIsEmpty(z)) {
+                                nrZoneOverlaps++;                                            
+                                if (nrZoneOverlaps == 1) {
+                                    // first fit! remember...
+                                    zfound = mzCopy(z);
+                                }
+                                else { // nrZoneOverlaps > 1
+                                    // more than one hit
+                                    break; // give up!
+                                }
+                            }
                         }
-                        
-                        // force p in range
-                        if (plat < mm.miny && mm.miny <= result.range.maxlat) { 
-                            plat = mm.miny; 
-                        }
-                        if (plat >= mm.maxy && mm.maxy > result.range.minlat) { 
-                            plat = mm.maxy - 0.000001; 
-                        }
-                        if (plon < bminx && bminx <= result.range.maxlon) { 
-                            plon = bminx; 
-                        }
-                        if (plon >= bmaxx && bmaxx > result.range.minlon) { 
-                            plon = bmaxx - 0.000001; 
-                        }
-                        // better?
-                        if ( plat > result.range.minlat && plat < result.range.maxlat &&
-                             plon > result.range.minlon && plon < result.range.maxlon &&
-                                 mm.miny <= plat && plat < mm.maxy && 
-                                 bminx <= plon && plon < bmaxx ) {
-
-                            result.y = plat;
-                            result.x = plon;
-                            fitssomewhere = 1;
-                            break;                                        
-                        }
-                      }
                     }
-                } //FORCE_RECODE
+                    if (nrZoneOverlaps == 1) { // intersected exactly ONE sub-area?
+                        zone = mzCopy(zfound); // use the intersection found...
+                    }
+                }
 
-                if (!fitssomewhere) {
-                    result = 0;
+                if (!nrZoneOverlaps) {
+                    zone = mzEmpty();
                 }
             }
             break;
         }
         else if (recType(m) == 1 && codex + 10 == incodex && headerLetter(m) == mapcode.charAt(0)) {
-            result = decodeGrid(mapcode.substr(1), extensionchars, mapcode.substr(0, 1), m);
+            zone = decodeGrid(mapcode.substr(1), extensionchars, mapcode.substr(0, 1), m);
             break;
         }
         else if (isNameless(m) && ((codex == 21 && incodex == 22 ) || (codex == 22 && incodex == 32) || (codex == 13 && incodex == 23))) {
-            result = decodeNameless(mapcode, extensionchars, m, from);
+            zone = decodeNameless(mapcode, extensionchars, m, from);
             break;
         }
         else if (recType(m) > 1 && postfixlength == 3 && CodexLen(m) == prefixlength + 2) {
-            result = decodeAutoHeader(mapcode, extensionchars, m);
+            zone = decodeAutoHeader(mapcode, extensionchars, m);
             break;
         }
     }
 
-    if (result) {
-        if (result.x > 180000000) {
-            result.x -= 360000000;
-        } else if (result.x < -180000000) {
-            result.x += 360000000;
-        }
-
-        // make sure result is in the country
-        if (territoryNumber != ccode_earth) {
-            if (!(fitsInsideWithRoom(result, minmaxSetup(upto)))) {
-                return false;
-            }
-            else { // FORCE_RECODE
-                var mm = minmaxSetup(upto);
-                if (result.y < mm.miny) {
-                    result.y = mm.miny;
-                }
-                if (result.y>= mm.maxy) {
-                    result.y = mm.maxy - 0.000001;
-                }
-                var bminx = mm.minx;
-                var bmaxx = mm.maxx;
-                if (result.x < 0 && bminx > 0) {
-                    bminx -= 360000000;
-                    bmaxx -= 360000000;
-                }
-                if (result.x < bminx) {
-                    result.x = bminx;
-                }
-                if (result.x>= bmaxx) {
-                    result.x = bmaxx - 0.000001;
-                }
-            }
-        }
-
-        result.x /= 1000000.0;
-        result.y /= 1000000.0;
-        if (result.y > 90) {
-            result.y = 90;
-        }
+    if (territoryNumber != ccode_earth) {
+        zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
     }
-    return result;
+    if (mzIsEmpty(zone)) {
+        return false;
+    }
+      
+    return convertFractionsToDegrees(mzMidPointFractions(zone));
 }
 
 // ******************** legacy interface *****************

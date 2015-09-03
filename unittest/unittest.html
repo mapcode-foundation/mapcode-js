@@ -15,7 +15,7 @@
 </head>
 <body>
 
-Mapcode Javascript Unit Test 2.1.1<BR>
+Mapcode Javascript Unit Test 2.1.4<BR>
 <DIV id="out"></DIV>
 <DIV id="perc"></DIV>
 
@@ -57,25 +57,13 @@ function alphabet_tests() {
 	}
 }
 
-function printGeneratedMapcodes(r) {
+function printGeneratedMapcodes(r, name) {
 	var n = r.length;
-	var t = ' &nbsp; ' + n + ' results generated:';
+	var t = ' &nbsp; ' + n + ' results generated (' + name + '):';
 	for (var i=0;i<n;i++) 
 		t += ' (' + r[i].fullmapcode + ')';
 	out(t);
 }
-
-var maxErrorForPrecision = [
-	7.49,
-	1.45,
-	0.2502,
-	0.0462,
-	0.00837,
-	0.00154,
-	0.00028,
-	0.000052,
-	0.0000093,
-];
 
 // perform an encode/decode test
 function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
@@ -138,14 +126,16 @@ function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
 			var p = decode(str);
 			if ( p ) {
 				var dm = distanceInMeters(y, x, p.y, p.x);
-				var maxerror = maxErrorForPrecision[precision];
+				var maxerror = maxErrorInMeters(precision);
 				if (dm>maxerror) {
 					nrErrors++;
 					out('*** ERROR *** decode('+str+') = ('+p.y.toFixed(8)+', '+p.x.toFixed(8)+'), which is '+ (dm*100).toFixed(4)+' cm away (>'+(maxerror*100)+' cm) from ('+y.toFixed(11)+', '+x.toFixed(11)+')');
 				}
-				else if ( nrWarnings < 16 ) {
+				else if ( nrWarnings < 86 ) {
 					// see if decode encodes back to the same solution
+					var parent = getParentOf(r[i].territoryAlphaCode);
 					var r2 = encodeWithPrecision( p.y, p.x, precision, r[i].territoryAlphaCode );
+					var r3 = {length:0};
 					var found=0;
 					for(var i2=0; i2<r2.length; i2++) {
 						if (r2[i2].fullmapcode==str) { 
@@ -155,11 +145,10 @@ function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
 					}
 					// of, if inherited from parent country: the same parent solution
 					if (!found) {
-						var parent = getParentOf(r[i].territoryAlphaCode);
 						if (parent>=0) {
-							r2 = encodeWithPrecision( p.y, p.x, precision, parent );
-							for(var i2=0; i2<r2.length; i2++) {
-								if (r2[i2].fullmapcode.split(" ")[1]==str.split(" ")[1]) { 
+							r3 = encodeWithPrecision( p.y, p.x, precision, parent );
+							for(var i2=0; i2<r3.length; i2++) {
+								if (r3[i2].fullmapcode.split(" ")[1]==str.split(" ")[1]) { 
 									found=1; 
 									break; 
 								}
@@ -171,8 +160,9 @@ function test_encode_decode(str,y,x,localsolutions,globalsolutions) {
 						{
 							nrWarnings++;
 							out('*** WARNING *** decode(' + str + ') = (' + p.y.toFixed(15) + ', ' + p.x.toFixed(15) + ') does not re-encode from ('+y.toFixed(15)+', '+x.toFixed(15)+')'+r[i].territoryAlphaCode);
-							printGeneratedMapcodes(r);
-							printGeneratedMapcodes(r2);
+							printGeneratedMapcodes(r,  "global");
+							printGeneratedMapcodes(r2, r[i].territoryAlphaCode);
+							printGeneratedMapcodes(r3, (parent < 0) ? "no parent" : parent);
 						}
 					}						
 				}
@@ -254,7 +244,7 @@ function test_failing_decodes() {
 	var i;
 	for (i=0;;i++)
 	{
-		str = badcodes[i];
+		var str = badcodes[i];
 		if (str=='end') 
 			break;
 
@@ -381,9 +371,9 @@ function test_territory_insides() {
 		"end"];
 		for (var i = 0; iTestData[i] != "end"; i += 4) {
 			nrTests++;
-			if (multipleBordersNearby(iTestData[i+1],iTestData[i+2],iTestData[i])!=iTestData[i+3]) {
+			if (multipleBordersNearby(iTestData[i+1],iTestData[i+2],iTestData[i]) != iTestData[i+3]) {
 				nrErrors++;
-				out('*** ERROR *** '+iTestData[i+1]+', '+iTestData[i+2]+' not multipleBordersNearby '+iTestData[i]);
+				out('*** ERROR *** '+iTestData[i+1]+', '+iTestData[i+2]+' multipleBordersNearby '+iTestData[i]+' != '+iTestData[i+3]);
 			}
 		}
 	}
@@ -481,6 +471,8 @@ function stepper()
 		case 11:
 			out('<HR>Done.');
 			out('Executed '+nrTests+' tests, found '+nrErrors+' errors');
+			break;
+		default:
 			clearInterval(myVar);
 			break;
 	}
