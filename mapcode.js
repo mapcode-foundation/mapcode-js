@@ -1679,7 +1679,7 @@ function mapcoderEngine(enc, tn, getshortest, isrecursive, state_override, extra
                     else if (recType(i) > 1) {
                         r = encodeAutoHeader(enc, i, extraDigits);
                     }
-                    else if (isRestricted(i) && i == upto && getParentOf(territoryNumber) >= 0) {
+                    else if ((i == upto) && (getParentOf(territoryNumber) >= 0)) {
                         moreresults = mapcoderEngine(enc, getParentOf(territoryNumber), getshortest, true/*recursive*/, territoryNumber, extraDigits);
                         if (moreresults && moreresults.length > 0) {
                             results = results.concat(moreresults);
