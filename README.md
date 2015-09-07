@@ -43,6 +43,10 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 # Version History
 
+* 2.2
+
+    Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible
+
 * 2.1.5
 
     Added maxErrorInMeters to API;

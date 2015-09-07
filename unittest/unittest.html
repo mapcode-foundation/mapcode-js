@@ -15,7 +15,7 @@
 </head>
 <body>
 
-Mapcode Javascript Unit Test 2.1.4<BR>
+Mapcode Javascript Unit Test 2.2<BR>
 <DIV id="out"></DIV>
 <DIV id="perc"></DIV>
 
@@ -338,7 +338,7 @@ function test_territory_insides() {
 			"AAA", -90, 0,0,
 			"AAA", 0, 180,0,
 			"AAA", 0, -180,0,
-			"ATA", -90, 0,0,
+			"ATA", -90, 0,1, // in data version 2.2, ATA -90,0 has ZZ.ZZ and multiple borders
 			"ATA", -70, 0,0,
 
 			"USA", 31, -70,0, // interational waters (not in state)

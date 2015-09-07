@@ -12,63 +12,62 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-
+ */ 
 var entity_iso = [
-    'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
-    'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
-    'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM',
-    'NIU', 'KNA', 'CYM', 'BES', 'MDV', 'SHN', 'MLT', 'GRD', 'VIR', 'MYT',
-    'SJM', 'VCT', 'HMD', 'BRB', 'ATG', 'CUW', 'SYC', 'PLW', 'MNP', 'AND',
-    'GUM', 'IMN', 'LCA', 'FSM', 'SGP', 'TON', 'DMA', 'BHR', 'KIR', 'TCA',
-    'STP', 'HKG', 'MTQ', 'FRO', 'GLP', 'COM', 'MUS', 'REU', 'LUX', 'WSM',
-    'SGS', 'PYF', 'CPV', 'TTO', 'BRN', 'ATF', 'PRI', 'CYP', 'LBN', 'JAM',
-    'GMB', 'QAT', 'FLK', 'VUT', 'MNE', 'BHS', 'TLS', 'SWZ', 'KWT', 'FJI',
-    'NCL', 'SVN', 'ISR', 'PSE', 'SLV', 'BLZ', 'DJI', 'MKD', 'RWA', 'HTI',
-    'BDI', 'GNQ', 'ALB', 'SLB', 'ARM', 'LSO', 'BEL', 'MDA', 'GNB', 'TWN',
-    'BTN', 'CHE', 'NLD', 'DNK', 'EST', 'DOM', 'SVK', 'CRI', 'BIH', 'HRV',
-    'TGO', 'LVA', 'LTU', 'LKA', 'GEO', 'IRL', 'SLE', 'PAN', 'CZE', 'GUF',
-    'ARE', 'AUT', 'AZE', 'SRB', 'JOR', 'PRT', 'HUN', 'KOR', 'ISL', 'GTM',
-    'CUB', 'BGR', 'LBR', 'HND', 'BEN', 'ERI', 'MWI', 'PRK', 'NIC', 'GRC',
-    'TJK', 'BGD', 'NPL', 'TUN', 'SUR', 'URY', 'KHM', 'SYR', 'SEN', 'KGZ',
-    'BLR', 'GUY', 'LAO', 'ROU', 'GHA', 'UGA', 'GBR', 'GIN', 'ECU', 'ESH',
-    'GAB', 'NZL', 'BFA', 'PHL', 'ITA', 'OMN', 'POL', 'CIV', 'NOR', 'MYS',
-    'VNM', 'FIN', 'COG', 'DEU', 'JPN', 'ZWE', 'PRY', 'IRQ', 'MAR', 'UZB',
-    'SWE', 'PNG', 'CMR', 'TKM', 'ESP', 'THA', 'YEM', 'FRA', 'ALA', 'KEN',
-    'BWA', 'MDG', 'UKR', 'SSD', 'CAF', 'SOM', 'AFG', 'MMR', 'ZMB', 'CHL',
-    'TUR', 'PAK', 'MOZ', 'NAM', 'VEN', 'NGA', 'TZA', 'EGY', 'MRT', 'BOL',
-    'ETH', 'COL', 'ZAF', 'MLI', 'AGO', 'NER', 'TCD', 'PER', 'MNG', 'IRN',
-    'LBY', 'SDN', 'IDN', 'DIF', 'TLA', 'MOR', 'AGU', '5CL', 'QUE', 'HID',
-    '5MX', 'TAB', 'NAY', 'GUA', 'PUE', 'YUC', 'ROO', 'SIN', 'CAM', 'MIC',
-    'SLP', 'GRO', 'NLE', 'BCN', 'VER', 'CHP', 'BCS', 'ZAC', 'JAL', 'TAM',
-    'OAX', 'DUR', 'COA', 'SON', 'CHH', 'GRL', 'SAU', 'COD', 'DZA', 'KAZ',
-    'ARG', '2DD', '2DN', '2CH', '2AN', '2LD', '2DL', '2ML', '2NL', '2MN',
-    '2TR', '2MZ', '2SK', '2PB', '2HR', '2AR', '2AS', '2BR', '2UT', '2GA',
-    '2KL', '2TN', '2HP', '2JK', '2CT', '2JH', '2KA', '2RJ', '2OR', '2GJ',
-    '2WB', '2MP', '2TG', '2AP', '2MH', '2UP', '2PY', 'NSW', 'ACT', 'JBT',
-    '4NT', '4SA', 'TAS', 'VIC', '4WA', 'QLD', '6DF', '6SE', '6AL', '6RJ',
-    '6ES', '6RN', '6PB', '6SC', '6PE', '6AP', '6CE', '6AC', '6PR', '6RR',
-    '6RO', '6SP', '6PI', '6TO', '6RS', '6MA', '6GO', '6MS', '6BA', '6MG',
-    '6MT', '6PA', '6AM', '1DC', '1RI', '1DE', '1CT', '1NJ', '1NH', '1VT',
-    '1MA', '1HI', '1MD', '1WV', '1SC', '1ME', '1IN', '1KY', '1TN', '1VA',
-    '1OH', '1PA', '1MS', '1LA', '1AL', '1AR', '1NC', '1NY', '1IA', '1IL',
-    '1GA', '1WI', '1FL', '1MO', '1OK', '1ND', '1WA', '1SD', '1NE', '1KS',
-    '1ID', '1UT', '1MN', '1MI', '1WY', '1OR', '1CO', '1NV', '1AZ', '1NM',
-    '1MT', '1CA', '1TX', '1AK', '3BC', '3AB', '3ON', '3QC', '3SK', '3MB',
-    '3NL', '3NB', '3NS', '3PE', '3YT', '3NT', '3NU', 'IND', 'AUS', 'BRA',
-    'USA', 'MEX', 'MOW', 'SPE', 'KGD', '7IN', '7AD', '7SE', '7KB', '7KC',
-    '7CE', '7CU', 'IVA', 'LIP', 'ORL', 'TUL', '7BE', 'VLA', 'KRS', 'KLU',
-    '7TT', 'BRY', 'YAR', 'RYA', 'AST', 'MOS', 'SMO', '7DA', 'VOR', 'NGR',
-    'PSK', 'KOS', 'STA', 'KDA', '7KL', 'TVE', 'LEN', 'ROS', 'VGG', 'VLG',
-    'MUR', '7KR', 'NEN', '7KO', 'ARK', '7MO', 'NIZ', 'PNZ', '7KI', '7ME',
-    'ORE', 'ULY', '7PM', '7BA', '7UD', '7TA', 'SAM', 'SAR', 'YAN', '7KM',
-    'SVE', 'TYU', 'KGN', '7CH', '7BU', 'ZAB', 'IRK', 'NVS', 'TOM', 'OMS',
-    '7KK', 'KEM', '7AL', 'ALT', '7TY', 'KYA', 'MAG', 'CHU', 'KAM', 'SAK',
-    '7PO', 'YEV', 'KHA', 'AMU', '7SA', 'CAN', 'RUS', '8SH', '8TJ', '8BJ',
-    '8HI', '8NX', '8CQ', '8ZJ', '8JS', '8FJ', '8AH', '8LN', '8SD', '8SX',
-    '8JX', '8HA', '8GZ', '8GD', '8HB', '8JL', '8HE', '8SN', '8NM', '8HL',
-    '8HN', '8GX', '8SC', '8YN', '8XZ', '8GS', '8QH', '8XJ', 'CHN', 'UMI',
-    'CPT', 'ATA', 'AAA', '?'];
+  'VAT','MCO','GIB','TKL','CCK','BLM','NRU','TUV','MAC','SXM',
+  'MAF','NFK','PCN','BVT','BMU','IOT','SMR','GGY','AIA','MSR',
+  'JEY','CXR','WLF','VGB','LIE','ABW','MHL','ASM','COK','SPM',
+  'NIU','KNA','CYM','BES','MDV','SHN','MLT','GRD','VIR','MYT',
+  'SJM','VCT','HMD','BRB','ATG','CUW','SYC','PLW','MNP','AND',
+  'GUM','IMN','LCA','FSM','SGP','TON','DMA','BHR','KIR','TCA',
+  'STP','HKG','MTQ','FRO','GLP','COM','MUS','REU','LUX','WSM',
+  'SGS','PYF','CPV','TTO','BRN','ATF','PRI','CYP','LBN','JAM',
+  'GMB','QAT','FLK','VUT','MNE','BHS','TLS','SWZ','KWT','FJI',
+  'NCL','SVN','ISR','PSE','SLV','BLZ','DJI','MKD','RWA','HTI',
+  'BDI','GNQ','ALB','SLB','ARM','LSO','BEL','MDA','GNB','TWN',
+  'BTN','CHE','NLD','DNK','EST','DOM','SVK','CRI','BIH','HRV',
+  'TGO','LVA','LTU','LKA','GEO','IRL','SLE','PAN','CZE','GUF',
+  'ARE','AUT','AZE','SRB','JOR','PRT','HUN','KOR','ISL','GTM',
+  'CUB','BGR','LBR','HND','BEN','ERI','MWI','PRK','NIC','GRC',
+  'TJK','BGD','NPL','TUN','SUR','URY','KHM','SYR','SEN','KGZ',
+  'BLR','GUY','LAO','ROU','GHA','UGA','GBR','GIN','ECU','ESH',
+  'GAB','NZL','BFA','PHL','ITA','OMN','POL','CIV','NOR','MYS',
+  'VNM','FIN','COG','DEU','JPN','ZWE','PRY','IRQ','MAR','UZB',
+  'SWE','PNG','CMR','TKM','ESP','THA','YEM','FRA','ALA','KEN',
+  'BWA','MDG','UKR','SSD','CAF','SOM','AFG','MMR','ZMB','CHL',
+  'TUR','PAK','MOZ','NAM','VEN','NGA','TZA','EGY','MRT','BOL',
+  'ETH','COL','ZAF','MLI','AGO','NER','TCD','PER','MNG','IRN',
+  'LBY','SDN','IDN','DIF','TLA','MOR','AGU','5CL','QUE','HID',
+  '5MX','TAB','NAY','GUA','PUE','YUC','ROO','SIN','CAM','MIC',
+  'SLP','GRO','NLE','BCN','VER','CHP','BCS','ZAC','JAL','TAM',
+  'OAX','DUR','COA','SON','CHH','GRL','SAU','COD','DZA','KAZ',
+  'ARG','2DD','2DN','2CH','2AN','2LD','2DL','2ML','2NL','2MN',
+  '2TR','2MZ','2SK','2PB','2HR','2AR','2AS','2BR','2UT','2GA',
+  '2KL','2TN','2HP','2JK','2CT','2JH','2KA','2RJ','2OR','2GJ',
+  '2WB','2MP','2TG','2AP','2MH','2UP','2PY','NSW','ACT','JBT',
+  '4NT','4SA','TAS','VIC','4WA','QLD','6DF','6SE','6AL','6RJ',
+  '6ES','6RN','6PB','6SC','6PE','6AP','6CE','6AC','6PR','6RR',
+  '6RO','6SP','6PI','6TO','6RS','6MA','6GO','6MS','6BA','6MG',
+  '6MT','6PA','6AM','1DC','1RI','1DE','1CT','1NJ','1NH','1VT',
+  '1MA','1HI','1MD','1WV','1SC','1ME','1IN','1KY','1TN','1VA',
+  '1OH','1PA','1MS','1LA','1AL','1AR','1NC','1NY','1IA','1IL',
+  '1GA','1WI','1FL','1MO','1OK','1ND','1WA','1SD','1NE','1KS',
+  '1ID','1UT','1MN','1MI','1WY','1OR','1CO','1NV','1AZ','1NM',
+  '1MT','1CA','1TX','1AK','3BC','3AB','3ON','3QC','3SK','3MB',
+  '3NL','3NB','3NS','3PE','3YT','3NT','3NU','IND','AUS','BRA',
+  'USA','MEX','MOW','SPE','KGD','7IN','7AD','7SE','7KB','7KC',
+  '7CE','7CU','IVA','LIP','ORL','TUL','7BE','VLA','KRS','KLU',
+  '7TT','BRY','YAR','RYA','AST','MOS','SMO','7DA','VOR','NGR',
+  'PSK','KOS','STA','KDA','7KL','TVE','LEN','ROS','VGG','VLG',
+  'MUR','7KR','NEN','7KO','ARK','7MO','NIZ','PNZ','7KI','7ME',
+  'ORE','ULY','7PM','7BA','7UD','7TA','SAM','SAR','YAN','7KM',
+  'SVE','TYU','KGN','7CH','7BU','ZAB','IRK','NVS','TOM','OMS',
+  '7KK','KEM','7AL','ALT','7TY','KYA','MAG','CHU','KAM','SAK',
+  '7PO','YEV','KHA','AMU','7SA','CAN','RUS','8SH','8TJ','8BJ',
+  '8HI','8NX','8CQ','8ZJ','8JS','8FJ','8AH','8LN','8SD','8SX',
+  '8JX','8HA','8GZ','8GD','8HB','8JL','8HE','8SN','8NM','8HL',
+  '8HN','8GX','8SC','8YN','8XZ','8GS','8QH','8XJ','CHN','UMI',
+  'CPT','ATA','AAA', '?'];
 
 var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,COL=5CL,5ME=5MX,MEX=5MX,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,1PR=PRI,5TM=TAM,TAM=TAM,2OD=2OR,";
 
@@ -117,11 +116,11 @@ var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 var ccode_start = 112; // NLD
 var mapcode_cversion = "2.0.2";
-var mapcode_dataversion = "2.0";
+var mapcode_dataversion = "2.2";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.1.4/Data2.0';
+var mapcode_javaversion = '2.2/Data'+mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -678,6 +677,14 @@ function mzMidPointFractions(zone) {
 function convertFractionsToCoord32(p) {
     p.y = Math.floor(p.y /  810000);
     p.x = Math.floor(p.x / 3240000);
+    return p;
+}
+
+function wrap(p) {
+    if (p.x >= (180 * 3240000 * 1000000))
+        p.x -= (360 * 3240000 * 1000000);
+    if (p.x < (-180 * 3240000 * 1000000))
+        p.x += (360 * 3240000 * 1000000);
     return p;
 }
 
@@ -1870,9 +1877,7 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
             zone = decodeGrid(mapcode, extensionchars, '', m);
 
             // first of all, make sure the zone fits the country
-            if (!mzIsEmpty(zone) && territoryNumber != ccode_earth) {
-                zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
-            }    
+            zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
 
             if (!mzIsEmpty(zone) && isRestricted(m)) {
                 var nrZoneOverlaps = 0;
@@ -1932,14 +1937,12 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
         }
     }
 
-    if (territoryNumber != ccode_earth) {
-        zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
-    }
+    zone = mzRestrictZoneTo(zone, minmaxSetup(upto));
     if (mzIsEmpty(zone)) {
         return false;
     }
       
-    return convertFractionsToDegrees(mzMidPointFractions(zone));
+    return convertFractionsToDegrees(wrap(mzMidPointFractions(zone)));
 }
 
 // ******************** legacy interface *****************
