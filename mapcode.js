@@ -120,7 +120,7 @@ var mapcode_dataversion = "2.2";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.2/Data' + mapcode_dataversion;
+var mapcode_javaversion = '2.2.1/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -180,15 +180,17 @@ function iso2ccode(territoryAlphaCode) {
     if (typeof territoryAlphaCode == "undefined") {
         return undefined;
     }
-    if (!isNaN(territoryAlphaCode) && territoryAlphaCode < 800) {
-        return territoryAlphaCode;
-    }
     territoryAlphaCode = trim(String(territoryAlphaCode)).toUpperCase();
+    var sp = territoryAlphaCode.indexOf(" ");
+    if (sp > 0) territoryAlphaCode = territoryAlphaCode.substr(0, sp);
+    if (!isNaN(territoryAlphaCode)) {
+        var n = Number(territoryAlphaCode);
+        if ((n >= 0) && (n <= ccode_earth)) {
+            return n;
+        }
+    }
 
     var sep = territoryAlphaCode.lastIndexOf('-');
-    if (sep < 0) {
-        sep = territoryAlphaCode.lastIndexOf(' ');
-    }
     if (sep >= 0) {
 
         var prefix = territoryAlphaCode.substring(0, sep);
@@ -198,7 +200,7 @@ function iso2ccode(territoryAlphaCode) {
             return -1;
         }
         if (set_disambiguate(prefix)) {
-            return -2;
+            return -1;
         }
 
         // FIRST see if the territoryAlphaCode is in this disambiguation
@@ -365,7 +367,7 @@ function getTerritoryAlphaCode(territory, format) {
     }
     var territoryNumber = getTerritoryNumber(territory);
     if (territoryNumber < 0 || territoryNumber > ccode_earth) {
-        return -1;
+        return '';
     }
     var n = entity_iso[territoryNumber];
     if (/^[0-9]/.test(n)) {
