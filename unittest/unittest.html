@@ -15,7 +15,7 @@
 </head>
 <body>
 
-Mapcode Javascript Unit Test 2.2<BR>
+Mapcode Javascript Unit Test 2.2.1<BR>
 
 <DIV id="out"></DIV>
 <DIV id="perc"></DIV>
@@ -91,7 +91,7 @@ Mapcode Javascript Unit Test 2.2<BR>
                 if (r.length != localsolutions) {
                     nrErrors++;
                     out('*** ERROR *** encode(' + y.toFixed(10) + ', ' + x.toFixed(10) + ', "' + territory + '" ) does not deliver ' + localsolutions + ' solutions\n');
-                    printGeneratedMapcodes(r);
+                    printGeneratedMapcodes(r, territory);
                 }
             }
 
@@ -104,7 +104,7 @@ Mapcode Javascript Unit Test 2.2<BR>
             if (!foundlocal) {
                 nrErrors++;
                 out('*** ERROR *** encode(' + y.toFixed(10) + ', ' + x.toFixed(10) + ', "' + territory + '" ) does not deliver "' + str + '"');
-                printGeneratedMapcodes(r);
+                printGeneratedMapcodes(r, territory);
             }
         }
 
@@ -116,8 +116,8 @@ Mapcode Javascript Unit Test 2.2<BR>
             nrTests++;
             if (r.length != globalsolutions) {
                 nrErrors++;
-                out('*** ERROR *** encode(' + y.toFixed(10) + ', ' + x.toFixed(10) + ') does not deliver ' + globalsolutions + ' solutions\n');
-                printGeneratedMapcodes(r);
+                out('*** ERROR *** encode(' + y.toFixed(10) + ', ' + x.toFixed(10) + ') does not deliver ' + globalsolutions + ' global solutions\n');
+                printGeneratedMapcodes(r, territory);
             }
         }
 
@@ -174,6 +174,7 @@ Mapcode Javascript Unit Test 2.2<BR>
                 else {
                     nrErrors++;
                     out('*** ERROR *** no result from decode(' + str + '), expected (' + y.toFixed(11) + ', ' + x.toFixed(11) + ')');
+                    printGeneratedMapcodes(r, "global");
                 }
             }
         }
@@ -323,7 +324,7 @@ Mapcode Javascript Unit Test 2.2<BR>
         if (needsParent == 0 && isAlias == 0 && (alphacode.length <= 3 || alphacode.charAt(3) != '-')) {
             nrTests++;
             var nam = getTerritoryAlphaCode(ccode);
-            if (nam != alphacode && nam.indexOf('-' + alphacode) < 0) {
+            if ((nam < 0) || (nam != alphacode && nam.indexOf('-' + alphacode) < 0)) {
                 nrErrors++;
                 out('*** ERROR *** getTerritoryAlphaCode(' + ccode + ')="' + nam + '" does not equal or contain "' + alphacode + '"');
             }
@@ -424,6 +425,57 @@ Mapcode Javascript Unit Test 2.2<BR>
 
     }
 
+    function territory_code_tests() {
+        var testdata = [
+            // expected answer, context, string
+        	"BR-AL", "BRA",    "AL",
+            "VAT",   , "",
+            "",      , "R",
+            "",      , "RX",
+            "",      , "RXX",
+            "RUS",   , "RUS",
+            "",      , "RUSSIA",
+        	"USA",   , "US",
+        	"USA",   , "USA",
+        	"USA",   , "usa",
+        	"USA",   , "   usa   ",
+             "",     , "999",
+             "",     , "-44 33",
+             "",     , "666",
+        	"USA",   , "410",
+        	"USA",   , "  410  ",
+        	"USA",   , "410 MORE TEXT",
+        	"USA",   , "US CA",
+             "",     , "US-TEST",
+        	"USA",   , "US OTHER TEXT",
+        	"USA",   , "   US OTHER TEXT   ",
+        	"US-CA", , "US-CA",
+        	"US-CA", , "US-CA OTHER TEXT",
+        	"US-CA", , "USA-CA",
+        	"RU-TT", , "RUS-TAM",
+             "",     , "RUS-TAMX",
+        	"RU-TT", , "RUS-TAM X OTHER TEXT",
+        	"RU-AL", "rus",    "AL",
+        	"RU-AL", "RUS",    "AL",
+        	"RU-AL", "ru-tam", "AL",
+        	"RU-AL", "RU-TAM", "AL",
+        	"US-AL", "US",     "AL",
+        	"US-AL", "US-CA",  "AL",
+        -9];
+
+    	for (var i = 0; testdata[i] != -9; i += 3 ) {
+        	var tc = getTerritoryAlphaCode(getTerritoryNumber(testdata[i + 2], testdata[i + 1]));
+        	nrTests++;
+        	if (tc != testdata[i]) 
+            {
+            	nrErrors++;
+            	out('*** ERROR *** getTerritoryNumber("' + testdata[i + 2] + '", ' + 
+                	testdata[i + 1] + ')=' + tc + ', expected ' + testdata[i]);
+            }
+        }
+
+    }
+
 
     var myVar = setInterval(function () { stepper() }, 20);
     var dostep = 0;
@@ -446,6 +498,7 @@ Mapcode Javascript Unit Test 2.2<BR>
                 test_territory_insides();
                 break;
             case 4:
+                territory_code_tests();
                 test_territories();
                 break;
             case 5:
