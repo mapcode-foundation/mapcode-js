@@ -45,7 +45,9 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 * 2.2
 
-    Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible
+    Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible;
+
+    Ran source through code prettifier
 
 * 2.1.5
 
