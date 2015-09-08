@@ -258,8 +258,9 @@ function iso2ccode(territoryAlphaCode) {
 
 /// PUBLIC given an alphacode (such as US-AL), returns the territory number (or negative).
 /// A contextTerritoryNumber helps to interpret ambiguous (abbreviated) AlphaCodes, such as "AL"
-function getTerritoryNumber(territoryAlphaCode, contextTerritoryNumber) {
-    if (contextTerritoryNumber) {
+function getTerritoryNumber(territoryAlphaCode, contextTerritory) {
+    if (contextTerritory) {
+        var contextTerritoryNumber = getTerritoryNumber(contextTerritory);
         set_disambiguate(entity_iso[contextTerritoryNumber]);
     }
     return iso2ccode(territoryAlphaCode);
