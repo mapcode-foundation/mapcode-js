@@ -16,7 +16,7 @@
 -->
 <html>
 <head>
-    <title>Mapcode Javascript Unit Test</title>
+    <title>Mapcode Javascript Unit Tests</title>
     <script src="../ndata.js" type="text/javascript"></script>
     <script src="../mapcode.js" type="text/javascript"></script>
     <script src="test_territories.js" type="text/javascript"></script>
@@ -494,7 +494,6 @@
                         testdata[i + 1] + ')=' + tc + ', expected ' + testdata[i]);
             }
         }
-
     }
 
 
@@ -548,9 +547,9 @@
                 break;
             case 11:
                 out('<hr>Done<br>');
-                out('Executed ' + nrTests + ' tests, found ' + nrErrors + ' errors');
+                out('Executed ' + nrTests + ' tests, found ' + nrErrors + ' errors (and ' + nrWarnings + ') warnings');
                 if ((nrWarnings > 0) || (nrErrors > 0)) {
-                    out("<b>UNIT TEST FAILED!</b>");
+                    out("<b>UNIT TESTS FAILED!</b>");
                 }
                 else {
                     out("Unit tests passed");
