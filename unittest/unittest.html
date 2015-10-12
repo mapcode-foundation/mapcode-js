@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<!--
+    ~ Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
+    ~
+    ~ Licensed under the Apache License, Version 2.0 (the "License");
+    ~ you may not use this file except in compliance with the License.
+    ~ You may obtain a copy of the License at
+    ~
+    ~    http://www.apache.org/licenses/LICENSE-2.0
+    ~
+    ~ Unless required by applicable law or agreed to in writing, software
+    ~ distributed under the License is distributed on an "AS IS" BASIS,
+    ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    ~ See the License for the specific language governing permissions and
+    ~ limitations under the License.
+-->
 <html>
 <head>
     <title>Mapcode Javascript Unit Test</title>
@@ -9,13 +24,15 @@
     <script>
         function out(str) {
             var e = document.getElementById('out');
-            if (e) e.innerHTML = e.innerHTML + str + '<BR>';
+            if (e) {
+                e.innerHTML = e.innerHTML + str + '<br>';
+            }
         }
     </script>
 </head>
 <body>
 
-Mapcode Javascript Unit Test 2.2.1<BR>
+<h1>Mapcode Javascript Unit Tests</h1>
 
 <DIV id="out"></DIV>
 <DIV id="perc"></DIV>
@@ -44,7 +61,7 @@ Mapcode Javascript Unit Test 2.2.1<BR>
                 out('convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + expect + '"');
             }
 
-            // see if E/U voweled mapcodes (re)convert as expected
+            // see if E/U vowelled mapcodes (re)convert as expected
             str = "OMN 112.3AU";
             expect = str;
             nrTests++;
@@ -59,8 +76,9 @@ Mapcode Javascript Unit Test 2.2.1<BR>
     function printGeneratedMapcodes(r, name) {
         var n = r.length;
         var t = ' &nbsp; ' + n + ' results generated (' + name + '):';
-        for (var i = 0; i < n; i++)
+        for (var i = 0; i < n; i++) {
             t += ' (' + r[i].fullmapcode + ')';
+        }
         out(t);
     }
 
@@ -98,8 +116,9 @@ Mapcode Javascript Unit Test 2.2.1<BR>
             // test that expected solution is there
             var foundlocal = 0;
             for (var i = 0; i < r.length; i++) {
-                if (r[i].fullmapcode.indexOf(str) == 0)
+                if (r[i].fullmapcode.indexOf(str) == 0) {
                     foundlocal = 1;
+                }
             }
             if (!foundlocal) {
                 nrErrors++;
@@ -121,7 +140,7 @@ Mapcode Javascript Unit Test 2.2.1<BR>
             }
         }
 
-        // check that all global solutions are within 9 milimeters of coordinate
+        // check that all global solutions are within 9 millimeters of coordinate
         for (precision = 0; precision <= 8; precision++) {
             r = encodeWithPrecision(y, x, precision);
             for (i = 0; i < r.length; i++) {
@@ -233,10 +252,10 @@ Mapcode Javascript Unit Test 2.2.1<BR>
             "NLD 123.U45",   // U in invalid position
             "NLD 123.1UE",   // UE illegal vowel-encode
             "NLD 123.1UU",   // UU illegal
-            "NLD x23.1A0",   // A0 with nondigit
-            "NLD 1x3.1A0",   // A0 with nondigit
-            "NLD 12x.1A0",   // A0 with nondigit
-            "NLD 123.xA0",   // A0 with nondigit
+            "NLD x23.1A0",   // A0 with non-digit
+            "NLD 1x3.1A0",   // A0 with non-digit
+            "NLD 12x.1A0",   // A0 with non-digit
+            "NLD 123.xA0",   // A0 with non-digit
             "NLD 123.1U#",   // U#
 
             "NLD ZZ.ZZ",     // nameless out of range
@@ -249,8 +268,9 @@ Mapcode Javascript Unit Test 2.2.1<BR>
         var i;
         for (i = 0; ; i++) {
             var str = badcodes[i];
-            if (str == 'end')
+            if (str == 'end') {
                 break;
+            }
 
             nrTests++;
             var p = decode(str);
@@ -261,12 +281,12 @@ Mapcode Javascript Unit Test 2.2.1<BR>
         }
     }
 
-    // test encode/decodes from testdata array; returns nonzero if more tests are needed
+    // test encode/decodes from test data array; returns nonzero if more tests are needed
     var next_encode_to_test = 0;
     function test_encodes_decodes() {
         var tests_per_timeslot = 50;
         for (var i = next_encode_to_test; testdata[i] != -1; i += 5) {
-            if (nrErrors > 20) {
+            if (nrErrors > 0) {
                 out('Too many errors!');
                 return 0;
             }
@@ -307,11 +327,13 @@ Mapcode Javascript Unit Test 2.2.1<BR>
         return 0;
     }
 
-    // perform tests on alphacodes (used from test_territories.js)
+    // perform tests on alpha codes (used from test_territories.js)
     function test_territory(alphacode, tc, isAlias, needsParent, tcParent) {
         var ccode = tc - 1;
         var ccodeParent = tcParent - 1;
-        if (nrErrors > 30) return;
+        if (nrErrors > 30) {
+            return;
+        }
         nrTests++;
 
         var tn = getTerritoryNumber(alphacode, needsParent ? ccodeParent : 0);
@@ -343,8 +365,8 @@ Mapcode Javascript Unit Test 2.2.1<BR>
                 "ATA", -90, 0, 1, // in data version 2.2, ATA -90,0 has ZZ.ZZ and multiple borders
                 "ATA", -70, 0, 0,
 
-                "USA", 31, -70, 0, // interational waters (not in state)
-                "MEX", 19, -115, 0, // interational waters (not in state)
+                "USA", 31, -70, 0, // international waters (not in state)
+                "MEX", 19, -115, 0, // international waters (not in state)
                 "MEX", 18.358525, -114.722672, 0, // Isla Clarion, not in a state
                 "MX-ROO", 20, -87, 0,  // just in ROO
                 "MX-ROO", 20, -87.3, 0, // in ROO because in MEX
@@ -428,72 +450,73 @@ Mapcode Javascript Unit Test 2.2.1<BR>
     function territory_code_tests() {
         var testdata = [
             // expected answer, context, string
-        	"BR-AL", "BRA",    "AL",
-            "VAT",   , "",
-            "",      , "R",
-            "",      , "RX",
-            "",      , "RXX",
-            "RUS",   , "RUS",
-            "",      , "RUSSIA",
-        	"USA",   , "US",
-        	"USA",   , "USA",
-        	"USA",   , "usa",
-        	"USA",   , "   usa   ",
-             "",     , "999",
-             "",     , "-44 33",
-             "",     , "666",
-        	"USA",   , "410",
-        	"USA",   , "  410  ",
-        	"USA",   , "410 MORE TEXT",
-        	"USA",   , "US CA",
-             "",     , "US-TEST",
-        	"USA",   , "US OTHER TEXT",
-        	"USA",   , "   US OTHER TEXT   ",
-        	"US-CA", , "US-CA",
-        	"US-CA", , "US-CA OTHER TEXT",
-        	"US-CA", , "USA-CA",
-        	"RU-TT", , "RUS-TAM",
-             "",     , "RUS-TAMX",
-        	"RU-TT", , "RUS-TAM X OTHER TEXT",
-        	"RU-AL", "rus",    "AL",
-        	"RU-AL", "RUS",    "AL",
-        	"RU-AL", "ru-tam", "AL",
-        	"RU-AL", "RU-TAM", "AL",
-        	"US-AL", "US",     "AL",
-        	"US-AL", "US-CA",  "AL",
-        -9];
+            "BR-AL", "BRA", "AL",
+            "VAT", , "",
+            "", , "R",
+            "", , "RX",
+            "", , "RXX",
+            "RUS", , "RUS",
+            "", , "RUSSIA",
+            "USA", , "US",
+            "USA", , "USA",
+            "USA", , "usa",
+            "USA", , "   usa   ",
+            "", , "999",
+            "", , "-44 33",
+            "", , "666",
+            "USA", , "410",
+            "USA", , "  410  ",
+            "USA", , "410 MORE TEXT",
+            "USA", , "US CA",
+            "", , "US-TEST",
+            "USA", , "US OTHER TEXT",
+            "USA", , "   US OTHER TEXT   ",
+            "US-CA", , "US-CA",
+            "US-CA", , "US-CA OTHER TEXT",
+            "US-CA", , "USA-CA",
+            "RU-TT", , "RUS-TAM",
+            "", , "RUS-TAMX",
+            "RU-TT", , "RUS-TAM X OTHER TEXT",
+            "RU-AL", "rus", "AL",
+            "RU-AL", "RUS", "AL",
+            "RU-AL", "ru-tam", "AL",
+            "RU-AL", "RU-TAM", "AL",
+            "US-AL", "US", "AL",
+            "US-AL", "US-CA", "AL",
+            -9];
 
-    	for (var i = 0; testdata[i] != -9; i += 3 ) {
-        	var tc = getTerritoryAlphaCode(getTerritoryNumber(testdata[i + 2], testdata[i + 1]));
-        	nrTests++;
-        	if (tc != testdata[i]) 
-            {
-            	nrErrors++;
-            	out('*** ERROR *** getTerritoryNumber("' + testdata[i + 2] + '", ' + 
-                	testdata[i + 1] + ')=' + tc + ', expected ' + testdata[i]);
+        for (var i = 0; testdata[i] != -9; i += 3) {
+            var tc = getTerritoryAlphaCode(getTerritoryNumber(testdata[i + 2], testdata[i + 1]));
+            nrTests++;
+            if (tc != testdata[i]) {
+                nrErrors++;
+                out('*** ERROR *** getTerritoryNumber("' + testdata[i + 2] + '", ' +
+                        testdata[i + 1] + ')=' + tc + ', expected ' + testdata[i]);
             }
         }
 
     }
 
 
-    var myVar = setInterval(function () { stepper() }, 20);
+    var myVar = setInterval(function () {
+        stepper()
+    }, 20);
     var dostep = 0;
     function stepper() {
-        switch (dostep++) {
+        switch (dostep) {
             case 0:
-                out('JavaScript version ' + mapcode_javaversion);
+                out('Mapcode Javascript version ' + mapcode_javaversion);
                 break;
             case 1:
-                out('<HR>Alphabet tests');
+                out('<hr>Alphabet tests');
                 break;
             case 2:
                 alphabet_tests();
                 break;
             case 3:
-                out('<HR>Distance tests');
+                out('<hr>Distance tests');
                 distance_tests();
-                out('<HR>Territory tests');
+                out('<hr>Territory tests');
                 out((ccode_earth + 1) + ' territories');
                 test_territory_insides();
                 break;
@@ -502,31 +525,42 @@ Mapcode Javascript Unit Test 2.2.1<BR>
                 test_territories();
                 break;
             case 5:
-                out('<HR>Failing decode tests');
+                out('<hr>Incorrect format tests');
                 break;
             case 6:
                 test_failing_decodes();
                 break;
             case 7:
-                out('<HR>Encode/Decode tests');
+                out('<hr>Encode/decode tests');
                 break;
             case 8:
-                if (test_encodes_decodes()) dostep--;
+                if (test_encodes_decodes()) {
+                    dostep--;
+                }
                 break;
             case 9:
-                out('<HR>Edge-case Encode/Decode tests');
+                out('<hr>Edge-case encode/decode tests');
                 break;
             case 10:
-                if (test_corner_encodes()) dostep--;
+                if (test_corner_encodes()) {
+                    dostep--;
+                }
                 break;
             case 11:
-                out('<HR>Done.');
+                out('<hr>Done<br>');
                 out('Executed ' + nrTests + ' tests, found ' + nrErrors + ' errors');
+                if ((nrWarnings > 0) || (nrErrors > 0)) {
+                    out("<b>UNIT TEST FAILED!</b>");
+                }
+                else {
+                    out("Unit tests passed");
+                }
                 break;
             default:
                 clearInterval(myVar);
                 break;
         }
+        dostep++;
     }
 </script>
 

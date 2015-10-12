@@ -35,15 +35,19 @@ of the Mapcode library by Rijn Buve and Matthew Lowden.
 
 # Javascript Files for Mapcode Support
 
+The following files provide the Javascript interfaces for mapcodes:
+
     mapcode.js  - Key routines for mapcode support
     ndata.js    - Data table for mapcode support
 
     sample.html - Sample code to interpret / generate mapcodes
     ctrynams.js - Optional js array with the names of territories (in English)
 
+To run the Javascript unit tests, simply open the file `unittest/unittest/html`.
+
 # Version History
 
-* 2.2
+* 2.2.0
 
     Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible;
 

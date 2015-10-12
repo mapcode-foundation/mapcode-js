@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 var testdata = [
 
@@ -22,14 +37,14 @@ var testdata = [
 "", 55.015025, 20.950025, 0,0,
 "", 21.6199995, -102.02419949999999, 0,0,
 "", 21.6200035, -102.0242375, 0,0,
-"", 29.727055, 73.87498650000001,0,0 , 
+"", 29.727055, 73.87498650000001,0,0 ,
 "", 29.727025, 73.87502499999999,0,0,
 "", 28.679995, 78.71705600000000,0,0,
 "", 28.680025, 78.71702500000001,0,0,
 "", 5.785780,169.79175, 0,0 , // grid
 "", -9.34015920,-171.99626665, 0,0 , // encompassing
 "", 49.4632595,  -2.55989, 0,0 , // inner grid
-"", 49.4632625,  -2.5599018, 0,0 , // old 
+"", 49.4632625,  -2.5599018, 0,0 , // old
 "", 47.1495405,   9.5319995, 0,0 , // inner grid AUT
 "", 41.9035, 12.45200000000000 , 0,0,
 "", 12.168921, -68.26226699999999, 0,0,
@@ -15883,6 +15898,6 @@ var testdata = [
 "CN-XJ 123.XXX",46.1175215,84.492761000,3,7,
 "CN-XJ 12.XXXX",45.925468,80.918028500,2,5,
 "CN-XJ 0123.XX",40.917864,79.977318500,3,6,
-  
+
  -1];
 

@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 var entity_iso = [
   'VAT','MCO','GIB','TKL','CCK','BLM','NRU','TUV','MAC','SXM',
   'MAF','NFK','PCN','BVT','BMU','IOT','SMR','GGY','AIA','MSR',
@@ -116,11 +116,11 @@ var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 var ccode_start = 112; // NLD
 var mapcode_cversion = "2.0.2";
-var mapcode_dataversion = "2.2";
+var mapcode_dataversion = "2.2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.2.1/Data' + mapcode_dataversion;
+var mapcode_javaversion = '2.2.2/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -670,7 +670,7 @@ function mzSetFromFractions(y, x, yDelta, xDelta) {
             fmaxx: x + xDelta,
             fminy: y + 1 + yDelta, // y+yDelta can NOT be represented
             fmaxy: y + 1           // y CAN be represented
-        };        
+        };
     }
     else {
         return {
