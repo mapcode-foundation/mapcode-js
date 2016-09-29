@@ -14,60 +14,60 @@
  * limitations under the License.
  */
 var entity_iso = [
-  'VAT','MCO','GIB','TKL','CCK','BLM','NRU','TUV','MAC','SXM',
-  'MAF','NFK','PCN','BVT','BMU','IOT','SMR','GGY','AIA','MSR',
-  'JEY','CXR','WLF','VGB','LIE','ABW','MHL','ASM','COK','SPM',
-  'NIU','KNA','CYM','BES','MDV','SHN','MLT','GRD','VIR','MYT',
-  'SJM','VCT','HMD','BRB','ATG','CUW','SYC','PLW','MNP','AND',
-  'GUM','IMN','LCA','FSM','SGP','TON','DMA','BHR','KIR','TCA',
-  'STP','HKG','MTQ','FRO','GLP','COM','MUS','REU','LUX','WSM',
-  'SGS','PYF','CPV','TTO','BRN','ATF','PRI','CYP','LBN','JAM',
-  'GMB','QAT','FLK','VUT','MNE','BHS','TLS','SWZ','KWT','FJI',
-  'NCL','SVN','ISR','PSE','SLV','BLZ','DJI','MKD','RWA','HTI',
-  'BDI','GNQ','ALB','SLB','ARM','LSO','BEL','MDA','GNB','TWN',
-  'BTN','CHE','NLD','DNK','EST','DOM','SVK','CRI','BIH','HRV',
-  'TGO','LVA','LTU','LKA','GEO','IRL','SLE','PAN','CZE','GUF',
-  'ARE','AUT','AZE','SRB','JOR','PRT','HUN','KOR','ISL','GTM',
-  'CUB','BGR','LBR','HND','BEN','ERI','MWI','PRK','NIC','GRC',
-  'TJK','BGD','NPL','TUN','SUR','URY','KHM','SYR','SEN','KGZ',
-  'BLR','GUY','LAO','ROU','GHA','UGA','GBR','GIN','ECU','ESH',
-  'GAB','NZL','BFA','PHL','ITA','OMN','POL','CIV','NOR','MYS',
-  'VNM','FIN','COG','DEU','JPN','ZWE','PRY','IRQ','MAR','UZB',
-  'SWE','PNG','CMR','TKM','ESP','THA','YEM','FRA','ALA','KEN',
-  'BWA','MDG','UKR','SSD','CAF','SOM','AFG','MMR','ZMB','CHL',
-  'TUR','PAK','MOZ','NAM','VEN','NGA','TZA','EGY','MRT','BOL',
-  'ETH','COL','ZAF','MLI','AGO','NER','TCD','PER','MNG','IRN',
-  'LBY','SDN','IDN','DIF','TLA','MOR','AGU','5CL','QUE','HID',
-  '5MX','TAB','NAY','GUA','PUE','YUC','ROO','SIN','CAM','MIC',
-  'SLP','GRO','NLE','BCN','VER','CHP','BCS','ZAC','JAL','TAM',
-  'OAX','DUR','COA','SON','CHH','GRL','SAU','COD','DZA','KAZ',
-  'ARG','2DD','2DN','2CH','2AN','2LD','2DL','2ML','2NL','2MN',
-  '2TR','2MZ','2SK','2PB','2HR','2AR','2AS','2BR','2UT','2GA',
-  '2KL','2TN','2HP','2JK','2CT','2JH','2KA','2RJ','2OR','2GJ',
-  '2WB','2MP','2TG','2AP','2MH','2UP','2PY','NSW','ACT','JBT',
-  '4NT','4SA','TAS','VIC','4WA','QLD','6DF','6SE','6AL','6RJ',
-  '6ES','6RN','6PB','6SC','6PE','6AP','6CE','6AC','6PR','6RR',
-  '6RO','6SP','6PI','6TO','6RS','6MA','6GO','6MS','6BA','6MG',
-  '6MT','6PA','6AM','1DC','1RI','1DE','1CT','1NJ','1NH','1VT',
-  '1MA','1HI','1MD','1WV','1SC','1ME','1IN','1KY','1TN','1VA',
-  '1OH','1PA','1MS','1LA','1AL','1AR','1NC','1NY','1IA','1IL',
-  '1GA','1WI','1FL','1MO','1OK','1ND','1WA','1SD','1NE','1KS',
-  '1ID','1UT','1MN','1MI','1WY','1OR','1CO','1NV','1AZ','1NM',
-  '1MT','1CA','1TX','1AK','3BC','3AB','3ON','3QC','3SK','3MB',
-  '3NL','3NB','3NS','3PE','3YT','3NT','3NU','IND','AUS','BRA',
-  'USA','MEX','MOW','SPE','KGD','7IN','7AD','7SE','7KB','7KC',
-  '7CE','7CU','IVA','LIP','ORL','TUL','7BE','VLA','KRS','KLU',
-  '7TT','BRY','YAR','RYA','AST','MOS','SMO','7DA','VOR','NGR',
-  'PSK','KOS','STA','KDA','7KL','TVE','LEN','ROS','VGG','VLG',
-  'MUR','7KR','NEN','7KO','ARK','7MO','NIZ','PNZ','7KI','7ME',
-  'ORE','ULY','7PM','7BA','7UD','7TA','SAM','SAR','YAN','7KM',
-  'SVE','TYU','KGN','7CH','7BU','ZAB','IRK','NVS','TOM','OMS',
-  '7KK','KEM','7AL','ALT','7TY','KYA','MAG','CHU','KAM','SAK',
-  '7PO','YEV','KHA','AMU','7SA','CAN','RUS','8SH','8TJ','8BJ',
-  '8HI','8NX','8CQ','8ZJ','8JS','8FJ','8AH','8LN','8SD','8SX',
-  '8JX','8HA','8GZ','8GD','8HB','8JL','8HE','8SN','8NM','8HL',
-  '8HN','8GX','8SC','8YN','8XZ','8GS','8QH','8XJ','CHN','UMI',
-  'CPT','ATA','AAA', '?'];
+    'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
+    'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
+    'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM',
+    'NIU', 'KNA', 'CYM', 'BES', 'MDV', 'SHN', 'MLT', 'GRD', 'VIR', 'MYT',
+    'SJM', 'VCT', 'HMD', 'BRB', 'ATG', 'CUW', 'SYC', 'PLW', 'MNP', 'AND',
+    'GUM', 'IMN', 'LCA', 'FSM', 'SGP', 'TON', 'DMA', 'BHR', 'KIR', 'TCA',
+    'STP', 'HKG', 'MTQ', 'FRO', 'GLP', 'COM', 'MUS', 'REU', 'LUX', 'WSM',
+    'SGS', 'PYF', 'CPV', 'TTO', 'BRN', 'ATF', 'PRI', 'CYP', 'LBN', 'JAM',
+    'GMB', 'QAT', 'FLK', 'VUT', 'MNE', 'BHS', 'TLS', 'SWZ', 'KWT', 'FJI',
+    'NCL', 'SVN', 'ISR', 'PSE', 'SLV', 'BLZ', 'DJI', 'MKD', 'RWA', 'HTI',
+    'BDI', 'GNQ', 'ALB', 'SLB', 'ARM', 'LSO', 'BEL', 'MDA', 'GNB', 'TWN',
+    'BTN', 'CHE', 'NLD', 'DNK', 'EST', 'DOM', 'SVK', 'CRI', 'BIH', 'HRV',
+    'TGO', 'LVA', 'LTU', 'LKA', 'GEO', 'IRL', 'SLE', 'PAN', 'CZE', 'GUF',
+    'ARE', 'AUT', 'AZE', 'SRB', 'JOR', 'PRT', 'HUN', 'KOR', 'ISL', 'GTM',
+    'CUB', 'BGR', 'LBR', 'HND', 'BEN', 'ERI', 'MWI', 'PRK', 'NIC', 'GRC',
+    'TJK', 'BGD', 'NPL', 'TUN', 'SUR', 'URY', 'KHM', 'SYR', 'SEN', 'KGZ',
+    'BLR', 'GUY', 'LAO', 'ROU', 'GHA', 'UGA', 'GBR', 'GIN', 'ECU', 'ESH',
+    'GAB', 'NZL', 'BFA', 'PHL', 'ITA', 'OMN', 'POL', 'CIV', 'NOR', 'MYS',
+    'VNM', 'FIN', 'COG', 'DEU', 'JPN', 'ZWE', 'PRY', 'IRQ', 'MAR', 'UZB',
+    'SWE', 'PNG', 'CMR', 'TKM', 'ESP', 'THA', 'YEM', 'FRA', 'ALA', 'KEN',
+    'BWA', 'MDG', 'UKR', 'SSD', 'CAF', 'SOM', 'AFG', 'MMR', 'ZMB', 'CHL',
+    'TUR', 'PAK', 'MOZ', 'NAM', 'VEN', 'NGA', 'TZA', 'EGY', 'MRT', 'BOL',
+    'ETH', 'COL', 'ZAF', 'MLI', 'AGO', 'NER', 'TCD', 'PER', 'MNG', 'IRN',
+    'LBY', 'SDN', 'IDN', 'DIF', 'TLA', 'MOR', 'AGU', '5CL', 'QUE', 'HID',
+    '5MX', 'TAB', 'NAY', 'GUA', 'PUE', 'YUC', 'ROO', 'SIN', 'CAM', 'MIC',
+    'SLP', 'GRO', 'NLE', 'BCN', 'VER', 'CHP', 'BCS', 'ZAC', 'JAL', 'TAM',
+    'OAX', 'DUR', 'COA', 'SON', 'CHH', 'GRL', 'SAU', 'COD', 'DZA', 'KAZ',
+    'ARG', '2DD', '2DN', '2CH', '2AN', '2LD', '2DL', '2ML', '2NL', '2MN',
+    '2TR', '2MZ', '2SK', '2PB', '2HR', '2AR', '2AS', '2BR', '2UT', '2GA',
+    '2KL', '2TN', '2HP', '2JK', '2CT', '2JH', '2KA', '2RJ', '2OR', '2GJ',
+    '2WB', '2MP', '2TG', '2AP', '2MH', '2UP', '2PY', 'NSW', 'ACT', 'JBT',
+    '4NT', '4SA', 'TAS', 'VIC', '4WA', 'QLD', '6DF', '6SE', '6AL', '6RJ',
+    '6ES', '6RN', '6PB', '6SC', '6PE', '6AP', '6CE', '6AC', '6PR', '6RR',
+    '6RO', '6SP', '6PI', '6TO', '6RS', '6MA', '6GO', '6MS', '6BA', '6MG',
+    '6MT', '6PA', '6AM', '1DC', '1RI', '1DE', '1CT', '1NJ', '1NH', '1VT',
+    '1MA', '1HI', '1MD', '1WV', '1SC', '1ME', '1IN', '1KY', '1TN', '1VA',
+    '1OH', '1PA', '1MS', '1LA', '1AL', '1AR', '1NC', '1NY', '1IA', '1IL',
+    '1GA', '1WI', '1FL', '1MO', '1OK', '1ND', '1WA', '1SD', '1NE', '1KS',
+    '1ID', '1UT', '1MN', '1MI', '1WY', '1OR', '1CO', '1NV', '1AZ', '1NM',
+    '1MT', '1CA', '1TX', '1AK', '3BC', '3AB', '3ON', '3QC', '3SK', '3MB',
+    '3NL', '3NB', '3NS', '3PE', '3YT', '3NT', '3NU', 'IND', 'AUS', 'BRA',
+    'USA', 'MEX', 'MOW', 'SPE', 'KGD', '7IN', '7AD', '7SE', '7KB', '7KC',
+    '7CE', '7CU', 'IVA', 'LIP', 'ORL', 'TUL', '7BE', 'VLA', 'KRS', 'KLU',
+    '7TT', 'BRY', 'YAR', 'RYA', 'AST', 'MOS', 'SMO', '7DA', 'VOR', 'NGR',
+    'PSK', 'KOS', 'STA', 'KDA', '7KL', 'TVE', 'LEN', 'ROS', 'VGG', 'VLG',
+    'MUR', '7KR', 'NEN', '7KO', 'ARK', '7MO', 'NIZ', 'PNZ', '7KI', '7ME',
+    'ORE', 'ULY', '7PM', '7BA', '7UD', '7TA', 'SAM', 'SAR', 'YAN', '7KM',
+    'SVE', 'TYU', 'KGN', '7CH', '7BU', 'ZAB', 'IRK', 'NVS', 'TOM', 'OMS',
+    '7KK', 'KEM', '7AL', 'ALT', '7TY', 'KYA', 'MAG', 'CHU', 'KAM', 'SAK',
+    '7PO', 'YEV', 'KHA', 'AMU', '7SA', 'CAN', 'RUS', '8SH', '8TJ', '8BJ',
+    '8HI', '8NX', '8CQ', '8ZJ', '8JS', '8FJ', '8AH', '8LN', '8SD', '8SX',
+    '8JX', '8HA', '8GZ', '8GD', '8HB', '8JL', '8HE', '8SN', '8NM', '8HL',
+    '8HN', '8GX', '8SC', '8YN', '8XZ', '8GS', '8QH', '8XJ', 'CHN', 'UMI',
+    'CPT', 'ATA', 'AAA', '?'];
 
 var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,COL=5CL,5ME=5MX,MEX=5MX,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,1PR=PRI,5TM=TAM,TAM=TAM,2OD=2OR,";
 
@@ -120,7 +120,7 @@ var mapcode_dataversion = "2.2.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.2.2/Data' + mapcode_dataversion;
+var mapcode_javaversion = '2.3.0/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -182,7 +182,9 @@ function iso2ccode(territoryAlphaCode) {
     }
     territoryAlphaCode = trim(String(territoryAlphaCode)).toUpperCase();
     var sp = territoryAlphaCode.indexOf(" ");
-    if (sp > 0) territoryAlphaCode = territoryAlphaCode.substr(0, sp);
+    if (sp > 0) {
+        territoryAlphaCode = territoryAlphaCode.substr(0, sp);
+    }
     if (!isNaN(territoryAlphaCode)) {
         var n = Number(territoryAlphaCode);
         if ((n >= 0) && (n <= ccode_earth)) {
@@ -696,10 +698,12 @@ function convertFractionsToCoord32(p) {
 }
 
 function wrap(p) {
-    if (p.x >= (180 * 3240000 * 1000000))
+    if (p.x >= (180 * 3240000 * 1000000)) {
         p.x -= (360 * 3240000 * 1000000);
-    if (p.x < (-180 * 3240000 * 1000000))
+    }
+    if (p.x < (-180 * 3240000 * 1000000)) {
         p.x += (360 * 3240000 * 1000000);
+    }
     return p;
 }
 
@@ -782,7 +786,7 @@ function decodeExtension(extensionchars, coord32, dividerx4, dividery, lon_offse
     }
 
     var lon4 = (coord32.x * 3240000.0) + (lon32 * dividerx4) + (lon_offset4 * 810000.0);
-    var lat1 = (coord32.y *  810000.0) + (lat32 * dividery );
+    var lat1 = (coord32.y * 810000.0) + (lat32 * dividery );
 
     // determine the range of coordinates that are encode to this mapcode
     var mapcodeZone;
@@ -905,10 +909,10 @@ function encodeBase31(value, nrchars) {
 function encodeTriple(difx, dify, dividerx, dividery) {
     var rx, ry, cx, cy;
     if (dify < 4 * 34) {
-       rx = Math.floor(difx / 28);
-       ry = Math.floor(dify / 34);
-       cx = (difx % 28);
-       cy = (dify % 34);
+        rx = Math.floor(difx / 28);
+        ry = Math.floor(dify / 34);
+        cx = (difx % 28);
+        cy = (dify % 34);
         if (getDebugInfo) {
             mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + ((28 * rx * dividerx)), (1000000 * (mcInfo.rectSubarea.maxy)) - (((34 * ry) + 34) * dividery), 28 * dividerx, 34 * dividery);
         }
@@ -1061,10 +1065,10 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
 
 /// alphabet support
 
-var MAXLANS = 14;
+var MAXLANS = 15;
 var asc2lan = [
     [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Roman
-    [913, 914, 926, 916, 63, 917, 915, 919, 921, 928, 922, 923, 924, 925, 927, 929, 920, 936, 931, 932, 63, 934, 937, 935, 933, 918, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Greek
+    [913, 914, 926, 916, 904/*e*/, 917, 915, 919, 921, 928, 922, 923, 924, 925, 927, 929, 920, 936, 931, 932, 905/*u*/, 934, 937, 935, 933, 918, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Greek
     [1040, 1042, 1057, 1044, 1045, 1046, 1043, 1053, 1048, 1055, 1050, 1051, 1052, 1047, 1054, 1056, 1060, 1071, 1062, 1058, 1069, 1063, 1064, 1061, 1059, 1041, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Cyrillic
     [1488, 1489, 1490, 1491, 1507, 1492, 1494, 1495, 1493, 1496, 1497, 1498, 1499, 1500, 1505, 1501, 1502, 1504, 1506, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Hebrew
     [2309, 2325, 2327, 2328, 2319, 2330, 2332, 2335, 73, 2336, 2339, 2340, 2342, 2343, 79, 2344, 2346, 2349, 2350, 2352, 2347, 2354, 2357, 2360, 2361, 2337, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415], // Hindi
@@ -1076,7 +1080,8 @@ var asc2lan = [
     [1366, 1330, 1331, 1332, 1333, 1336, 1337, 1338, 1339, 1341, 1343, 1344, 1345, 1347, 1365, 1351, 1352, 1354, 1357, 1358, 1349, 1359, 1360, 1361, 1362, 1363, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Armenian
     [2437, 2444, 2453, 2454, 2447, 2455, 2457, 2458, 73, 2461, 2464, 2465, 2466, 2467, 79, 2468, 2469, 2470, 2472, 2474, 2451, 2476, 2477, 2479, 2482, 2489, 2534, 2535, 2536, 2537, 2538, 2539, 2540, 2541, 2542, 2543], // Bengali
     [2565, 2581, 2583, 2584, 2575, 2586, 2588, 2591, 73, 2592, 2595, 2596, 2598, 2599, 79, 2600, 2602, 2605, 2606, 2608, 2603, 2610, 2613, 2616, 2617, 2593, 2662, 2663, 2664, 2665, 2666, 2667, 2668, 2669, 2670, 2671], // Gurmukhi
-    [3928, 3904, 3905, 3906, 3940, 3908, 3909, 3910, 73, 3911, 3914, 3916, 3918, 3919, 79, 3921, 3923, 3924, 3926, 3934, 3941, 3935, 3937, 3938, 3939, 3942, 3872, 3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881] // Tibetan
+    [3928, 3904, 3905, 3906, 3940, 3908, 3909, 3910, 73, 3911, 0xF49, 0xF55, 0xF50, /*KLM=3914, 3916, 3918,*/ 3919, 79, 3921, 3923, 3924, 3926, 3934, 0xF60/*u=3941*/, 3935, 3937, 3938, 3939, 3942, 3872, 3873, 3874, 3875, 3876, 3877, 3878, 3879, 3880, 3881], // Tibetan
+    [1576, 1578, 1581, 1582, 1609/*e*/, 1583, 1584, 1585, 73/*i*/, 1586, 1587, 1588, 1589, 1590, 79/*o*/, 1591, 1592, 1593, 1594, 1601, 1602/*u*/, 1603, 1604, 1605, 1606, 1608, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57] // Arabic
 ];
 
 // *UI*
@@ -1094,7 +1099,8 @@ var lannam = [
     ["Armenian"],
     ["Bengali"],
     ["Gurmukhi"],
-    ["Tibetan"]
+    ["Tibetan"],
+    ["Arabic"]
 ];
 
 // *UI*
@@ -1112,7 +1118,8 @@ var lanlannam = [
     ["&#1392;&#1377;&#1397;&#1381;&#1408;&#1381;&#1398;"],
     ["&#2476;&#2494;&#2434;&#2482;&#2494;"],
     ["&#2583;&#2625;&#2608;&#2606;&#2625;&#2582;&#2624;"],
-    ["&#3921;&#3926;&#3956;&#3851;&#3909;&#3923;&#3851;"]
+    ["&#3921;&#3926;&#3956;&#3851;&#3909;&#3923;&#3851;"],
+    ["&#1575;&#1604;&#1593;&#1614;&#1585;&#1614;&#1576;&#1616;&#1610;&#1614;&#1617;&#1577;"]
 ];
 
 /// PRIVATE substitute characters in str with characters form the specified language (pass asHTML=1 to explicitly HTML-encode characters)
@@ -1129,6 +1136,10 @@ function showinlan(str, lan, asHTML) {
     if (sp++ > 0) {
         result = str.substr(0, sp);
         str = str.substr(sp);
+    }
+
+    if (lan == 1 || lan == 3 || lan == 14) {
+        str = convertToAbjad(str);
     }
 
     // unpack for languages that do not support E and U
@@ -1193,11 +1204,20 @@ function to_ascii(str) {
         }
     }
     var p = result.lastIndexOf(' ');
-    if (p < 0) p = 0; else p++;
+    if (p < 0) {
+        p = 0;
+    } else {
+        p++;
+    }
     if (result.charAt(p) == 'A') {
         result = result.substr(0, p) + aeu_pack(aeu_unpack(result.substr(p)), false);
         /* v1.50 repack A-voweled to AEU-voweled */
     }
+
+    if (isAbjadScript(str)) {
+        result = convertFromAbjad(result);
+    }
+
     return result;
 }
 
@@ -1641,8 +1661,16 @@ var debugStopRecord = -1; // GLOBAL
 
 function getEncodeRec(lat, lon) {
 
-    if (isNaN(lat)) lat = 0; else lat = Number(lat);
-    if (lat < -90) lat = -90; else if (lat > 90) lat = 90;
+    if (isNaN(lat)) {
+        lat = 0;
+    } else {
+        lat = Number(lat);
+    }
+    if (lat < -90) {
+        lat = -90;
+    } else if (lat > 90) {
+        lat = 90;
+    }
     lat += 90; // lat now [0..180]
     lat *= 810000000000;
     var fraclat = Math.floor(lat + 0.1);
@@ -1651,14 +1679,20 @@ function getEncodeRec(lat, lon) {
     fraclat -= (lat32 * 810000);
     lat32 -= 90000000;
 
-    if (isNaN(lon)) lon = 0; else lon = Number(lon);
+    if (isNaN(lon)) {
+        lon = 0;
+    } else {
+        lon = Number(lon);
+    }
     lon -= (360 * Math.floor(lon / 360)); // lon now in [0..360>
     lon *= 3240000000000;
     var fraclon = Math.floor(lon + 0.1);
     d = fraclon / 3240000;
     var lon32 = Math.floor(d);
     fraclon -= (lon32 * 3240000);
-    if (lon32 >= 180000000) lon32 -= 360000000;
+    if (lon32 >= 180000000) {
+        lon32 -= 360000000;
+    }
 
     return {coord32: {y: lat32, x: lon32}, fraclat: fraclat, fraclon: fraclon};
 }
@@ -1775,7 +1809,7 @@ function aeu_unpack(str) {
     var lastpos = str.length - 1;
     var dotpos = str.indexOf('.');
     if (dotpos < 2 || lastpos < dotpos + 2) {
-        return '';
+        return str;
     } // Error: no dot, or less than 2 letters before dot, or less than 2 letters after dot
 
     if (str.charAt(0) == 'A') /* V1.50 */
@@ -1847,8 +1881,12 @@ function aeu_unpack(str) {
             }
         }
     }
-    if (voweled && hasletters) return '';
-    if (!voweled && !hasletters) return '';
+    if (voweled && hasletters) {
+        return '';
+    }
+    if (!voweled && !hasletters) {
+        return '';
+    }
     return str;
 }
 
@@ -2121,3 +2159,176 @@ function multipleBordersNearby(latitudeDegrees, longitudeDegrees, territory) {
 function maxErrorInMeters(extraDigits) {
     return maxErrorInMetersForDigits[extraDigits];
 }
+
+/// PRIVATE convert a mapcode to an ABJAD-format (never more than 2 non-digits in a row)
+function convertToAbjad(str) {
+    var rest = '', h = str.indexOf('-');
+    if (h > 0) {
+        rest = str.substring(h);
+        str = str.substring(0, h);
+    }
+    str = aeu_unpack(str);
+    var len = str.length;
+    var dot = str.indexOf('.');
+    var form = 10 * dot + (len - dot - 1);
+
+    // see if >2 non-digits in a row
+    var inarow = 0;
+    for (var i = 0; i < len; i++) {
+        var c = str.charCodeAt(i);
+        if (c != 46) {
+            inarow++;
+            if (decodeChar[c] <= 9) {
+                inarow = 0;
+            } else if (inarow > 2) {
+                break;
+            }
+        }
+    }
+    if (inarow < 3 && (form == 22 || form == 32 || form == 33 || form == 42 || form == 43 || form == 44 || form == 54)) {
+        // no need to do anything
+    }
+    else {
+        var c = decodeChar[str.charCodeAt(2)];
+        if (c < 0) {
+            c = decodeChar[str.charCodeAt(3)];
+        }
+        var c1, c2, c3 = 0;
+        if (form >= 44) {
+            c = (c * 31) + (decodeChar[str.charCodeAt(len - 1)] + 39);
+            c1 = Math.floor(c / 100)
+            c2 = Math.floor((c % 100) / 10);
+            c3 = (c % 10);
+        }
+        else if (len == 7) {
+            if (form == 24) {
+                c += 7;
+            } else if (form == 33) {
+                c += 38;
+            } else if (form == 42) {
+                c += 69;
+            }
+            c1 = Math.floor(c / 10);
+            c2 = (c % 10);
+        }
+        else {
+            c1 = 2 + Math.floor(c / 8);
+            c2 = 2 + (c % 8);
+        }
+
+        if (form == 22) {
+            str = str.charAt(0) + str.charAt(1) + '.' + c1 + c2 + str.charAt(4);
+        }
+        else if (form == 23) {
+            str = str.charAt(0) + str.charAt(1) + '.' + c1 + c2 + str.charAt(4) + str.charAt(5);
+        }
+        else if (form == 32) {
+            str = str.charAt(0) + str.charAt(1) + '.' + (c1 + 4) + c2 + str.charAt(4) + str.charAt(5);
+        }
+        else if (form == 24) {
+            str = str.charAt(0) + str.charAt(1) + c1 + '.' + str.charAt(4) + c2 + str.charAt(5) + str.charAt(6);
+        }
+        else if (form == 33) {
+            str = str.charAt(0) + str.charAt(1) + c1 + '.' + str.charAt(4) + c2 + str.charAt(5) + str.charAt(6);
+        }
+        else if (form == 42) {
+            str = str.charAt(0) + str.charAt(1) + c1 + '.' + str.charAt(3) + c2 + str.charAt(5) + str.charAt(6);
+        }
+        else if (form == 43) {
+            str = str.charAt(0) + str.charAt(1) + (c1 + 4) + '.' + str.charAt(3) + str.charAt(5) + c2 + str.charAt(6) + str.charAt(7);
+        }
+        else if (form == 34) {
+            str = str.charAt(0) + str.charAt(1) + c1 + '.' + str.charAt(4) + str.charAt(5) + c2 + str.charAt(6) + str.charAt(7);
+        }
+        else if (form == 44) {
+            str = str.charAt(0) + str.charAt(1) + c1 + str.charAt(3) + '.' + c2 + str.charAt(5) + str.charAt(6) + c3 + str.charAt(7);
+        }
+        else if (form == 54) {
+            str = str.charAt(0) + str.charAt(1) + c1 + str.charAt(3) + str.charAt(4) + '.' + c2 + str.charAt(6) + str.charAt(7) + c3 + str.charAt(8);
+        }
+    }
+    return aeu_pack(str + rest, false);
+}
+
+/// PRIVATE returns true if str contains characters from an abjad-script
+function isAbjadScript(str) {
+    for (var i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i);
+        if (c >= 1576 && c <= 1609) {
+            return true;
+        } // arabic
+        if (c >= 1488 && c <= 1514) {
+            return true;
+        } // hebrew
+        if (c >= 904 && c <= 969) {
+            return true;
+        } // greek 0x388-0x3C9
+    }
+    return false;
+}
+
+/// PRIVATE convert a mapcode in ABJAD-format to normal format
+function convertFromAbjad(result) {
+    // split into prefix, s, postfix
+    var p = result.lastIndexOf(' ');
+    if (p < 0) {
+        p = 0;
+    } else {
+        p++;
+    }
+    var prefix = result.substr(0, p);
+    var s = result.substr(p);
+    var postfix = '';
+    var h = s.indexOf('-');
+    if (h > 0) {
+        postfix = s.substring(h);
+        s = s.substring(0, h);
+    }
+
+    s = aeu_unpack(s);
+    var len = s.length;
+    var dot = s.indexOf('.');
+    var form = dot * 10 + (len - dot - 1);
+    var c;
+
+    if (form == 23) {
+        c = (s.charAt(3) * 8) + (s.charAt(4) - 18);
+        s = s.charAt(0) + s.charAt(1) + '.' + encodeChar[c] + s.charAt(5);
+    }
+    else if (form == 24) {
+        c = (s.charAt(3) * 8) + (s.charAt(4) - 18);
+        if (c >= 32) {
+            s = s.charAt(0) + s.charAt(1) + encodeChar[c - 32] + '.' + s.charAt(5) + s.charAt(6);
+        } else {
+            s = s.charAt(0) + s.charAt(1) + '.' + encodeChar[c] + s.charAt(5) + s.charAt(6);
+        }
+    }
+    else if (form == 34) {
+        c = (s.charAt(2) * 10) + (s.charAt(5) - 7);
+        if (c < 31) {
+            s = s.charAt(0) + s.charAt(1) + '.' + encodeChar[c] + s.charAt(4) + s.charAt(6) + s.charAt(7);
+        } else if (c < 62) {
+            s = s.charAt(0) + s.charAt(1) + encodeChar[c - 31] + '.' + s.charAt(4) + s.charAt(6) + s.charAt(7);
+        } else {
+            s = s.charAt(0) + s.charAt(1) + encodeChar[c - 62] + s.charAt(4) + '.' + s.charAt(6) + s.charAt(7);
+        }
+    }
+    else if (form == 35) {
+        c = (s.charAt(2) * 8) + (s.charAt(6) - 18);
+        if (c >= 32) {
+            s = s.charAt(0) + s.charAt(1) + encodeChar[c - 32] + s.charAt(4) + '.' + s.charAt(5) + s.charAt(7) + s.charAt(8);
+        } else {
+            s = s.charAt(0) + s.charAt(1) + encodeChar[c] + '.' + s.charAt(4) + s.charAt(5) + s.charAt(7) + s.charAt(8);
+        }
+    }
+    else if (form == 45) {
+        c = (s.charAt(2) * 100) + (s.charAt(5) * 10) + (s.charAt(8) - 39);
+        s = s.charAt(0) + s.charAt(1) + encodeChar[Math.floor(c / 31)] + s.charAt(3) + '.' + s.charAt(6) + s.charAt(7) + s.charAt(9) + encodeChar[c % 31];
+    }
+    else if (form == 55) {
+        c = (s.charAt(2) * 100) + (s.charAt(6) * 10) + (s.charAt(9) - 39);
+        s = s.charAt(0) + s.charAt(1) + encodeChar[Math.floor(c / 31)] + s.charAt(3) + s.charAt(4) + '.' + s.charAt(7) + s.charAt(8) + s.charAt(10) + encodeChar[c % 31];
+    }
+    return prefix + aeu_pack(s, false) + postfix;
+}
+
