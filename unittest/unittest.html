@@ -45,30 +45,81 @@
     var nrWarnings = 0;
 
     // test the alphabet conversion routines
+
+    var testpairs = [
+//				"OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ","OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ",
+//		"OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ","OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ",
+//		"OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789euEUABCDFGHJKLMNPQRSTVWXYZ" , "OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789EUEUABCDFGHJKLMNPQRSTVWXYZ",
+        "OEUoi OIoi#%?abcdfghjklmnpqrstvwxyz0123456789euEUABCDFGHJKLMNPQRSTVWXYZ", "OEUOI OIOI#%?ABCDFGHJKLMNPQRSTVWXYZ0123456789EUEUABCDFGHJKLMNPQRSTVWXYZ",
+        ".", ".",
+        "-", "-",
+        "-abc", "-ABC",
+        "12.34", "12.34",
+        "  Oio 12.AU  ", "OIO 12.AU",
+        "OMN 112.3AU", "OMN 112.3AU",
+        "OMN 112.3EU", "OMN 112.3EU",
+        "OMN 100.3EU", "OMN 100.3EU",
+        "OMN 1Oo.3EU", "OMN 1OO.3EU",
+        "49.4V", "49.4V",
+        "NLD 49.4V-xx123", "NLD 49.4V-XX123",
+        "xx.xx", "XX.XX",
+        "xx.xxx", "XX.XXX",
+        "xxx.xx", "XXX.XX",
+        "xx.xxxx", "XX.XXXX",
+        "xxx.xxx", "XXX.XXX",
+        "xxxx.xx", "XXXX.XX",
+        "xxx.xxxx", "XXX.XXXX",
+        "xxxx.xxx", "XXXX.XXX",
+        "xxxx.xxxx", "XXXX.XXXX",
+        "xxxxx.xxxx", "XXXXX.XXXX",
+        "pq.rs", "PQ.RS",
+        "bc.123", "BC.123",
+        "123.xy", "123.XY",
+        " nld 12.34E0", "NLD 12.34E0",
+        "VVX.xxx", "VVX.XXX",
+        "x123.xx", "X123.XX",
+        "xxx.xxxx", "XXX.XXXX",
+        "12xx.xxx", "12XX.XXX",
+        "xxxx.xx12", "XXXX.XX12",
+        "99zxx.xxxx", "99ZXX.XXXX",
+        "xx.xx-P", "XX.XX-P",
+        "xx.xxx-pq", "XX.XXX-PQ",
+        "xxx.xx-123", "XXX.XX-123",
+        "xx.xxxx-pqRS", "XX.XXXX-PQRS",
+        "xxx.xxx-PQRSTUVW", "XXX.XXX-PQRSTUVW",
+        "xxxx.xx-pqrstuvw", "XXXX.XX-PQRSTUVW",
+        "xxx.xxxx-PQrsTU", "XXX.XXXX-PQRSTU",
+        "xxxx.xxx-09876543", "XXXX.XXX-09876543",
+        "xxxx.xxxx-PQRSTUVW", "XXXX.XXXX-PQRSTUVW",
+        "xxxxx.xxxx-PQRSTUVW", "XXXXX.XXXX-PQRSTUVW",
+        "pq.rs-PQRSTUVW", "PQ.RS-PQRSTUVW",
+        "bc.123-PQRSTUVW", "BC.123-PQRSTUVW",
+        "123.xy-PQRSTUVW", "123.XY-PQRSTUVW",
+        "12.34E0-PQRSTUVW", "12.34E0-PQRSTUVW",
+        "VVX.xxx-PQRSTUVW", "VVX.XXX-PQRSTUVW",
+        "x123.xx-PQRSTUVW", "X123.XX-PQRSTUVW",
+        "xxx.xxxx-PQRSTUVW", "XXX.XXXX-PQRSTUVW",
+        "12xx.xxx-PQRSTUVW", "12XX.XXX-PQRSTUVW",
+        "xxxx.xx12-PQRSTUVW", "XXXX.XX12-PQRSTUVW",
+        "99zxx.xxxx-PQRSTUVW", "99ZXX.XXXX-PQRSTUVW",
+        "", ""
+    ];
+
     function alphabet_tests() {
         out(MAXLANS + ' alphabets');
 
-        for (var i = 0; i < MAXLANS; i++) {
-
-            // see if alphabets (re)convert as expected
-            var str = "OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ";
-            var expect = "OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ";
-            nrTests++;
-            var enc = convertToAlphabet(str, i);
-            var dec = convertToAlphabet(enc, 0);
-            if (dec != expect) {
-                nrErrors++;
-                out('convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + expect + '"');
-            }
-
-            // see if E/U vowelled mapcodes (re)convert as expected
-            str = "OMN 112.3AU";
-            expect = str;
-            nrTests++;
-            dec = convertToAlphabet(convertToAlphabet(str, i), 0);
-            if (dec != expect) {
-                nrErrors++;
-                out('convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + expect + '"');
+        for (var t = 0; t < testpairs.length; t += 2) {
+            for (var i = 0; i < MAXLANS; i++) {
+                // see if alphabets (re)convert as expected
+                var str = testpairs[t];
+                var expect = testpairs[t + 1];
+                nrTests++;
+                var enc = convertToAlphabet(str, i);
+                var dec = convertToAlphabet(enc, 0);
+                if (dec != expect) {
+                    nrErrors++;
+                    out('convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + expect + '"');
+                }
             }
         }
     }
@@ -145,6 +196,13 @@
             r = encodeWithPrecision(y, x, precision);
             for (i = 0; i < r.length; i++) {
                 str = r[i].fullmapcode;
+
+                dec = convertToAlphabet(convertToAlphabet(str, 14), 0);
+                if (dec != str) {
+                    nrError++;
+                    out('*** lanencode ' + str);
+                }
+
                 nrTests++;
                 var p = decode(str);
                 if (p) {
@@ -504,18 +562,18 @@
     function stepper() {
         switch (dostep) {
             case 0:
-                out('Mapcode Javascript version ' + mapcode_javaversion);
+                out('Mapcode JavaScript version ' + mapcode_javaversion);
                 break;
             case 1:
-                out('<hr>Alphabet tests');
+                out('<HR>Alphabet tests');
                 break;
             case 2:
                 alphabet_tests();
                 break;
             case 3:
-                out('<hr>Distance tests');
+                out('<HR>Distance tests');
                 distance_tests();
-                out('<hr>Territory tests');
+                out('<HR>Territory tests');
                 out((ccode_earth + 1) + ' territories');
                 test_territory_insides();
                 break;
@@ -530,7 +588,7 @@
                 test_failing_decodes();
                 break;
             case 7:
-                out('<hr>Encode/decode tests');
+                out('<HR>Encode/Decode tests');
                 break;
             case 8:
                 if (test_encodes_decodes()) {
@@ -538,7 +596,7 @@
                 }
                 break;
             case 9:
-                out('<hr>Edge-case encode/decode tests');
+                out('<HR>Edge-case Encode/Decode tests');
                 break;
             case 10:
                 if (test_corner_encodes()) {

@@ -1068,7 +1068,7 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
 var MAXLANS = 15;
 var asc2lan = [
     [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Roman
-    [913, 914, 926, 916, 904/*e*/, 917, 915, 919, 921, 928, 922, 923, 924, 925, 927, 929, 920, 936, 931, 932, 905/*u*/, 934, 937, 935, 933, 918, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Greek
+    [913, 914, 926, 916, 904/*e*/, 917, 915, 919, 921, 928, 922, 923, 924, 925, 927/*o*/, 929, 920, 936, 931, 932, 905/*u*/, 934, 937, 935, 933, 918, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Greek
     [1040, 1042, 1057, 1044, 1045, 1046, 1043, 1053, 1048, 1055, 1050, 1051, 1052, 1047, 1054, 1056, 1060, 1071, 1062, 1058, 1069, 1063, 1064, 1061, 1059, 1041, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Cyrillic
     [1488, 1489, 1490, 1491, 1507, 1492, 1494, 1495, 1493, 1496, 1497, 1498, 1499, 1500, 1505, 1501, 1502, 1504, 1506, 1508, 1509, 1510, 1511, 1512, 1513, 1514, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57], // Hebrew
     [2309, 2325, 2327, 2328, 2319, 2330, 2332, 2335, 73, 2336, 2339, 2340, 2342, 2343, 79, 2344, 2346, 2349, 2350, 2352, 2347, 2354, 2357, 2360, 2361, 2337, 2406, 2407, 2408, 2409, 2410, 2411, 2412, 2413, 2414, 2415], // Hindi
@@ -1642,7 +1642,7 @@ function aeu_pack(r, short) /* v1.50 */ {
     }
 
     var v;
-    if (rlen - 2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?
+    if (dotpos >= 2 && rlen - 2 > dotpos) { // does r have a dot, AND at least 2 chars after the dot?
         if (short) { /* v1.50 new way: use only A */
             v = (r.charCodeAt(0) - 48) * 100 + (r.charCodeAt(rlen - 2) - 48) * 10 + (r.charCodeAt(rlen - 1) - 48);
             r = 'A' + r.substring(1, rlen - 2) + encodeChar[Math.floor(v / 32)] + encodeChar[v % 32]; // 1.50
@@ -2161,15 +2161,23 @@ function maxErrorInMeters(extraDigits) {
 }
 
 /// PRIVATE convert a mapcode to an ABJAD-format (never more than 2 non-digits in a row)
-function convertToAbjad(str) {
-    var rest = '', h = str.indexOf('-');
-    if (h > 0) {
-        rest = str.substring(h);
-        str = str.substring(0, h);
+function convertToAbjad(mapcode) {
+    var str, rest;
+    var h = mapcode.indexOf('-');
+    if (h >= 0) {
+        rest = mapcode.substring(h);
+        str = aeu_unpack(mapcode.substring(0, h));
     }
-    str = aeu_unpack(str);
+    else {
+        rest = '';
+        str = aeu_unpack(mapcode);
+    }
+
     var len = str.length;
     var dot = str.indexOf('.');
+    if (dot < 2 || dot > 5) {
+        return mapcode;
+    }
     var form = 10 * dot + (len - dot - 1);
 
     // see if >2 non-digits in a row
@@ -2187,15 +2195,22 @@ function convertToAbjad(str) {
     }
     if (inarow < 3 && (form == 22 || form == 32 || form == 33 || form == 42 || form == 43 || form == 44 || form == 54)) {
         // no need to do anything
+        return mapcode;
     }
     else {
         var c = decodeChar[str.charCodeAt(2)];
         if (c < 0) {
             c = decodeChar[str.charCodeAt(3)];
+            if (c < 0) {
+                return mapcode;
+            }
         }
         var c1, c2, c3 = 0;
         if (form >= 44) {
             c = (c * 31) + (decodeChar[str.charCodeAt(len - 1)] + 39);
+            if (c < 39 || c > 999) {
+                return mapcode;
+            }
             c1 = Math.floor(c / 100)
             c2 = Math.floor((c % 100) / 10);
             c3 = (c % 10);
@@ -2246,8 +2261,12 @@ function convertToAbjad(str) {
         else if (form == 54) {
             str = str.charAt(0) + str.charAt(1) + c1 + str.charAt(3) + str.charAt(4) + '.' + c2 + str.charAt(6) + str.charAt(7) + c3 + str.charAt(8);
         }
+        else {
+            return mapcode;
+        }
     }
-    return aeu_pack(str + rest, false);
+    //alert(str+' ['+rest+'] = '+aeu_pack(str, false));
+    return aeu_pack(str, false) + rest;
 }
 
 /// PRIVATE returns true if str contains characters from an abjad-script
@@ -2288,7 +2307,10 @@ function convertFromAbjad(result) {
     s = aeu_unpack(s);
     var len = s.length;
     var dot = s.indexOf('.');
-    var form = dot * 10 + (len - dot - 1);
+    if (dot < 2 || dot > 5) {
+        return result;
+    }
+    var form = 10 * dot + (len - dot - 1);
     var c;
 
     if (form == 23) {
@@ -2328,6 +2350,9 @@ function convertFromAbjad(result) {
     else if (form == 55) {
         c = (s.charAt(2) * 100) + (s.charAt(6) * 10) + (s.charAt(9) - 39);
         s = s.charAt(0) + s.charAt(1) + encodeChar[Math.floor(c / 31)] + s.charAt(3) + s.charAt(4) + '.' + s.charAt(7) + s.charAt(8) + s.charAt(10) + encodeChar[c % 31];
+    }
+    else {
+        return result;
     }
     return prefix + aeu_pack(s, false) + postfix;
 }
