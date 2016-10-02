@@ -47,6 +47,18 @@ To run the Javascript unit tests, simply open the file `unittest/unittest/html`.
 
 # Version History
 
+* 2.3.0
+
+    Arabic script added. 
+    
+    Greek script extended to be AEU-capable.
+
+    Tibetan script changed so all characters can be typed on a computer keyboard without using the SHIFT key.
+
+    Greek, Hebrew and Arab, the languages that have (implied) vowels in mapcode sequences, have been extended with ABJAD conversion, 
+    to prevent more than two consecutive non-digits from occurring. 
+    NOTE: as a result, mapcodes in Greek, Arab and Hebrew scripts are now often one character longer than in the roman script.
+
 * 2.2.0
 
     Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible;
