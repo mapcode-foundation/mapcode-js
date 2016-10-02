@@ -45,11 +45,11 @@
     var nrWarnings = 0;
 
     // test the alphabet conversion routines
-
     var testpairs = [
-//				"OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ","OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ",
-//		"OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ","OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ",
-//		"OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789euEUABCDFGHJKLMNPQRSTVWXYZ" , "OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789EUEUABCDFGHJKLMNPQRSTVWXYZ",
+        "12.34E0-PQRSTZVW", "12.34E0-PQRSTZVW",
+        "OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ", "OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ",
+        "OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789ABCDFGHJKLMNPQRSTVWXYZ", "OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789ABCDFGHJKLMNPQRSTVWXYZ",
+        "OEUoi OIoi#%?-.abcdfghjklmnpqrstvwxyz0123456789euEUABCDFGHJKLMNPQRSTVWXYZ", "OEUOI OIOI#%?-.ABCDFGHJKLMNPQRSTVWXYZ0123456789EUEUABCDFGHJKLMNPQRSTVWXYZ",
         "OEUoi OIoi#%?abcdfghjklmnpqrstvwxyz0123456789euEUABCDFGHJKLMNPQRSTVWXYZ", "OEUOI OIOI#%?ABCDFGHJKLMNPQRSTVWXYZ0123456789EUEUABCDFGHJKLMNPQRSTVWXYZ",
         ".", ".",
         "-", "-",
@@ -59,7 +59,7 @@
         "OMN 112.3AU", "OMN 112.3AU",
         "OMN 112.3EU", "OMN 112.3EU",
         "OMN 100.3EU", "OMN 100.3EU",
-        "OMN 1Oo.3EU", "OMN 1OO.3EU",
+        "OMN 1Oo.3Oo", "OMN 1OO.3OO",
         "49.4V", "49.4V",
         "NLD 49.4V-xx123", "NLD 49.4V-XX123",
         "xx.xx", "XX.XX",
@@ -86,24 +86,73 @@
         "xx.xxx-pq", "XX.XXX-PQ",
         "xxx.xx-123", "XXX.XX-123",
         "xx.xxxx-pqRS", "XX.XXXX-PQRS",
-        "xxx.xxx-PQRSTUVW", "XXX.XXX-PQRSTUVW",
-        "xxxx.xx-pqrstuvw", "XXXX.XX-PQRSTUVW",
-        "xxx.xxxx-PQrsTU", "XXX.XXXX-PQRSTU",
+        "xxx.xxx-PQRSTZVW", "XXX.XXX-PQRSTZVW",
+        "xxxx.xx-pqrstZvw", "XXXX.XX-PQRSTZVW",
+        "xxx.xxxx-PQrsTZ", "XXX.XXXX-PQRSTZ",
         "xxxx.xxx-09876543", "XXXX.XXX-09876543",
-        "xxxx.xxxx-PQRSTUVW", "XXXX.XXXX-PQRSTUVW",
-        "xxxxx.xxxx-PQRSTUVW", "XXXXX.XXXX-PQRSTUVW",
-        "pq.rs-PQRSTUVW", "PQ.RS-PQRSTUVW",
-        "bc.123-PQRSTUVW", "BC.123-PQRSTUVW",
-        "123.xy-PQRSTUVW", "123.XY-PQRSTUVW",
-        "12.34E0-PQRSTUVW", "12.34E0-PQRSTUVW",
-        "VVX.xxx-PQRSTUVW", "VVX.XXX-PQRSTUVW",
-        "x123.xx-PQRSTUVW", "X123.XX-PQRSTUVW",
-        "xxx.xxxx-PQRSTUVW", "XXX.XXXX-PQRSTUVW",
-        "12xx.xxx-PQRSTUVW", "12XX.XXX-PQRSTUVW",
-        "xxxx.xx12-PQRSTUVW", "XXXX.XX12-PQRSTUVW",
-        "99zxx.xxxx-PQRSTUVW", "99ZXX.XXXX-PQRSTUVW",
+        "xxxx.xxxx-PQRSTZVW", "XXXX.XXXX-PQRSTZVW",
+        "xxxxx.xxxx-PQRSTZVW", "XXXXX.XXXX-PQRSTZVW",
+        "pq.rs-PQRSTZVW", "PQ.RS-PQRSTZVW",
+        "bc.123-PQRSTZVW", "BC.123-PQRSTZVW",
+        "123.xy-PQRSTZVW", "123.XY-PQRSTZVW",
+        "VVX.xxx-PQRSTZVW", "VVX.XXX-PQRSTZVW",
+        "x123.xx-PQRSTZVW", "X123.XX-PQRSTZVW",
+        "xxx.xxxx-PQRSTZVW", "XXX.XXXX-PQRSTZVW",
+        "12xx.xxx-PQRSTZVW", "12XX.XXX-PQRSTZVW",
+        "xxxx.xx12-PQRSTZVW", "XXXX.XX12-PQRSTZVW",
+        "99zxx.xxxx-PQRSTZVW", "99ZXX.XXXX-PQRSTZVW",
         "", ""
     ];
+
+    var greek_versions = [
+        "26.53UK", "\u039161.328\u03A5",
+        "FR.B016", "\u0395\u03A81.0716",
+        "000.EU", "\u0391\u0030\u0030.23",
+        "PQ.YZ", "\u03a1\u0398.57\u0396",
+        "PQ.XYZ", "\u03a1\u0398.56\u03a5\u0396",
+        "PQR.YZ", "\u03a1\u0398.89\u03a5\u0396",
+        "PQ.RXYZ", "\u03a1\u03983.\u03a70\u03a5\u0396",
+        "PQR.XYZ", "\u03a1\u03986.\u03a71\u03a5\u0396",
+        "PQRX.YZ", "\u03a1\u03989.\u03a72\u03a5\u0396",
+        "PQR.SXYZ", "\u03a1\u03984.\u03a3\u03a79\u03a5\u0396",
+        "PQRS.XYZ", "\u03a1\u03988.\u03a3\u03a79\u03a5\u0396",
+        "PQRS.WXYZ", "\u03a1\u03987\u03a3.8\u03a9\u03a72\u03a5",
+        "PQRST.WXYZ", "\u03a1\u03987\u03a3\u03a4.8\u03a9\u03a72\u03a5",
+        "P4.YZ", "\u03a14.\u03a5\u0396",
+        "PQ.4Z", "\u03a1\u0398.4\u0396",
+        "PQ.4YZ", "\u03a1\u0398.26\u03a5\u0396",
+        "PQ4.YZ", "\u03a1\u03984.\u03a5\u0396",
+        "PQ.46YZ", "\u03a1\u03981.61\u03a5\u0396",
+        "PQ4.6YZ", "\u03a1\u03984.6\u03a5\u0396",
+        "PQ46.YZ", "\u03a1\u039846.\u03a5\u0396",
+        "PQ4.S6YZ", "\u03a1\u03982.\u03a366\u03a5\u0396",
+        "PQ4S.6YZ", "\u03a1\u03984\u03a3.6\u03a5\u0396",
+        "PQ4S.W6YZ", "\u03a1\u03984\u03a3.\u03a96\u03a5\u0396",
+        "PQ4PQ.6YZ9", "\u03a1\u03984\u03a1\u0398.6\u03a5\u03969",
+        "PQ.YZ-BCD", "\u03a1\u0398.57\u0396-\u0392\u039e\u0394",
+        "PQ.XYZ-BCD", "\u03a1\u0398.56\u03a5\u0396-\u0392\u039e\u0394",
+        "PQR.YZ-BCD", "\u03a1\u0398.89\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ.RXYZ-BCD", "\u03a1\u03983.\u03a70\u03a5\u0396-\u0392\u039e\u0394",
+        "PQR.XYZ-BCD", "\u03a1\u03986.\u03a71\u03a5\u0396-\u0392\u039e\u0394",
+        "PQRX.YZ-BCD", "\u03a1\u03989.\u03a72\u03a5\u0396-\u0392\u039e\u0394",
+        "PQR.SXYZ-BCD", "\u03a1\u03984.\u03a3\u03a79\u03a5\u0396-\u0392\u039e\u0394",
+        "PQRS.XYZ-BCD", "\u03a1\u03988.\u03a3\u03a79\u03a5\u0396-\u0392\u039e\u0394",
+        "PQRS.WXYZ-BCD", "\u03a1\u03987\u03a3.8\u03a9\u03a72\u03a5-\u0392\u039e\u0394",
+        "PQRST.WXYZ-BCD", "\u03a1\u03987\u03a3\u03a4.8\u03a9\u03a72\u03a5-\u0392\u039e\u0394",
+        "P4.YZ-BCD", "\u03a14.\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ.4Z-BCD", "\u03a1\u0398.4\u0396-\u0392\u039e\u0394",
+        "PQ.4YZ-BCD", "\u03a1\u0398.26\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ4.YZ-BCD", "\u03a1\u03984.\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ.46YZ-BCD", "\u03a1\u03981.61\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ4.6YZ-BCD", "\u03a1\u03984.6\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ46.YZ-BCD", "\u03a1\u039846.\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ4.S6YZ-BCD", "\u03a1\u03982.\u03a366\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ4S.6YZ-BCD", "\u03a1\u03984\u03a3.6\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ4S.W6YZ-BCD", "\u03a1\u03984\u03a3.\u03a96\u03a5\u0396-\u0392\u039e\u0394",
+        "PQ4PQ.6YZ9-BCD", "\u03a1\u03984\u03a1\u0398.6\u03a5\u03969-\u0392\u039e\u0394",
+        "", ""
+    ];
+
 
     function alphabet_tests() {
         out(MAXLANS + ' alphabets');
@@ -118,10 +167,29 @@
                 var dec = convertToAlphabet(enc, 0);
                 if (dec != expect) {
                     nrErrors++;
-                    out('convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + expect + '"');
+                    out('*** ERROR ** convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + expect + '"');
                 }
             }
         }
+
+        for (var t = 0; t < greek_versions.length; t += 2) {
+            // see if alphabets (re)convert as expected
+            var str = greek_versions[t];
+            var expect = greek_versions[t + 1];
+            nrTests++;
+            var enc = convertToAlphabet(str, 1); // to greek
+            if (enc != expect) {
+                nrErrors++;
+                out('*** ERROR *** convertToAlphabet("' + str + '",GREEK))= "' + enc + '", expected "' + expect + '"');
+            }
+            var dec = convertToAlphabet(enc, 0);
+            if (dec != str) {
+                nrErrors++;
+                out('*** ERROR *** convertToAlphabet(convertToAlphabet("' + str + '",' + i + '))= "' + dec + '", expected "' + str + '"');
+            }
+        }
+
+
     }
 
     function printGeneratedMapcodes(r, name) {
@@ -197,10 +265,12 @@
             for (i = 0; i < r.length; i++) {
                 str = r[i].fullmapcode;
 
-                dec = convertToAlphabet(convertToAlphabet(str, 14), 0);
+                // check conversion back and forth via Arabic script
+                nrTests++;
+                var dec = convertToAlphabet(convertToAlphabet(str, 14), 0);
                 if (dec != str) {
                     nrError++;
-                    out('*** lanencode ' + str);
+                    out('*** ERROR *** convert back and forth failed: ' + str);
                 }
 
                 nrTests++;

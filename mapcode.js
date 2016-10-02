@@ -1143,10 +1143,17 @@ function showinlan(str, lan, asHTML) {
     }
 
     // unpack for languages that do not support E and U
-    if (asc2lan[lan][4] == 63) {
+    if (lan == 1) { // greek
+        var rest = '';
+        var h = str.indexOf('-');
+        if (h >= 0) {
+            rest = str.substring(h);
+            str = str.substring(0, h);
+        }
         if (str.indexOf('E') >= 0 || str.indexOf('U') >= 0) {
             str = aeu_pack(aeu_unpack(str), true);
         }
+        str += rest;
     }
 
     // substitute
@@ -1210,7 +1217,14 @@ function to_ascii(str) {
         p++;
     }
     if (result.charAt(p) == 'A') {
-        result = result.substr(0, p) + aeu_pack(aeu_unpack(result.substr(p)), false);
+        var mc = result.substr(p);
+        var rest = '';
+        var h = mc.indexOf('-');
+        if (h >= 0) {
+            rest = mc.substring(h);
+            mc = mc.substring(0, h);
+        }
+        result = result.substr(0, p) + aeu_pack(aeu_unpack(mc), false) + rest;
         /* v1.50 repack A-voweled to AEU-voweled */
     }
 
