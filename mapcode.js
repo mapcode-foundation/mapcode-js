@@ -120,7 +120,7 @@ var mapcode_dataversion = "2.3.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.3.0/Data' + mapcode_dataversion;
+var mapcode_javaversion = '2.3.1/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
