@@ -116,7 +116,7 @@ var parents2 = "US,IN,CA,AU,MX,BR,RU,CN,";
 
 var ccode_start = 112; // NLD
 var mapcode_cversion = "2.0.2";
-var mapcode_dataversion = "2.2.0";
+var mapcode_dataversion = "2.3.0";
 
 // *************************** mapcode_org *********************
 
