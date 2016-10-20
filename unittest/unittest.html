@@ -468,7 +468,7 @@
 
         if (tn != ccode) {
             nrErrors++;
-            out('*** ERROR *** getTerritoryNumber(' + alphacode + (needsParent ? ',' + getTerritoryAlphaCode(ccodeParent) : "") + ')=' + tn + ' but expected ' + ccode);
+            out('*** ERROR *** getTerritoryNumber(' + alphacode + (needsParent ? ',' + getTerritoryAlphaCode(ccodeParent) : "") + ')=' + tn  + '=' + getTerritoryAlphaCode(tn) + ' but expected ' + ccode + '=' + getTerritoryAlphaCode(ccode));
         }
 
         if (needsParent == 0 && isAlias == 0 && (alphacode.length <= 3 || alphacode.charAt(3) != '-')) {
@@ -577,6 +577,10 @@
 
     function territory_code_tests() {
         var testdata = [
+            "ASM", "USA", "AS",
+            "MX-AGU", , "AG",
+            "MX-TAM", , "MEX-TAM",
+            "CXR", , "AUS-CX",
             // expected answer, context, string
             "BR-AL", "BRA", "AL",
             "VAT", , "",
@@ -619,7 +623,7 @@
             if (tc != testdata[i]) {
                 nrErrors++;
                 out('*** ERROR *** getTerritoryNumber("' + testdata[i + 2] + '", ' +
-                        testdata[i + 1] + ')=' + tc + ', expected ' + testdata[i]);
+                        testdata[i + 1] + ')=' + tc + ', expected \"' + testdata[i] + '\"');
             }
         }
     }

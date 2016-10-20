@@ -47,6 +47,24 @@ To run the Javascript unit tests, simply open the file `unittest/unittest/html`.
 
 # Version History
 
+
+* 2.4.0
+
+    Added scripts for Korean (Choson'gul / Hangul), Burmese, Khmer, Sinhalese, Thaana (Maldivan), 
+    Chinese (Zhuyin, Bopomofo), Tifinagh (Berber), Tamil, Amharic, Telugu, Odia, Kannada, Gujarati.
+
+    Renamed language strings to more correct terms (Malay to Malayalam; Hindi to Devanagari). 
+
+    Added var `alphabetsForTerritory[t]`, returning the most commonly used alphabets for territory `t`.
+
+    Improved some characters for Arabic and Devanagari.
+    
+    Fixed Bengali to also support Assamese.
+
+    For some alphabets, removed recognition of letters `I` and/or `O` unless looking like digits `1` and/or `0`.
+
+    Replaced internal encoded `entity_iso[]` array by non-encoded `iso3166alpha[]`.
+
 * 2.3.1
 
     Minor fixes to prevent some compiler warnings, or multiple inclusion of `.h` files.
