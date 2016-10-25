@@ -12,9 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 var iso3166alpha = [
-   
+
     'VAT', 'MCO', 'GIB', 'TKL', 'CCK', 'BLM', 'NRU', 'TUV', 'MAC', 'SXM',
     'MAF', 'NFK', 'PCN', 'BVT', 'BMU', 'IOT', 'SMR', 'GGY', 'AIA', 'MSR',
     'JEY', 'CXR', 'WLF', 'VGB', 'LIE', 'ABW', 'MHL', 'ASM', 'COK', 'SPM',
@@ -235,30 +235,31 @@ function iso2ccode(territoryAlphaCode) {
         }
     }
 
-    var i,isoa;
+    var i, isoa;
     var sep = territoryAlphaCode.lastIndexOf('-');
     if (sep >= 0) { // territory!
         var prefix = territoryAlphaCode.substring(0, sep);
         var properMapcode = territoryAlphaCode.substring(sep + 1);
-        if (set_disambiguate(prefix) || properMapcode.length<2) {
+        if (set_disambiguate(prefix) || properMapcode.length < 2) {
             return -1;
         }
         i = findISO(parentname2(disambiguate) + '-' + properMapcode);
-        if (i>=0) {
+        if (i >= 0) {
             return i;
         }
         // recognise alias
-        if (properMapcode.length==3)
+        if (properMapcode.length == 3) {
             isoa = alias2iso(properMapcode);
-        else
+        } else {
             isoa = alias2iso(disambiguate + '' + properMapcode);
+        }
         if (isoa) {
             if (isoa.charAt(0) == disambiguate) {
                 properMapcode = isoa.substring(1);
             } else {
                 properMapcode = isoa;
                 i = findISO(properMapcode);
-                if (i>=0) {
+                if (i >= 0) {
                     return i;
                 }
             }
@@ -267,7 +268,7 @@ function iso2ccode(territoryAlphaCode) {
     }
 
     // first rewrite alias in context
-    if (territoryAlphaCode.length==2) {
+    if (territoryAlphaCode.length == 2) {
         isoa = alias2iso(disambiguate + '' + territoryAlphaCode);
         if (isoa) {
             if (isoa.charAt(0) == disambiguate) {
@@ -279,41 +280,41 @@ function iso2ccode(territoryAlphaCode) {
     }
 
     // no prefix. check if a normal territory
-    if (territoryAlphaCode.length==3) {
+    if (territoryAlphaCode.length == 3) {
         i = findISO(territoryAlphaCode);
-        if (i>=0) {
+        if (i >= 0) {
             return i;
         }
     }
 
     // no prefix, check in context
     i = findISO(parentname2(disambiguate) + '-' + territoryAlphaCode);
-    if (i>=0) {
+    if (i >= 0) {
         return i;
     }
 
 
-    if (territoryAlphaCode.length>=2) {
+    if (territoryAlphaCode.length >= 2) {
         i = findISO(parentname2(disambiguate) + '-' + territoryAlphaCode);
-        if (i>=0) {
-           return i;
+        if (i >= 0) {
+            return i;
         }
         // find in ANY context
         var hyphenated = '-' + territoryAlphaCode;
         for (i = 0; i < iso3166alpha.length; i++) {
-            if (iso3166alpha[i].indexOf(hyphenated)>0) {
-                if (iso3166alpha[i].substring(iso3166alpha[i].indexOf(hyphenated))==hyphenated) {
+            if (iso3166alpha[i].indexOf(hyphenated) > 0) {
+                if (iso3166alpha[i].substring(iso3166alpha[i].indexOf(hyphenated)) == hyphenated) {
                     return i;
                 }
             }
         }
     }
-    
+
     // all else failed, try non-disambiguated alphacode
     isoa = alias2iso(territoryAlphaCode); // or try ANY alias
     if (isoa) {
         if (isoa.charCodeAt(0) <= 57) { // starts with digit
-            territoryAlphaCode = parentname2(isoa.charCodeAt(0)-48) + '-' + isoa.substring(1);
+            territoryAlphaCode = parentname2(isoa.charCodeAt(0) - 48) + '-' + isoa.substring(1);
         } else {
             territoryAlphaCode = isoa;
         }
@@ -438,11 +439,11 @@ function getTerritoryAlphaCode(territory, format) {
     }
     var full = iso3166alpha[territoryNumber];
     var hyphen = full.indexOf("-");
-    if (format==1 || hyphen<=0) {
+    if (format == 1 || hyphen <= 0) {
         return full;
     }
-    var short = full.substr(hyphen+1);
-    if (format==0) {
+    var short = full.substr(hyphen + 1);
+    if (format == 0) {
         return short;
     }
     // shortest POSSIBLE
@@ -454,7 +455,7 @@ function getTerritoryAlphaCode(territory, format) {
         count = 2;
     } else {
         for (i = 0; i < iso3166alpha.length; i++) {
-            if (iso3166alpha[i].indexOf("-"+short)>0) {
+            if (iso3166alpha[i].indexOf("-" + short) > 0) {
                 count++;
             }
         }
@@ -1139,7 +1140,7 @@ var asc2lan = [
     [0x0C1E, 0x0C15, 0x0C17, 0x0C19, 0x0C2B, 0x0C1A, 0x0C1C, 0x0C1F, 0x0049, 0x0C20, 0x0C21, 0x0C23, 0x0C24, 0x0C25, 0x004f, 0x0C26, 0x0C27, 0x0C28, 0x0C2A, 0x0C2C, 0x0C2D, 0x0C2E, 0x0C30, 0x0C32, 0x0C33, 0x0C35, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Telugu
     [0x0B1D, 0x0B15, 0x0B16, 0x0B17, 0x0B23, 0x0B18, 0x0B1A, 0x0B1C, 0x0049, 0x0B1F, 0x0B21, 0x0B22, 0x0B24, 0x0B25, 0x0B20, 0x0B26, 0x0B27, 0x0B28, 0x0B2A, 0x0B2C, 0x0B39, 0x0B2E, 0x0B2F, 0x0B30, 0x0B33, 0x0B38, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Odia
     [0x0C92, 0x0C95, 0x0C96, 0x0C97, 0x0C8E, 0x0C99, 0x0C9A, 0x0C9B, 0x0049, 0x0C9C, 0x0CA0, 0x0CA1, 0x0CA3, 0x0CA4, 0x004f, 0x0CA6, 0x0CA7, 0x0CA8, 0x0CAA, 0x0CAB, 0x0C87, 0x0CAC, 0x0CAD, 0x0CB0, 0x0CB2, 0x0CB5, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Kannada
-    [0x0AB3, 0x0A97, 0x0A9C, 0x0AA1, 0x0A87, 0x0AA6, 0x0AAC, 0x0A95, 0x0049, 0x0A9A, 0x0A9F, 0x0AA4, 0x0AAA, 0x0AA0, 0x004f, 0x0AB0, 0x0AB5, 0x0A9E, 0x0AAE, 0x0AAB, 0x0A89, 0x0AB7, 0x0AA8, 0x0A9D, 0x0AA2, 0x0AAD, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Gujarati    
+    [0x0AB3, 0x0A97, 0x0A9C, 0x0AA1, 0x0A87, 0x0AA6, 0x0AAC, 0x0A95, 0x0049, 0x0A9A, 0x0A9F, 0x0AA4, 0x0AAA, 0x0AA0, 0x004f, 0x0AB0, 0x0AB5, 0x0A9E, 0x0AAE, 0x0AAB, 0x0A89, 0x0AB7, 0x0AA8, 0x0A9D, 0x0AA2, 0x0AAD, 0x0030, 0x0031, 0x0032, 0x0033, 0x0034, 0x0035, 0x0036, 0x0037, 0x0038, 0x0039], // Gujarati
 ]
 
 
@@ -1182,7 +1183,7 @@ var lanlannam = [
     ["&#1082;&#1080;&#1088;&#1080;&#1083;&#1083;&#1080;&#1094;&#1072;"],
     ["&#1506;&#1460;&#1489;&#1456;&#1512;&#1460;&#1497;&#1514;"],
     ["&#2342;&#2375;&#2357;&#2344;&#2366;&#2327;&#2352;&#2368;"],  // Devanagari
-    ["&#3374;&#3378;&#3375;&#3390;&#3379;&#3330;"], // Malayalam 
+    ["&#3374;&#3378;&#3375;&#3390;&#3379;&#3330;"], // Malayalam
     ["&#4325;&#4304;&#4320;&#4311;&#4323;&#4314;&#4312;"],
     ["&#12459;&#12479;&#12459;&#12490;"],
     ["&#3616;&#3634;&#3625;&#3634;&#3652;&#3607;&#3618;"],
@@ -1194,8 +1195,8 @@ var lanlannam = [
     ["&#1575;&#1604;&#1593;&#1614;&#1585;&#1614;&#1576;&#1616;&#1610;&#1614;&#1617;&#1577;"],
     ["&#51312;&#49440;&#44544;/&#54620;&#44544;"], // Korean (Choson'gul / Hangul )
     ["&#4121;&#4156;&#4116;&#4154;&#4121;&#4140;&#4129;&#4096;&#4153;&#4097;&#4123;&#4140;"], // Burmese
-    ["&#6050;&#6016;&#6098;&#6047;&#6042;&#6017;&#6098;&#6040;&#6082;&#6042;"], // Khmer script      
-    ['&#3523;&#3538;&#3458;&#3524;&#3517; &#3461;&#3482;&#3530;&#3522;&#3515; &#3512;&#3535;&#3517;&#3535;&#3520;'], // Sinhalese 
+    ["&#6050;&#6016;&#6098;&#6047;&#6042;&#6017;&#6098;&#6040;&#6082;&#6042;"], // Khmer script
+    ['&#3523;&#3538;&#3458;&#3524;&#3517; &#3461;&#3482;&#3530;&#3522;&#3515; &#3512;&#3535;&#3517;&#3535;&#3520;'], // Sinhalese
     ["&#1932;&#1959;&#1922;&#1958;"], // Thaana (Maldivan)
     ["&#12549;&#12550;&#12551;&#12552;"], // Chinese (bopomofo) // &#27880;&#38899;&#31526;&#34399;,
     ["&#11612;&#11593;&#11580;&#11593;&#11599;&#11568;&#11606"], // Tifinagh (Berber)
