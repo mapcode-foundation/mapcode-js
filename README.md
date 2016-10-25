@@ -55,15 +55,13 @@ To run the Javascript unit tests, simply open the file `unittest/unittest/html`.
 
     Renamed language strings to more correct terms (Malay to Malayalam; Hindi to Devanagari). 
 
-    Added var `alphabetsForTerritory[t]`, returning the most commonly used alphabets for territory `t`.
+    Added var alphabetsForTerritory[t], returning the most commonly used alphabets for territory t.
 
-    Improved some characters for Arabic and Devanagari.
-    
-    Fixed Bengali to also support Assamese.
+    Improved some characters for Arabic and Devanagari; Fixed Bengali to also support Assamese.
 
-    For some alphabets, removed recognition of letters `I` and/or `O` unless looking like digits `1` and/or `0`.
+    For some alphabets, removed recognition of letters I and/or O unless looking like digits 1 and/or 0.
 
-    Replaced internal encoded `entity_iso[]` array by non-encoded `iso3166alpha[]`.
+    replaced internal encoded entity_iso[] array by non-encoded iso3166alpha[].
 
 * 2.3.1
 
