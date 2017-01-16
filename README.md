@@ -47,135 +47,136 @@ To run the Javascript unit tests, simply open the file `unittest/unittest/html`.
 
 # Version History
 
+### 2.4.0
 
-* 2.4.0
+* Added scripts for Korean (Choson'gul / Hangul), Burmese, Khmer, Sinhalese, Thaana (Maldivan), 
+  Chinese (Zhuyin, Bopomofo), Tifinagh (Berber), Tamil, Amharic, Telugu, Odia, Kannada, Gujarati.
 
-    Added scripts for Korean (Choson'gul / Hangul), Burmese, Khmer, Sinhalese, Thaana (Maldivan), 
-    Chinese (Zhuyin, Bopomofo), Tifinagh (Berber), Tamil, Amharic, Telugu, Odia, Kannada, Gujarati.
+* Renamed language strings to more correct terms (Malay to Malayalam; Hindi to Devanagari). 
 
-    Renamed language strings to more correct terms (Malay to Malayalam; Hindi to Devanagari). 
+* Added var `alphabetsForTerritory[t]`, returning the most commonly used alphabets for territory `t`.
 
-    Added var `alphabetsForTerritory[t]`, returning the most commonly used alphabets for territory `t`.
-
-    Improved some characters for Arabic and Devanagari.
-    
+* Improved some characters for Arabic and Devanagari.
+* 
     Fixed Bengali to also support Assamese.
 
-    For some alphabets, removed recognition of letters `I` and/or `O` unless looking like digits `1` and/or `0`.
+* For some alphabets, removed recognition of letters `I` and/or `O` unless looking like digits `1` and/or `0`.
 
-    Replaced internal encoded `entity_iso[]` array by non-encoded `iso3166alpha[]`.
+* Replaced internal encoded `entity_iso[]` array by non-encoded `iso3166alpha[]`.
 
-* 2.3.1
+### 2.3.1
 
-    Minor fixes to prevent some compiler warnings, or multiple inclusion of `.h` files.
+* Minor fixes to prevent some compiler warnings, or multiple inclusion of `.h` files.
 
-    Minor data fix (`ndata.js`) for Gansu Province, China (where mountain range extending further west).
+* Minor data fix (`ndata.js`) for Gansu Province, China (where mountain range extending further west).
 
-* 2.3.0
+### 2.3.0
 
-    Arabic script added. 
-    
-    Tibetan script changed so all characters can be typed on a computer keyboard without using the SHIFT key.
+* Arabic script added. 
+* Tibetan script changed so all characters can be typed on a computer keyboard without using the SHIFT key.
 
-    Greek, Hebrew and Arabic, the scripts that have (implied) vowels in mapcode sequences, have been extended with 
-    ABJAD conversion, to prevent more than two consecutive non-digits from occurring. 
-    NOTE: as a result, mapcodes in Greek, Arab and Hebrew scripts are now often one character longer than in the roman script.
+* Greek, Hebrew and Arabic, the scripts that have (implied) vowels in mapcode sequences, have been extended with 
+  ABJAD conversion, to prevent more than two consecutive non-digits from occurring. 
+  
+* NOTE: as a result, mapcodes in Greek, Arab and Hebrew scripts are now often one character longer than in the roman script.
 
-* 2.2.0
+### 2.2.0
 
-    Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible;
+* Solved 1-microdegree gap in a few spots on Earth, noticable now extreme precision is possible;
 
-    Ran source through code prettifier
+* Ran source through code prettifier
 
-* 2.1.5
+### 2.1.5
 
-    Added maxErrorInMeters to API;
+* Added maxErrorInMeters to API;
 
-    Enforce encode(decode(m))=m except near territory borders
+* Enforce `encode(decode(m)) == m` except near territory borders
 
-    Stricter unit tests;
+* Stricter unit tests;
 
-* 2.1.1
+### 2.1.1
 
-    Added DistanceInMeters to API
+* Added DistanceInMeters to API
 
-* 2.1.0
+### 2.1.0
 
-    Rewrote fraction floating points to integer arithmetic
+* Rewrote fraction floating points to integer arithmetic
 
-* 2.0.3
+### 2.0.3
 
-    Minor fix. Added unittest\unittest.html - open to peform
-    tests that try to verify that the library works as intended;
+* Minor fix. Added `unittest\unittest.html` - open to peform
+  tests that try to verify that the library works as intended;
 
-* 2.0.1
+### 2.0.1
 
-    Minor fixes.
+* Minor fixes.
 
-* 2.0.0 - July 2015
+### 2.0.0 - July 2015
 
-    Fixes to the data rectangles (primarily intended for ISO proposal), see Word document for details.
+* Fixes to the data rectangles (primarily intended for ISO proposal), see Word document for details.
 
-* 1.54 - June 2015
+### 1.54 - June 2015
 
-    Removed unneeded mminfo flags (no effect on functionality).
+* Removed unneeded mminfo flags (no effect on functionality).
 
-* 1.50.3 - May 2015
+### 1.50.3 - May 2015
 
-    Redesign of the API to conform to Javascript standards and match the Java implementation of the mapcode system
+* Redesign of the API to conform to Javascript standards and match the Java implementation of the mapcode system
 
-* 1.50.1 - May 2015
+### 1.50.1 - May 2015
 
-    Bugfix for mapcodes in IN-DD (in India).
+* Bugfix for mapcodes in IN-DD (in India).
 
-* 1.50 - May 2015
+### 1.50 - May 2015
 
-    Major release. This version is not backwards compatible with mapcode 1.4x: is has dropped support for
+* Major release. This version is not backwards compatible with mapcode 1.4x: it has dropped support for
     Antartica AT0-8 codes and has a changed (improved) way of dealing with the Greek alphabet.
 
-    Added 22-chararcter post-processing of all-digit mapcodes for the Greek alphabet.
+* Added 22-chararcter post-processing of all-digit mapcodes for the Greek alphabet.
 
-    Retired legacy aliases EAZ and SKM, AU-QL, AU-TS, AU-NI and AU-JB.
+* Retired legacy aliases EAZ and SKM, AU-QL, AU-TS, AU-NI and AU-JB.
 
-    Retired legacy Antarctica claims AT0 through AT8.
+* Retired legacy Antarctica claims AT0 through AT8.
 
-* 1.41 - January 2015
+### 1.41 - January 2015
 
-    Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
+* Added the India state Telangana (IN-TG), until 2014 a region in Adhra Pradesh.
 
-* 1.33 - August 2014
+### 1.33 - August 2014
 
-    Normalise results when longitude below -180 degrees.
+* Normalise results when longitude below -180 degrees.
 
-* 1.32 - August 2014
+### 1.32 - August 2014
 
-    Prevent FIJI failing to decode at exactly 180 degrees; prevent invalid filtering near the territory bounding rectangle.
+* Prevent FIJI failing to decode at exactly 180 degrees.
 
-* 1.31 - April 2014
+* Prevent invalid filtering near the territory bounding rectangle.
 
-    Make iso2ccode() even more forgiving by allowing a state alias to be recognized in context.
+### 1.31 - April 2014
 
-* 1.3 - April 2014
+* Make `iso2ccode()` even more forgiving by allowing a state alias to be recognized in context.
 
-    Disable 7-char state codes for large states in India, and instead generate country mapcodes for states.
+### 1.3 - April 2014
 
-* 1.28 - April 2014
+* Disable 7-char state codes for large states in India, and instead generate country mapcodes for states.
 
-    Fix for starpipe "zoning" error, causing the last 2 mapcode characters to be ignored in certain areas.
+### 1.28 - April 2014
 
-* 1.27 - April 2014
+* Fix for starpipe "zoning" error, causing the last 2 mapcode characters to be ignored in certain areas.
 
-    Support undefined ranges in data array (useful for partial JavaScript builds).
+### 1.27 - April 2014
 
-* 1.26 - May 2013
+* Support undefined ranges in data array (useful for partial JavaScript builds).
 
-    Added alias OD for India, and 2.3 code for Daman and Diu.
+### 1.26 - May 2013
 
-* 1.25 - May 2013
+* Added alias OD for India, and 2.3 code for Daman and Diu.
 
-    Ccode2iso(c,2) support added.
+### 1.25 - May 2013
 
-* 1.24 - May 2013
+* `Ccode2iso(c, 2)` support added.
 
-    Public domain release.
+### 1.24 - May 2013
+
+* Public domain release.
 
