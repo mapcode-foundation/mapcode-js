@@ -49,7 +49,15 @@
     -28.700225,28.602905,ZAF QNW2.Y72,8KYVG.4C8Y<br/>
     -28.433676,19.986191,ZAF 6MQP.506,8K70Z.7PB4
 </p>
-<p>The output is automatically saved to <b>mapcodes.csv</b> in your Downloads folder.</p>
+<p>
+    In some browsers the output will automatically be saved to <b>mapcodes.csv</b> in your Downloads folder.
+    However, not all browsers support this functionality and will shows the CSV file instead on your screen.
+    (Note: We've tried this with Google Chrome and it seems to work fine.)
+</p>
+<p>
+    Troubleshooting: If you select a file and nothing happens, check the format of the file. It should contain exactly
+    3 columns, separated by comma's and the latitude/longitudes must use decimal points.
+</p>
 
 <div id="inputs" class="clearfix">
     <input type="file" id="files" name="files[]" multiple/>
@@ -63,7 +71,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="jquery.csv.js"></script>
-<script src="FileSave.js"></script>
+<script src="FileSaver.js"></script>
 <script src="../ndata.js" type="text/javascript"></script>
 <script src="../mapcode.js" type="text/javascript"></script>
 <script>
@@ -152,7 +160,7 @@
             $('#contents').html(html);
 
             var blob = new Blob([csv], {
-                type: "text/plain;charset=utf-8;",
+                type: "text/csv;charset=utf-8;",
             });
             saveAs(blob, "mapcodes.csv");
         };
