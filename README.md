@@ -68,7 +68,7 @@ territoryAlphaCode | string, full territory alphacode
 
 The most widely used routine to generate mapcodes is probably:
 
-    encodeShortest (lat, lon, territory)
+    encodeShortest(lat, lon, territory)
 
 parameter | description 
 --- | --- 
@@ -84,14 +84,15 @@ sometimes called the “default mapcode” for a particular territory.
 Example Javascript:
 
     function displayMapcodes(e) {
-      document.write('<u>',e.length,' result(s)</u><br>');
-      for(var i=0;i<e.length;i++) {
-        if ( e[i].territoryAlphaCode != "AAA" )
-          document.write(e[i].territoryAlphaCode,' ');
-        document.write('<b>',e[i].mapcode,'</b><br>');
+      document.write('<u>',e.length,' result(s)</u><br/>');
+      for(var i = 0; i < e.length; i++) {
+        if (e[i].territoryAlphaCode != "AAA") {
+          document.write(e[i].territoryAlphaCode, ' ');
+        }
+        document.write('<b>', e[i].mapcode, '</b><br/>');
       }
     }
-    displayMapcodes( encodeShortest( 34.00956,-118.210572, 'US-CA' ) );
+    displayMapcodes(encodeShortest(34.00956, -118.210572, 'US-CA'));
 
 Output:
 
@@ -106,7 +107,7 @@ Since any coordinate is somewhere on the world, this routine is guaranteed to de
 
 Example Javascript:
 
-    var e = encodeShortest( 34.00956,-118.210572 );
+    var e = encodeShortest(34.00956, -118.210572);
 
 Output using displayMapcodes(e):
 
@@ -133,7 +134,7 @@ will simply yield all mapcodes that can represent the coordinate.
 
 Example Javascript:
 
-    var e = encode( 36.115, -115.1731, 'US-NV'  );
+    var e = encode(36.115, -115.1731, 'US-NV');
 
 Output using `displayMapcodes(e)`:
 
@@ -150,7 +151,7 @@ country share. Of course, the shortest mapcode is preferred in almost every circ
 
 Example Javascript:
 
-    var e = encode( 36.115, -115.1731 );
+    var e = encode(36.115, -115.1731);
 
 Output using `displayMapcodes(e)`:
 
@@ -173,7 +174,7 @@ mapcodes correctly represent the original coordinate.
 
 For very specific applications, the following routine only returns the international mapcode
 
-    encodeInternational (lat, lon)
+    encodeInternational(lat, lon)
 
 returns an array with exactly one result: the 9-letter international mapcode representing 
 the coordinate.
@@ -215,8 +216,8 @@ This routine is sufficient to decode a full mapcodeString into a coordinate.
 
 Example Javascript:
 
-    var result = decode( 'NLD 49.4V' );
-    document.write( result.y + ',' + result.x + '<BR>' );
+    var result = decode('NLD 49.4V');
+    document.write(result.y + ',' + result.x + '<br/>');
 
 Output:
 
@@ -247,14 +248,14 @@ Example Javascript:
     var defaultcontext = 'IN-DL';
     
     var result;
-    result = decode( 'US-AR 49.4V', defaultcontext ); 
-    document.write( result.y + ',' + result.x + '<BR>' ); 
-    result = decode( 'AR 49.4V', defaultcontext ); 
-    document.write( result.y + ',' + result.x + '<BR>' ); 
-    result = decode( '49.4V', defaultcontext ); 
-    document.write( result.y + ',' + result.x + '<BR>' ); 
-    result = decode( 'xxx.xxxx', defaultcontext ); 
-    document.write( result.y + ',' + result.x + '<BR>' ); 
+    result = decode('US-AR 49.4V', defaultcontext); 
+    document.write(result.y + ',' + result.x + '<br/>'); 
+    result = decode('AR 49.4V', defaultcontext); 
+    document.write(result.y + ',' + result.x + '<br/>'); 
+    result = decode('49.4V', defaultcontext); 
+    document.write(result.y + ',' + result.x + '<br/>'); 
+    result = decode('xxx.xxxx', defaultcontext); 
+    document.write(result.y + ',' + result.x + '<br/>'); 
 
 Output:
     
@@ -344,8 +345,8 @@ return value | a string
 
 Example Javascript:
 
-	document.write(convertToAlphabetAsHTML( ‘PQ.RS’, 4 ) ,’<br>’)
-	document.write(convertToAlphabetAsHTML( ‘PQ.RS’, 2 ) ,’<br>’)
+	document.write(convertToAlphabetAsHTML(‘PQ.RS’, 4) ,’<br/>’)
+	document.write(convertToAlphabetAsHTML(‘PQ.RS’, 2) ,’<br/>’)
 
 Output:
 
