@@ -19,17 +19,24 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Mapcode CSV Converter</title>
+    <title>Simple Mapcode CSV Converter</title>
 </head>
 
 <body>
-<h1>Mapcode CSV Converter</h1>
+<h1>Simple Mapcode CSV Converter</h1>
 <p>
-    Select a CSV file which has the following columns:<br/>
-    <b>latitude</b>, <b>longitude</b>, <b>territory</b> (optional)</p>
-<p>The context is used to specify the territory for which the shortest mapcode should be displayed.
-    For example, for South Africa, this would be ZAF.</p>
-<p>Example of a CSF file:</p>
+    This page allows you to upload a CSV file with coordinates and convert
+    them to mapcodes. The CSV file needs to have 3 columns:<br/>
+    <b>latitude</b> (in degrees), <b>longitude</b> (in degrees), <b>territory</b> (optional)<br/>
+    <i>Field delimiter:</i> <b>,</b> (comma)<br/>
+    <i>Decimal point:</i> <b>.</b> (dot)<br/>
+</p>
+<p>
+    The <b>context</b> is used to specify the territory for which the shortest mapcode should be displayed.
+    For example, for South Africa, this would be ZAF. Note that if you leave the field empty, the result might
+    not be what you expected.
+</p>
+<p>Example of a CSV file:</p>
 <p>
     <b>-28.700225, 28.602905, </b><i> (note the territory is missing)</i><br/>
     <b>-28.700225, 28.602905, ZAF</b><br/>
@@ -37,6 +44,7 @@
 </p>
 <p>This produces the following output:</p>
 <p>
+    latitude,longitude,mapcode,international<br/>
     -28.700225,28.602905,LSO MRG.8XX,8KYVG.4C8Y<br/>
     -28.700225,28.602905,ZAF QNW2.Y72,8KYVG.4C8Y<br/>
     -28.433676,19.986191,ZAF 6MQP.506,8K70Z.7PB4
@@ -94,10 +102,6 @@
 
         // read the file metadata
         var output = ''
-        output += '<span style="font-weight:bold;">' + escape(file.name) + '</span><br />\n';
-        output += ' - FileType: ' + (file.type || 'n/a') + '<br />\n';
-        output += ' - FileSize: ' + file.size + ' bytes<br />\n';
-        output += ' - LastModified: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '<br />\n';
 
         // read the file contents
         printTable(file);
@@ -113,8 +117,8 @@
             var csv = event.target.result;
             var data = $.csv.toArrays(csv);
             var html = '';
-            var csv = '';
-            html += '<tr><td>latitude</td><td>longitude</td><td>mapcode</td><<td>international</td>/tr>';
+            var csv = 'latitude,longitude,territory,mapcode,international\r\n';
+            html += '<tr><td>latitude</td><td>longitude</td><td>territory</td><td>mapcode</td><td>international</td>/tr>';
             for (var row in data) {
                 var lat = Number(data[row][0]);
                 var lon = Number(data[row][1]);
@@ -131,12 +135,14 @@
                 }
                 if (r.length > 0) {
                     var shortest = r[0];
-                    html += '<td>' + shortest.territoryAlphaCode + ' ' + shortest.mapcode + '</td>\r\n';
-                    csv += shortest.territoryAlphaCode + ' ' + shortest.mapcode + ',';
+                    html += '<td>' + shortest.territoryAlphaCode + '</td>\r\n';
+                    html += '<td>' + shortest.mapcode + '</td>\r\n';
+                    csv += shortest.territoryAlphaCode + ',' + shortest.mapcode + ',';
 
                 } else {
-                    html += "<td>N/A</td>"
-                    csv += 'N/A,';
+                    html += "<td></td>\r\n";
+                    html += "<td></td>\r\n";
+                    csv += ",,";
                 }
                 var international = encodeInternational(lat, lon)[0];
                 html += '<td>' + international.mapcode + '</td>\r\n';
