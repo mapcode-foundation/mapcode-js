@@ -26,37 +26,49 @@
 <h1>Simple Mapcode CSV Converter</h1>
 <p>
     This page allows you to upload a CSV file with coordinates and convert
-    them to mapcodes. The CSV file needs to have 3 columns:<br/>
-    <b>latitude</b> (in degrees), <b>longitude</b> (in degrees), <b>territory</b> (optional)<br/>
+    them to mapcodes, also in CSV format. The input CSV file needs to have 3 columns:<br/>
+    <tt>latitude</tt> (in degrees), <tt>longitude</tt> (in degrees), <tt>territory</tt> (optional)<br/>
     <i>Field delimiter:</i> <b>,</b> (comma)<br/>
     <i>Decimal point:</i> <b>.</b> (dot)<br/>
 </p>
 <p>
-    The <b>context</b> is used to specify the territory for which the shortest mapcode should be displayed.
-    For example, for South Africa, this would be ZAF. Note that if you leave the field empty, the result might
-    not be what you expected.
+    The column <b>context</b> is used to specify the
+    <a href="http://www.mapcode.com/isos.html">territory code</a> for which the shortest mapcode should be displayed.
+    For example, for South Africa, this would be <b>ZAF</b>. Note that if you leave the field empty, the result might
+    not be what you expected. The system may choose a nearby territory instead.
 </p>
-<p>Example of a CSV file:</p>
-<p>
-    <b>-28.700225, 28.602905, </b><i> (note the territory is missing)</i><br/>
+<p>Example of an input CSV file:</p>
+<p><tt>
+    <b>-28.700225, 28.602905, </b></tt><i> (note the territory is missing)</i><tt><br/>
     <b>-28.700225, 28.602905, ZAF</b><br/>
     <b>-28.433676, 19.986191, ZAF</b>
-</p>
+</tt></p>
 <p>This produces the following output:</p>
-<p>
+<p><tt>
     latitude,longitude,mapcode,international<br/>
     -28.700225,28.602905,LSO MRG.8XX,8KYVG.4C8Y<br/>
     -28.700225,28.602905,ZAF QNW2.Y72,8KYVG.4C8Y<br/>
     -28.433676,19.986191,ZAF 6MQP.506,8K70Z.7PB4
-</p>
+</tt></p>
 <p>
-    In some browsers the output will automatically be saved to <b>mapcodes.csv</b> in your Downloads folder.
-    However, not all browsers support this functionality and will shows the CSV file instead on your screen.
+    The output is formatted in CSV format. In some browsers this will automatically be saved to a file called
+    <b>mapcodes.csv</b> in your Downloads folder.
+    However, not all browsers support this functionality. Some will shows the contents of the file on your screen
+    instead and you'll need to copy or save it to a CSV file yourself then.
     (Note: We've tried this with Google Chrome and it seems to work fine.)
 </p>
 <p>
-    Troubleshooting: If you select a file and nothing happens, check the format of the file. It should contain exactly
-    3 columns, separated by comma's and the latitude/longitudes must use decimal points.
+    Troubleshooting: If you select a CSV file and nothing happens, the format of the input file is not OK.
+    It should contain exactly 3 columns, separated by comma's and the latitude/longitudes must use decimal points.
+    Try saving the example text from above in a file and use that first, in that case.<br/>
+    Note that this page is just an example. If you wish to have better error checking and more options, feel
+    free to use and adapt the source files to your needs.
+    They can be found <a href="https://github.com/mapcode-foundation/mapcode-js/tree/master/csv">here</a> on Github.
+</p>
+<p>
+    Useful links:<br/>
+    <a href="http://www.mapcode.com/isos.html">List of territory codes</a><br/>
+    <a href="https://github.com/mapcode-foundation/mapcode-js/tree/master/csv">Source files on Github</a>
 </p>
 
 <div id="inputs" class="clearfix">
