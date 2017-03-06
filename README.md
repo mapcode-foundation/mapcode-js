@@ -45,6 +45,336 @@ The following files provide the Javascript interfaces for mapcodes:
 
 To run the Javascript unit tests, simply open the file `unittest/unittest/html`.
 
+# Using the Library
+
+## Converting a Coordinate into a Mapcode
+
+In the mapcode system, territories are limited by rectangles, not by actual or political borders. 
+This means that a coordinate will often yield mapcode possibilities in more than one territory. 
+Each possibility correctly represents the coordinate, but which one is *politically* correct is a 
+choice that must be made (in advance or afterwards) by the caller or user of the routines.
+
+There are several routines to generate the possible mapcodes for a coordinate.
+The right one to use depends on the situation. All routines take a latitude and a longitude,
+and all routines yield an array of possible mapcodes, with the following structure:
+
+attribute | description 
+--- | --- 
+fullmapcode | string, full mapcode including full territory alphacode 
+mapcode | string, full mapcode excluding territory alphacode 
+territoryAlphaCode | string, full territory alphacode 
+
+### The Shortest Mapcode
+
+The most widely used routine to generate mapcodes is probably:
+
+    encodeShortest (lat, lon, territory)
+
+parameter | description 
+--- | --- 
+lat | latitude in degrees (maximized by routine to 90.0 and minimized to -90.0)
+lon | longitude in degrees (all values allowed, wrapped to -180.0 and +180.0)
+territory | a territory (an iso code such as “NLD”)
+return value | an array of result records (see above)
+
+This routine will yield at most one result: the shortest mapcode (if any) that exists
+for that coordinate within the specified territory. Such a mapcode is also 
+sometimes called the “default mapcode” for a particular territory.
+
+Example Javascript:
+
+    function displayMapcodes(e) {
+      document.write('<u>',e.length,' result(s)</u><br>');
+      for(var i=0;i<e.length;i++) {
+        if ( e[i].territoryAlphaCode != "AAA" )
+          document.write(e[i].territoryAlphaCode,' ');
+        document.write('<b>',e[i].mapcode,'</b><br>');
+      }
+    }
+    displayMapcodes( encodeShortest( 34.00956,-118.210572, 'US-CA' ) );
+
+Output:
+
+    1 result(s):
+    US-CA XX.XX
+
+To get a mapcode for every territory in which a coordinate can be encoded, use
+
+    encodeShortest (lat, lon)
+
+Since any coordinate is somewhere on the world, this routine is guaranteed to deliver at least one possibility.
+
+Example Javascript:
+
+    var e = encodeShortest( 34.00956,-118.210572 );
+
+Output using displayMapcodes(e):
+
+    3 result(s)
+    US-CA XX.XX
+    USA KKYP.19MN
+    R59KJ.W5FT
+
+This particular coordinate thus has a California mapcode (XX.XX), a national 8-letter mapcode, 
+and (like any coordinate) an international 9-letter mapcode (by tradition shown without its 
+alphacode “AAA”).
+
+### All Possible Mapcodes
+
+Even within a particular territory, there are often several possible mapcodes. 
+
+    encode(lat,lon, territory)
+
+will yield all possible mapcodes (if any) within the specified territory, while
+
+    encode(lat, lon)
+    
+will simply yield all mapcodes that can represent the coordinate.
+
+Example Javascript:
+
+    var e = encode( 36.115, -115.1731, 'US-NV'  );
+
+Output using `displayMapcodes(e)`:
+
+    5 result(s)
+    US-NV CN.NN
+    US-NV BX.5KF
+    US-NV NJ7.127
+    US-NV F978.JY1
+    US-NV L70X.6V4G
+
+The results are ordered by length, the first is the shortest (the default). 
+The last is usually the “national” encoding, i.e. a format that all coordinates within a 
+country share. Of course, the shortest mapcode is preferred in almost every circumstance.
+
+Example Javascript:
+
+    var e = encode( 36.115, -115.1731 );
+
+Output using `displayMapcodes(e)`:
+
+    9 result(s)
+    US-NV CN.NN
+    US-NV BX.5KF
+    US-NV NJ7.127
+    US-NV F978.JY1
+    US-NV L70X.6V4G
+    US-CA F978.JY1
+    US-CA L70X.6V4G
+    USA L70X.6V4G
+    R5KDM.C8C8
+
+Note that two of these (in US-CA) are politically incorrect, since the specified coordinate 
+lies within the borders of Nevada and not California. However, they are valid in that the 
+mapcodes correctly represent the original coordinate.
+
+### International Mapcodes
+
+For very specific applications, the following routine only returns the international mapcode
+
+    encodeInternational (lat, lon)
+
+returns an array with exactly one result: the 9-letter international mapcode representing 
+the coordinate.
+
+### Higher Precision Mapcodes
+
+A mapcode represents a coordinate with a precision of a few meters. To be precise, 
+most mapcodes represent the center point of a 10x10 meter area. The coordinate may 
+thus be 5 meters off both longitudinally and latitudinal, or 3,6 meters on average. 
+This is precise enough for everyday use, but mapcodes can also be generate with higher 
+precisions. With one extra letter (after a hyphen), a mapcode represents a 2x2 meter area, 
+with two letters, an area of a square foot. The extra letters defeat the purpose of the 
+mapcode system (which is to offer short, easy codes for everyday use) but there may be 
+cases where the extra letters are appropriate.
+
+For all routines mentioned, there are “`WithPrecision`” variants:
+
+    encodeShortestWithPrecision(lat, lon, territory, precision)
+    encodeShortestWithPrecision(lat, lon, precision)
+    encodeWithPrecision(lat, lon, territory, precision)
+    encodeWithPrecision(lat, lon, precision)
+    encodeInternationalWithPrecision(lat, lon, precision)
+
+where precision is an integer specifying how many extra letters must be generated. 
+Using the value 0 just yields normal mapcodes.
+
+## Converting a Mapcode into a Coordinate
+
+Given a string with a mapcode (which may or may not include a territory alphacode and may or may not include high-precision letters at the end), the following routines are available to decode them back to a coordinate:
+
+    decode(mapcodeString)
+
+parameter | description |
+--- | --- 
+mapcodeString | a string containing a mapcode
+return value | an object with fields x (longitude) and y (latitude), or false
+
+This routine is sufficient to decode a full mapcodeString into a coordinate.
+
+Example Javascript:
+
+    var result = decode( 'NLD 49.4V' );
+    document.write( result.y + ',' + result.x + '<BR>' );
+
+Output:
+
+    52.376514, 4. 908543375
+    
+However, in daily life you will often have to cope with mapcodes provided by people who 
+abbreviate or completely leave out the alphacode of the territory. For example, the 
+alphacode `US-AR` may have been abbreviated to `AR`, which within the context of the 
+United States of America clearly identifies the state of Arkansas, but could in fact 
+just as well represent Arunachal Pradesh, India. Someone in The Netherlands may even 
+abbreviate a mapcode to just “`49.4V`”, assuming that the country is obvious.
+
+The following routine provides an argument to “help” decoding such input:
+
+    decode(mapcodeString, contextTerritory)
+
+parameter | description
+--- | ---
+mapcodeString | a string containing a mapcode
+contextTerritory | a string (an ISO code such as “NLD”)
+returns | an object with fields x (longitude) and y (latitude), or false
+
+By passing a context territory, you allow the decode routine to solve any ambiguities.
+
+Example Javascript:
+
+    // Assume the user of the system is Delhi, India
+    var defaultcontext = 'IN-DL';
+    
+    var result;
+    result = decode( 'US-AR 49.4V', defaultcontext ); 
+    document.write( result.y + ',' + result.x + '<BR>' ); 
+    result = decode( 'AR 49.4V', defaultcontext ); 
+    document.write( result.y + ',' + result.x + '<BR>' ); 
+    result = decode( '49.4V', defaultcontext ); 
+    document.write( result.y + ',' + result.x + '<BR>' ); 
+    result = decode( 'xxx.xxxx', defaultcontext ); 
+    document.write( result.y + ',' + result.x + '<BR>' ); 
+
+Output:
+    
+    34.77035,-92.3273875
+    27.0693605,93.59582
+    28.648506,77.183788
+    24.423323,92.506517
+
+Thus, the first, complete mapcode (`US-AR 49.4V`) does not require the provided context, 
+and simply returns a coordinate in Arkansas. But the second, specifying only `AR`, 
+is interpreted as `IN-AR` (without the context, it might just as well have been 
+interpreted as Arkansas, USA). The third and fourth examples specify no territory 
+whatsoever so could never be interpreted correctly without the aid of the context provided. 
+The third, `49.4V`, is simply interpreted within the specified context, `IN-DL`, and yields a 
+New Delhi address. The fourth can not be interpreted in the state of Delhi, but can be 
+interpreted in India and yields a coordinate in Assam. Note that the input “`49.4V`” 
+would not have yielded results if the context had been `IND` (since many states in 
+India have mapcode `49.4V`).
+
+## Routines Related to Territories
+
+    getTerritoryFullname(territory)
+
+parameter | description
+--- | ---
+territory | an string (an ISO code such as “NLD”)
+return value | string (the full name of the territory)
+
+    isSubdivision(territory)
+
+parameter | description
+--- | ---
+territory | an string (an ISO code such as “NLD”)
+return value | true iff territory is a subdivision of a country
+
+    hasSubdivisions(territory)
+
+parameter | description
+--- | ---
+territory | an string (an ISO code such as “NLD”)
+return value | true iff territory is a country that has subdivisions
+
+    getTerritoryAlphaCode(territory, format)
+
+parameter | description
+--- | ---
+territory | string, or internal integer between 0 and ccode_earth
+format | 0: leave out country for subdivisions
+. | undefined or 1: always return full abbreviation
+. | 2: leave out country for subdivisions unless this would make the abbreviation ambigious
+return value | territory abbreviation in the specified format, or empty
+
+## Routines Related to Distance
+
+    distanceInMeters(lat1, lon1, lat2, lon2)
+
+parameter | description
+--- | ---
+lat1, lon1 | a latitude/longitude (in degrees)
+lat2, lon2 | another latitude/longitude (in degrees)
+return value | distance between the coordinates, in meters
+
+**Note:** estimate, only correct for coordinates that are within a few miles of each other.
+
+    maxErrorInMeters(precision)
+    
+parameter | description
+--- | ---
+precision |  the number of “high precision digits” in a mapcode
+return value | worst-case distance in meters between the original coordinate and the decode location of the mapcode.
+
+## Routines Related to Unicode and Alphabets
+
+Mapcodes may be specified in other alphabets. These routines takes a mapcode in any 
+alphabet and returns its equivalent in the target alphabet. Characters that have no 
+roman equivalent in the mapcode system are replaced by question marks. Territories 
+(in fact anything before a separating space) are left untouched.
+
+    convertToAlphabet(mapcode, targetAlphabet)
+    convertToAlphabetAsHTML(mapcode, targetAlphabet)
+
+parameter | description
+--- | ---
+mapcode | a string
+targetAlphabet | an integer (identifying one of the languages)
+return value | a string
+
+Example Javascript:
+
+	document.write(convertToAlphabetAsHTML( ‘PQ.RS’, 4 ) ,’<br>’)
+	document.write(convertToAlphabetAsHTML( ‘PQ.RS’, 2 ) ,’<br>’)
+
+Output:
+
+    नप.भम
+    РФ.ЯЦ
+
+The following alphabets have been approved for official use, 
+
+    0: roman
+    2: cyrillic
+    4: hindi
+    12: gurmukhi
+
+Other values are available but have not yet officially been formally approved:
+
+    1: Greek
+    3: Hebrew
+    5: Malay
+    6: Georgian
+    7: Katakana
+    8: Thai
+    9: Lao
+    10: Armenian
+    11: Bengali
+    13: Tibetan
+
+Please check http://www.mapcode.com to see if there is a more up-to-date version.
+
+
 # Version History
 
 ### 2.4.0
