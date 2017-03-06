@@ -1,0 +1,161 @@
+<!--
+    ~ Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
+    ~
+    ~ Licensed under the Apache License, Version 2.0 (the "License");
+    ~ you may not use this file except in compliance with the License.
+    ~ You may obtain a copy of the License at
+    ~
+    ~    http://www.apache.org/licenses/LICENSE-2.0
+    ~
+    ~ Unless required by applicable law or agreed to in writing, software
+    ~ distributed under the License is distributed on an "AS IS" BASIS,
+    ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    ~ See the License for the specific language governing permissions and
+    ~ limitations under the License.
+-->
+
+<!doctype html>
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Mapcode CSV Converter</title>
+</head>
+
+<body>
+<h1>Mapcode CSV Converter</h1>
+<p>
+    Select a CSV file which has the following columns:<br/>
+    <b>latitude</b>, <b>longitude</b>, <b>territory</b> (optional)</p>
+<p>The context is used to specify the territory for which the shortest mapcode should be displayed.
+    For example, for South Africa, this would be ZAF.</p>
+<p>Example of a CSF file:</p>
+<p>
+    <b>-28.700225, 28.602905, </b><i> (note the territory is missing)</i><br/>
+    <b>-28.700225, 28.602905, ZAF</b><br/>
+    <b>-28.433676, 19.986191, ZAF</b>
+</p>
+<p>This produces the following output:</p>
+<p>
+    -28.700225,28.602905,LSO MRG.8XX,8KYVG.4C8Y<br/>
+    -28.700225,28.602905,ZAF QNW2.Y72,8KYVG.4C8Y<br/>
+    -28.433676,19.986191,ZAF 6MQP.506,8K70Z.7PB4
+</p>
+<p>The output is automatically saved to <b>mapcodes.csv</b> in your Downloads folder.</p>
+
+<div id="inputs" class="clearfix">
+    <input type="file" id="files" name="files[]" multiple/>
+</div>
+<hr/>
+<output id="list">
+</output>
+<hr/>
+<table id="contents" style="width:100%; height:400px;" border>
+</table>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="jquery.csv.js"></script>
+<script src="FileSave.js"></script>
+<script src="../ndata.js" type="text/javascript"></script>
+<script src="../mapcode.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        if (isAPIAvailable()) {
+            $('#files').bind('change', handleFileSelect);
+        }
+    });
+
+    function isAPIAvailable() {
+        // Check for the various File API support.
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            // Great success! All the File APIs are supported.
+            return true;
+        } else {
+            // source: File API availability - http://caniuse.com/#feat=fileapi
+            // source: <output> availability - http://html5doctor.com/the-output-element/
+            document.writeln('The HTML5 APIs used in this form are only available in the following browsers:<br />');
+            // 6.0 File API & 13.0 <output>
+            document.writeln(' - Google Chrome: 13.0 or later<br />');
+            // 3.6 File API & 6.0 <output>
+            document.writeln(' - Mozilla Firefox: 6.0 or later<br />');
+            // 10.0 File API & 10.0 <output>
+            document.writeln(' - Internet Explorer: Not supported (partial support expected in 10.0)<br />');
+            // ? File API & 5.1 <output>
+            document.writeln(' - Safari: Not supported<br />');
+            // ? File API & 9.2 <output>
+            document.writeln(' - Opera: Not supported');
+            return false;
+        }
+    }
+
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+        var file = files[0];
+
+        // read the file metadata
+        var output = ''
+        output += '<span style="font-weight:bold;">' + escape(file.name) + '</span><br />\n';
+        output += ' - FileType: ' + (file.type || 'n/a') + '<br />\n';
+        output += ' - FileSize: ' + file.size + ' bytes<br />\n';
+        output += ' - LastModified: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '<br />\n';
+
+        // read the file contents
+        printTable(file);
+
+        // post the results
+        $('#list').append(output);
+    }
+
+    function printTable(file) {
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function (event) {
+            var csv = event.target.result;
+            var data = $.csv.toArrays(csv);
+            var html = '';
+            var csv = '';
+            html += '<tr><td>latitude</td><td>longitude</td><td>mapcode</td><<td>international</td>/tr>';
+            for (var row in data) {
+                var lat = Number(data[row][0]);
+                var lon = Number(data[row][1]);
+                var context = data[row][2].trim();
+                html += '<tr>\r\n';
+                html += '<td>' + lat + '</td>\r\n';
+                html += '<td>' + lon + '</td>\r\n';
+                csv += lat + ',' + lon + ',';
+                var r;
+                if (context.length == 0) {
+                    r = encodeShortest(lat, lon);
+                } else {
+                    r = encodeShortest(lat, lon, context);
+                }
+                if (r.length > 0) {
+                    var shortest = r[0];
+                    html += '<td>' + shortest.territoryAlphaCode + ' ' + shortest.mapcode + '</td>\r\n';
+                    csv += shortest.territoryAlphaCode + ' ' + shortest.mapcode + ',';
+
+                } else {
+                    html += "<td>N/A</td>"
+                    csv += 'N/A,';
+                }
+                var international = encodeInternational(lat, lon)[0];
+                html += '<td>' + international.mapcode + '</td>\r\n';
+                csv += international.mapcode + '\r\n';
+                html += '</tr>\r\n';
+            }
+            $('#contents').html(html);
+
+            var blob = new Blob([csv], {
+                type: "text/plain;charset=utf-8;",
+            });
+            saveAs(blob, "mapcodes.csv");
+        };
+        reader.onerror = function () {
+            alert('Unable to read ' + file.fileName);
+        };
+
+    }
+</script>
+
+</body>
+</html>
