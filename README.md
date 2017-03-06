@@ -101,7 +101,7 @@ Output:
 
 To get a mapcode for every territory in which a coordinate can be encoded, use
 
-    encodeShortest (lat, lon)
+    encodeShortest(lat, lon)
 
 Since any coordinate is somewhere on the world, this routine is guaranteed to deliver at least one possibility.
 
@@ -116,9 +116,9 @@ Output using displayMapcodes(e):
     USA KKYP.19MN
     R59KJ.W5FT
 
-This particular coordinate thus has a California mapcode (XX.XX), a national 8-letter mapcode, 
+This particular coordinate thus has a California mapcode (`XX.XX`), a national 8-letter mapcode, 
 and (like any coordinate) an international 9-letter mapcode (by tradition shown without its 
-alphacode “AAA”).
+alphacode “`AAA`”).
 
 ### All Possible Mapcodes
 
@@ -166,7 +166,7 @@ Output using `displayMapcodes(e)`:
     USA L70X.6V4G
     R5KDM.C8C8
 
-Note that two of these (in US-CA) are politically incorrect, since the specified coordinate 
+Note that two of these (in `US-CA`) are politically incorrect, since the specified coordinate 
 lies within the borders of Nevada and not California. However, they are valid in that the 
 mapcodes correctly represent the original coordinate.
 
@@ -183,7 +183,7 @@ the coordinate.
 
 A mapcode represents a coordinate with a precision of a few meters. To be precise, 
 most mapcodes represent the center point of a 10x10 meter area. The coordinate may 
-thus be 5 meters off both longitudinally and latitudinal, or 3,6 meters on average. 
+thus be 5 meters off both longitudinally and latitudinal, or 3.6 meters on average. 
 This is precise enough for everyday use, but mapcodes can also be generate with higher 
 precisions. With one extra letter (after a hyphen), a mapcode represents a 2x2 meter area, 
 with two letters, an area of a square foot. The extra letters defeat the purpose of the 
@@ -210,7 +210,7 @@ Given a string with a mapcode (which may or may not include a territory alphacod
 parameter | description |
 --- | --- 
 mapcodeString | a string containing a mapcode
-return value | an object with fields x (longitude) and y (latitude), or false
+return value | an object with fields `x` (longitude) and `y` (latitude), or false
 
 This routine is sufficient to decode a full mapcodeString into a coordinate.
 
@@ -238,7 +238,7 @@ parameter | description
 --- | ---
 mapcodeString | a string containing a mapcode
 contextTerritory | a string (an ISO code such as “NLD”)
-returns | an object with fields x (longitude) and y (latitude), or false
+return value | an object with fields `x` (longitude) and `y` (latitude), or false
 
 By passing a context territory, you allow the decode routine to solve any ambiguities.
 
@@ -281,28 +281,28 @@ India have mapcode `49.4V`).
 
 parameter | description
 --- | ---
-territory | an string (an ISO code such as “NLD”)
+territory | an string (an ISO code such as “`NLD`”)
 return value | string (the full name of the territory)
 
     isSubdivision(territory)
 
 parameter | description
 --- | ---
-territory | an string (an ISO code such as “NLD”)
+territory | an string (an ISO code such as “`NLD`”)
 return value | true iff territory is a subdivision of a country
 
     hasSubdivisions(territory)
 
 parameter | description
 --- | ---
-territory | an string (an ISO code such as “NLD”)
+territory | an string (an ISO code such as “`NLD`”)
 return value | true iff territory is a country that has subdivisions
 
     getTerritoryAlphaCode(territory, format)
 
 parameter | description
 --- | ---
-territory | string, or internal integer between 0 and ccode_earth
+territory | string (or internal integer between 0 and `ccode_earth`)
 format | 0: leave out country for subdivisions
 . | undefined or 1: always return full abbreviation
 . | 2: leave out country for subdivisions unless this would make the abbreviation ambigious
