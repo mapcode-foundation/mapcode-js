@@ -1,6 +1,11 @@
 # Mapcode Library for JavaScript
 
-Copyright (C) 2014-2015 Stichting Mapcode Foundation (http://www.mapcode.com)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c86dbf5e7deb493db7ac1a3483dfddfb)](https://www.codacy.com/app/rijnb/mapcode-js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mapcode-foundation/mapcode-js&amp;utm_campaign=Badge_Grade)
+[![License](http://img.shields.io/badge/license-APACHE2-blue.svg)]()
+[![Release](https://img.shields.io/github/release/mapcode-foundation/mapcode-js.svg?maxAge=3600)](https://github.com/mapcode-foundation/mapcode-js/releases)
+
+
+**Copyright (C) 2014-2017 Stichting Mapcode Foundation (http://www.mapcode.com)**
 
 ----
 
