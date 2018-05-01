@@ -383,10 +383,10 @@ Please check http://www.mapcode.com to see if there is a more up-to-date version
 
 # Version History
 
-### 2.4.1
+### 2.4.1 - 2.4.2
 
 * Fixed bug in `getTerritoryAlphaCode` when getting the shortest unambiguous code for `US-CA`,
-which is `CA`, not `US-CA`. 
+which is `CA`, not `US-CA`.
 
 ### 2.4.0
 

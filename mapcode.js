@@ -162,7 +162,7 @@ var mapcode_dataversion = "2.3.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.4.1/Data' + mapcode_dataversion;
+var mapcode_javaversion = '2.4.2/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -456,11 +456,9 @@ function getTerritoryAlphaCode(territory, format) {
         return short;
     }
     // shortest POSSIBLE
-    var parent = getParentOf(territoryNumber);
-    var n = full.substr(hyphen + 1);
-    // see if n occurs multiple times, if not, don't bother with parent
+    // see if short occurs multiple times, if not, don't bother with parent
     var count = 0;
-    var i = aliases.indexOf(n + '=');
+    var i = aliases.indexOf(short + '=');
     if (i >= 0) {
         count = 2;
     } else {
