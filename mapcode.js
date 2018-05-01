@@ -102,12 +102,21 @@ var iso3166alpha = [
 ];
 
 
-var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD,COL=5CL,5ME=5MX,MEX=5MX,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR,5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO,5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX,815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA,842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS,863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO,CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL,JTN=UMI,MID=1HI,1PR=PRI,5TM=TAM,TAM=TAM,2OD=2OR,";
+var aliases = "2UK=2UT,2CG=2CT,1GU=GUM,1UM=UMI,1VI=VIR,1AS=ASM,1MP=MNP,4CX=CXR,4CC=CCK,4NF=NFK,4HM=HMD," +
+        "COL=5CL,5ME=5MX,MEX=5MX,5AG=AGU,5BC=BCN,5BS=BCS,5CM=CAM,5CS=CHP,5CH=CHH,5CO=COA,5DF=DIF,5DG=DUR," +
+        "5GT=GUA,5GR=GRO,5HG=HID,5JA=JAL,5MI=MIC,5MO=MOR,5NA=NAY,5NL=NLE,5OA=OAX,5PB=PUE,5QE=QUE,5QR=ROO," +
+        "5SL=SLP,5SI=SIN,5SO=SON,5TB=TAB,5TL=TLA,5VE=VER,5YU=YUC,5ZA=ZAC,811=8BJ,812=8TJ,813=8HE,814=8SX," +
+        "815=8NM,821=8LN,822=8JL,823=8HL,831=8SH,832=8JS,833=8ZJ,834=8AH,835=8FJ,836=8JX,837=8SD,841=8HA," +
+        "842=8HB,843=8HN,844=8GD,845=8GX,846=8HI,850=8CQ,851=8SC,852=8GZ,853=8YN,854=8XZ,861=8SN,862=8GS," +
+        "863=8QH,864=8NX,865=8XJ,871=TWN,891=HKG,892=MAC,8TW=TWN,8HK=HKG,8MC=MAC,BEL=7BE,KIR=7KI,PRI=7PO," +
+        "CHE=7CH,KHM=7KM,PER=7PM,TAM=7TT,0US=USA,0AU=AUS,0RU=RUS,0CN=CHN,TAA=SHN,ASC=SHN,DGA=IOT,WAK=MHL," +
+        "JTN=UMI,MID=1HI,1PR=PRI,5TM=TAM,TAM=TAM,2OD=2OR,";
 
 var dependency = [
     27, 410, 50, 410, 26, 410, 53, 410, 48, 410, 47, 410, 76, 410, 529, 410, 38, 410,
     21, 408, 4, 408, 42, 408, 11, 408,
-    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166, 35, 166, 70, 166, 59, 166,
+    18, 166, 14, 166, 15, 166, 23, 166, 32, 166, 82, 166, 2, 166, 17, 166, 51, 166, 20, 166, 19, 166, 12, 166,
+    35, 166, 70, 166, 59, 166,
     61, 528, 8, 528, 109, 528,
     63, 113, 265, 113,
     198, 181,
@@ -153,7 +162,7 @@ var mapcode_dataversion = "2.3.0";
 
 // *************************** mapcode_org *********************
 
-var mapcode_javaversion = '2.4.0/Data' + mapcode_dataversion;
+var mapcode_javaversion = '2.4.1/Data' + mapcode_dataversion;
 
 /// PRIVATE returns string without leading spaces and plus-signs, and trailing spaces
 function trim(str) {
@@ -401,12 +410,12 @@ function isInRangeX(x, minx, maxx) {
 
 /// PRIVATE returns true iff coordinate inside rectangle (all values in millionths)
 function fitsInside(coord, mm) {
-    return ( mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx, mm.maxx) );
+    return (mm.miny <= coord.y && coord.y < mm.maxy && isInRangeX(coord.x, mm.minx, mm.maxx));
 }
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare outside (all values in millionths)
 function fitsInsideWithRoom(coord, mm) {
-    if ((( mm.miny - 60) > coord.y) || (coord.y >= (mm.maxy + 60))) {
+    if (((mm.miny - 60) > coord.y) || (coord.y >= (mm.maxy + 60))) {
         return false;
     }
     var xroom = xDivider4(mm.miny, mm.maxy) / 4;
@@ -415,7 +424,7 @@ function fitsInsideWithRoom(coord, mm) {
 
 /// PRIVATE returns true iff coordinate inside rectangle with some room to spare inside (all values in millionths)
 function fitsWellInside(coord, mm) {
-    if ((( mm.miny + 60) > coord.y) || (coord.y >= (mm.maxy - 60))) {
+    if (((mm.miny + 60) > coord.y) || (coord.y >= (mm.maxy - 60))) {
         return false;
     }
     var xroom = xDivider4(mm.miny, mm.maxy) / 4;
@@ -448,6 +457,7 @@ function getTerritoryAlphaCode(territory, format) {
     }
     // shortest POSSIBLE
     var parent = getParentOf(territoryNumber);
+    var n = full.substr(hyphen + 1);
     // see if n occurs multiple times, if not, don't bother with parent
     var count = 0;
     var i = aliases.indexOf(n + '=');
@@ -455,7 +465,8 @@ function getTerritoryAlphaCode(territory, format) {
         count = 2;
     } else {
         for (i = 0; i < iso3166alpha.length; i++) {
-            if (iso3166alpha[i].indexOf("-" + short) > 0) {
+            var pos = iso3166alpha[i].indexOf("-" + short);
+            if ((pos >= 0) && (iso3166alpha[i].substr(pos + 1) == short)) {
                 count++;
             }
         }
@@ -467,9 +478,11 @@ function getTerritoryAlphaCode(territory, format) {
 function dataFirstRecord(territoryNumber) {
     return data_start[territoryNumber];
 }
+
 function dataLastRecord(territoryNumber) {
     return data_start[++territoryNumber] - 1;
 }
+
 function minmaxSetup(i) {
     var d = data_maxy[i];
     if (d < 10) {
@@ -586,7 +599,7 @@ function decodeSixWide(v, width, height) {
         col = maxcol;
         D = width - maxcol * 6;
     }
-    var w = v - (col * height * 6 );
+    var w = v - (col * height * 6);
     var x6 = col * 6 + (w % D);
     var y6 = height - 1 - Math.floor(w / D);
     return {y: y6, x: x6}
@@ -605,6 +618,7 @@ function encodeSixWide(x, y, width, height) {
 
 var getDebugInfo;    // caller must set this to 1 to get debug info about first successful encode
 var mcInfo;
+
 /*
  type: 1=topdown nameless, 2=sixwide nameless, 3=regulargrid 4=irregular grid 5=rounded groups 6=unrounded groups
  record: rectangle record used to encode
@@ -644,7 +658,7 @@ function encodeExtension(result, enc, extrax4, extray, dividerx4, dividery, extr
     var factorx = 810000 * dividerx4; // 810000 = 30^4
     var factory = 810000 * dividery;
     var valx = (810000 * extrax4) + (enc.fraclon);
-    var valy = (810000 * extray ) + (enc.fraclat * ydirection);
+    var valy = (810000 * extray) + (enc.fraclat * ydirection);
 
     // protect against floating point errors
     if (valx < 0) {
@@ -753,7 +767,7 @@ function wrap(p) {
 }
 
 function convertFractionsToDegrees(p) {
-    p.y /= ( 810000 * 1000000);
+    p.y /= (810000 * 1000000);
     p.x /= (3240000 * 1000000);
     return p;
 }
@@ -831,7 +845,7 @@ function decodeExtension(extensionchars, coord32, dividerx4, dividery, lon_offse
     }
 
     var lon4 = (coord32.x * 3240000.0) + (lon32 * dividerx4) + (lon_offset4 * 810000.0);
-    var lat1 = (coord32.y * 810000.0) + (lat32 * dividery );
+    var lat1 = (coord32.y * 810000.0) + (lat32 * dividery);
 
     // determine the range of coordinates that are encode to this mapcode
     var mapcodeZone;
@@ -939,7 +953,7 @@ function decodeGrid(input, extensionchars, m) {
     var decodeMaxx = ((relx + xgridsize) < mm.maxx) ? (relx + xgridsize) : mm.maxx;
     var decodeMaxy = ((rely + ygridsize) < mm.maxy) ? (rely + ygridsize) : mm.maxy;
     return decodeExtension(extensionchars, corner, dividerx << 2, dividery,
-        0, decodeMaxy, decodeMaxx); // grid
+            0, decodeMaxy, decodeMaxx); // grid
 }
 
 function encodeBase31(value, nrchars) {
@@ -959,7 +973,8 @@ function encodeTriple(difx, dify, dividerx, dividery) {
         cx = (difx % 28);
         cy = (dify % 34);
         if (getDebugInfo) {
-            mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + ((28 * rx * dividerx)), (1000000 * (mcInfo.rectSubarea.maxy)) - (((34 * ry) + 34) * dividery), 28 * dividerx, 34 * dividery);
+            mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + ((28 * rx * dividerx)),
+                    (1000000 * (mcInfo.rectSubarea.maxy)) - (((34 * ry) + 34) * dividery), 28 * dividerx, 34 * dividery);
         }
         return encodeChar[(rx + 6 * ry)] + encodeBase31(cx * 34 + cy, 2);
     }
@@ -967,7 +982,8 @@ function encodeTriple(difx, dify, dividerx, dividery) {
         rx = Math.floor(difx / 24);
         cx = (difx % 24);
         if (getDebugInfo) {
-            mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + (24 * rx * dividerx), 1000000 * mcInfo.rectSubarea.miny, 24 * dividerx, 40 * dividery);
+            mcInfo.rectRegion = asDegreeRect((1000000 * mcInfo.rectSubarea.minx) + (24 * rx * dividerx),
+                    1000000 * mcInfo.rectSubarea.miny, 24 * dividerx, 40 * dividery);
         }
         return encodeChar[rx + 24] + encodeBase31(cx * 40 + (dify - 136), 2);
     }
@@ -1055,7 +1071,8 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
     }
 
     if (getDebugInfo && prefixlength == 4 && divx == 961 && divy == 961) {
-        mcInfo.rectZone = asDegreeRect(mm.minx + 31 * xgridsize * Math.floor(relx / 31), mm.miny + 31 * ygridsize * Math.floor(rely / 31), xgridsize * 31, ygridsize * 31);
+        mcInfo.rectZone = asDegreeRect(mm.minx + 31 * xgridsize * Math.floor(relx / 31),
+                mm.miny + 31 * ygridsize * Math.floor(rely / 31), xgridsize * 31, ygridsize * 31);
     }
 
     rely = mm.miny + (rely * ygridsize);
@@ -1078,7 +1095,8 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
 
     if (getDebugInfo) {
         mcInfo.rectSubarea = asDegreeRect(relx, rely, dividerx * xside[postfixlength], dividery * yside[postfixlength]);
-        mcInfo.rectCell = asDegreeRect((relx + difx * dividerx), (rely + (yside[postfixlength] - 1 - dify) * dividery), dividerx, dividery);
+        mcInfo.rectCell = asDegreeRect((relx + difx * dividerx), (rely + (yside[postfixlength] - 1 - dify) * dividery),
+                dividerx, dividery);
         mcInfo.form += (postfixlength == 2 ? 'pp' : (postfixlength == 3 ? 'ppp' : 'pppp'));
         mcInfo.postfixType = postfixlength;
     }
@@ -1091,7 +1109,8 @@ function encodeGrid(enc, m, mm, headerletter, extraDigits) {
         if (postfixlength == 4) {
             postfix = postfix.charAt(0) + postfix.charAt(2) + postfix.charAt(1) + postfix.charAt(3);
             if (getDebugInfo) {
-                mcInfo.rectRegion = asDegreeRect(relx + (31 * Math.floor(difx / 31) * dividerx), rely + (31 * Math.floor((yside[postfixlength] - 1 - dify) / 31) * dividery), 31 * dividerx, 31 * dividery);
+                mcInfo.rectRegion = asDegreeRect(relx + (31 * Math.floor(difx / 31) * dividerx),
+                        rely + (31 * Math.floor((yside[postfixlength] - 1 - dify) / 31) * dividery), 31 * dividerx, 31 * dividery);
             }
         }
         result += postfix;
@@ -1329,29 +1348,37 @@ function headerLetter(i) {
     }
     return '';
 }
+
 function smartdiv(i) {
     return data_special1[i];
 }
+
 function isRestricted(i) {
     return data_flags[i] & 512;
 }
+
 function isNameless(i) {
     return data_flags[i] & 64;
 }
+
 function isAutoHeader(i) {
     return data_flags[i] & (8 << 5);
 }
+
 function codexLen(i) {
     var flags = data_flags[i] & 31;
     return Math.floor(flags / 5) + (flags % 5) + 1;
 }
+
 function coDex(i) {
     var flags = data_flags[i] & 31;
     return 10 * Math.floor(flags / 5) + (flags % 5) + 1;
 }
+
 function isSpecialShape(i) {
     return data_flags[i] & 1024;
 }
+
 function recType(i) {
     return ((data_flags[i] >> 7) & 3); // 1=pipe 2=plus 3=star
 }
@@ -1397,7 +1424,7 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
             storage_offset = X * (961 * 961);
         }
         else {
-            storage_offset = (62 - A + Math.floor((X - 62 + A) / 2) ) * (961 * 961);
+            storage_offset = (62 - A + Math.floor((X - 62 + A) / 2)) * (961 * 961);
             if (((X + A) % 2) == 1) {
                 storage_offset += (16 * 961 * 31);
             }
@@ -1467,7 +1494,8 @@ function encodeNameless(enc, m, firstcode, extraDigits) {
                 mcInfo.headerletter = encodeChar[storage_offset / (961 * 961)];
                 mcInfo.postfixType = 2;
                 mcInfo.regular = true;
-                mcInfo.rectRegion = asDegreeRect((mm.minx + (31 * Math.floor(dx / 31) * dividerx4 / 4)), mm.maxy - (31 * dividery) * (1 + Math.floor(dy / 31)), 31 * dividerx4 / 4, 31 * dividery);
+                mcInfo.rectRegion = asDegreeRect((mm.minx + (31 * Math.floor(dx / 31) * dividerx4 / 4)),
+                        mm.maxy - (31 * dividery) * (1 + Math.floor(dy / 31)), 31 * dividerx4 / 4, 31 * dividery);
             }
             result = result.charAt(0) + result.charAt(1) + result.charAt(3) + '.' + result.charAt(2) + result.charAt(4);
         } else if (codex == 13) {
@@ -1542,7 +1570,7 @@ function decodeNameless(input, extensionchars, m, firstindex) {
         v = decodeBase31(input);
 
         if (X > 0) {
-            v -= ( (X * p + (X < r ? X : r)) * (961 * 961) );
+            v -= ((X * p + (X < r ? X : r)) * (961 * 961));
         }
     }
     else if (codex != 21 && A < 62) {
@@ -1593,7 +1621,7 @@ function decodeNameless(input, extensionchars, m, firstindex) {
         x: mm.minx + Math.floor((dx * dividerx4) / 4)
     };
     return decodeExtension(extensionchars, corner, dividerx4, -dividery,
-        ((dx * dividerx4) % 4), mm.miny, mm.maxx); // nameless
+            ((dx * dividerx4) % 4), mm.miny, mm.maxx); // nameless
 }
 
 function encodeAutoHeader(enc, m, extraDigits) {
@@ -1612,7 +1640,7 @@ function encodeAutoHeader(enc, m, extraDigits) {
         var mm = minmaxSetup(i);
         var H = Math.floor((mm.maxy - mm.miny + 89) / 90);
         var xdiv = xDivider4(mm.miny, mm.maxy);
-        var W = Math.floor(( (mm.maxx - mm.minx) * 4 + (xdiv - 1) ) / xdiv);
+        var W = Math.floor(((mm.maxx - mm.minx) * 4 + (xdiv - 1)) / xdiv);
 
         H = 176 * Math.floor((H + 176 - 1) / 176);
         W = 168 * Math.floor((W + 168 - 1) / 168);
@@ -1653,11 +1681,14 @@ function encodeAutoHeader(enc, m, extraDigits) {
                 mcInfo.dotPosition = codexlen - 2;
                 mcInfo.prefixDivx = Math.floor(W / 168);
                 mcInfo.prefixDivy = Math.floor(H / 176);
-                mcInfo.rectSubarea = asDegreeRect(mm.minx + (vx * 168    ) * dividerx, mm.maxy - ((vy + 1) * 176      ) * dividery, 168 * dividerx, 176 * dividery);
-                mcInfo.rectCell = asDegreeRect(mm.minx + (vx * 168 + spx) * dividerx, mm.maxy - ((vy  ) * 176 + spy + 1) * dividery, dividerx, dividery);
+                mcInfo.rectSubarea = asDegreeRect(mm.minx + (vx * 168) * dividerx, mm.maxy - ((vy + 1) * 176) * dividery,
+                        168 * dividerx, 176 * dividery);
+                mcInfo.rectCell = asDegreeRect(mm.minx + (vx * 168 + spx) * dividerx, mm.maxy - ((vy) * 176 + spy + 1) * dividery,
+                        dividerx, dividery);
             }
 
-            var mapc = encodeBase31(Math.floor(STORAGE_START / (961 * 31)) + value, codexlen - 2) + '.' + encodeTriple(spx, spy, dividerx, dividery);
+            var mapc = encodeBase31(Math.floor(STORAGE_START / (961 * 31)) + value, codexlen - 2) + '.' +
+                    encodeTriple(spx, spy, dividerx, dividery);
 
             return encodeExtension(mapc, enc, extrax << 2, extray, dividerx << 2, dividery, extraDigits, -1);
         }
@@ -1680,7 +1711,7 @@ function decodeAutoHeader(input, extensionchars, m) {
 
         var H = Math.floor((mm.maxy - mm.miny + 89) / 90);
         var xdiv = xDivider4(mm.miny, mm.maxy);
-        var W = Math.floor(( (mm.maxx - mm.minx) * 4 + (xdiv - 1) ) / xdiv);
+        var W = Math.floor(((mm.maxx - mm.minx) * 4 + (xdiv - 1)) / xdiv);
 
         H = 176 * Math.floor((H + 176 - 1) / 176);
         W = 168 * Math.floor((W + 168 - 1) / 168);
@@ -1712,7 +1743,7 @@ function decodeAutoHeader(input, extensionchars, m) {
             }
 
             return decodeExtension(extensionchars, corner, dividerx << 2, -dividery,
-                0, mm.miny, mm.maxx); // autoheader
+                    0, mm.miny, mm.maxx); // autoheader
         }
         STORAGE_START += product;
     }
@@ -2087,7 +2118,8 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
             zone = decodeGrid(mapcode.substr(1), extensionchars, m);
             break;
         }
-        else if (isNameless(m) && ((codex == 21 && incodex == 22 ) || (codex == 22 && incodex == 32) || (codex == 13 && incodex == 23))) {
+        else if (isNameless(m) && ((codex == 21 && incodex == 22) || (codex == 22 && incodex == 32) ||
+                (codex == 13 && incodex == 23))) {
             zone = decodeNameless(mapcode, extensionchars, m, from);
             break;
         }
@@ -2110,15 +2142,19 @@ function master_decode(mapcode, territoryNumber) // returns object with y and x 
 function hasStates(territoryNumber) {
     return hasSubdivision(territoryNumber);
 }
+
 function isState(territoryNumber) {
     return isSubdivision(territoryNumber);
 }
+
 function StateParent(territoryNumber) {
     return getParentOf(territoryNumber);
 }
+
 function ccode2iso(territoryNumber, format) {
     return getTerritoryAlphaCode(territoryNumber, format);
 }
+
 function fullname(territoryNumber, keepindex) {
     if (keepindex) {
         return isofullname[territoryNumber];
