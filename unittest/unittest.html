@@ -411,6 +411,7 @@
 
     // test encode/decodes from test data array; returns nonzero if more tests are needed
     var next_encode_to_test = 0;
+
     function test_encodes_decodes() {
         var tests_per_timeslot = 50;
         for (var i = next_encode_to_test; testdata[i] != -1; i += 5) {
@@ -431,6 +432,7 @@
 
 
     var next_corner_to_test = 0;
+
     function test_corner_encodes() {
         var tests_per_timeslot = 20;
         var last = dataLastRecord(ccode_earth);
@@ -468,7 +470,7 @@
 
         if (tn != ccode) {
             nrErrors++;
-            out('*** ERROR *** getTerritoryNumber(' + alphacode + (needsParent ? ',' + getTerritoryAlphaCode(ccodeParent) : "") + ')=' + tn  + '=' + getTerritoryAlphaCode(tn) + ' but expected ' + ccode + '=' + getTerritoryAlphaCode(ccode));
+            out('*** ERROR *** getTerritoryNumber(' + alphacode + (needsParent ? ',' + getTerritoryAlphaCode(ccodeParent) : "") + ')=' + tn + '=' + getTerritoryAlphaCode(tn) + ' but expected ' + ccode + '=' + getTerritoryAlphaCode(ccode));
         }
 
         if (needsParent == 0 && isAlias == 0 && (alphacode.length <= 3 || alphacode.charAt(3) != '-')) {
@@ -577,11 +579,11 @@
 
     function territory_code_tests() {
         var testdata = [
+            // expected answer, context, string
             "ASM", "USA", "AS",
             "MX-AGU", , "AG",
             "MX-TAM", , "MEX-TAM",
             "CXR", , "AUS-CX",
-            // expected answer, context, string
             "BR-AL", "BRA", "AL",
             "VAT", , "",
             "", , "R",
@@ -615,24 +617,58 @@
             "RU-AL", "RU-TAM", "AL",
             "US-AL", "US", "AL",
             "US-AL", "US-CA", "AL",
-            -9];
+            -999];
 
-        for (var i = 0; testdata[i] != -9; i += 3) {
+        for (var i = 0; testdata[i] != -999; i += 3) {
             var tc = getTerritoryAlphaCode(getTerritoryNumber(testdata[i + 2], testdata[i + 1]));
             nrTests++;
             if (tc != testdata[i]) {
                 nrErrors++;
-                out('*** ERROR *** getTerritoryNumber("' + testdata[i + 2] + '", ' +
+                out('*** ERROR *** getTerritoryAlphaCode("' + testdata[i + 2] + '", ' +
                         testdata[i + 1] + ')=' + tc + ', expected \"' + testdata[i] + '\"');
             }
         }
     }
 
+    function territory_alphacode_tests() {
+        var testdata = [
+            // expected answer, territory, 0=local;1=international;2=shortest
+            "CA", "US-CA", 0,           // CA is not ambiguous.
+            "US-CA", "US-CA", 1,
+            "CA", "US-CA", 2,
+            "CAM", "MX-CAM", 0,         // Test for -CA and -CAM.
+            "MX-CAM", "MX-CAM", 1,
+            "CAM", "MX-CAM", 2,
+            "MN", "US-MN", 0,
+            "US-MN", "US-MN", 1,
+            "US-MN", "US-MN", 2,
+            "MN", "IN-MN", 0,           // MN is ambiguous as a state.
+            "IN-MN", "IN-MN", 1,
+            "IN-MN", "IN-MN", 2,
+            "IN", "US-IN", 0,           // IN is ambigious as a state/country.
+            "US-IN", "US-IN", 1,
+            "US-IN", "US-IN", 2,
+            "NLD", "NLD", 0,            // NLD is never ambiguous.
+            "NLD", "NLD", 1,
+            "NLD", "NLD", 2,
+            -999
+        ];
+        for (var i = 0; testdata[i] != -999; i += 3) {
+            var tc = getTerritoryAlphaCode(getTerritoryNumber(testdata[i + 1]), testdata[i + 2]);
+            nrTests++;
+            if (tc != testdata[i]) {
+                nrErrors++;
+                out('*** ERROR *** getTerritoryAlphaCode("' + testdata[i + 1] + '", ' + testdata[i + 2] + ')=' + tc +
+                        ', expected \"' + testdata[i] + '\"');
+            }
+        }
+    }
 
     var myVar = setInterval(function () {
         stepper()
     }, 20);
     var dostep = 0;
+
     function stepper() {
         switch (dostep) {
             case 0:
@@ -653,6 +689,7 @@
                 break;
             case 4:
                 territory_code_tests();
+                territory_alphacode_tests();
                 test_territories();
                 break;
             case 5:
