@@ -5,7 +5,7 @@
 [![Release](https://img.shields.io/github/release/mapcode-foundation/mapcode-js.svg?maxAge=3600)](https://github.com/mapcode-foundation/mapcode-js/releases)
 
 
-**Copyright (C) 2014-2017 Stichting Mapcode Foundation (http://www.mapcode.com)**
+**Copyright (C) 2003-2018 Stichting Mapcode Foundation (http://www.mapcode.com)**
 
 ----
 
