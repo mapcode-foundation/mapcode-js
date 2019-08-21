@@ -350,8 +350,8 @@ return value | a string
 
 Example Javascript:
 
-	document.write(convertToAlphabetAsHTML(‘PQ.RS’, 4) ,’<br/>’)
-	document.write(convertToAlphabetAsHTML(‘PQ.RS’, 2) ,’<br/>’)
+    document.write(convertToAlphabetAsHTML(‘PQ.RS’, 4) ,’<br/>’)
+    document.write(convertToAlphabetAsHTML(‘PQ.RS’, 2) ,’<br/>’)
 
 Output:
 
